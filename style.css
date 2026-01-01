@@ -420,17 +420,29 @@ header {
 
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column; /* Stacks logo above the links */
-        gap: 20px;
-        text-align: center;
-        padding: 15px 20px;
+        flex-direction: row !important; /* Forces side-by-side layout */
+        justify-content: space-between !important; /* Pushes Logo left, Menu right */
+        padding: 10px 20px;
+        align-items: center;
     }
-    
-    .main-nav ul {
-        gap: 15px;
-        flex-wrap: wrap; /* Allows links to wrap to a new line if needed */
-        justify-content: center;
-        font: size 0.9rem;
+
+    .logo {
+        text-align: left !important;
+        margin: 0;
+    }
+
+    .hamburger {
+        display: block !important; /* Ensures the menu icon shows on the right */
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-blue);
+        z-index: 1000;
     }
 }
     
