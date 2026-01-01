@@ -32,20 +32,31 @@ body {
 
 /* 2. Header & Logo Styling */
 header {
-    background-color: var(--primary-blue);
+    /* We change the solid color to a semi-transparent version (RGBA) */
+    background-color: rgba(61, 133, 198, 0.95); 
+    
+    /* This creates the "frosted glass" look through the header */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    
     padding: 10px 0;
     width: 100%;
-    position: sticky;
+    position: fixed; 
     top: 0;
+    left: 0;
     z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease; /* Makes any changes look smooth */
+}
+header:hover {
+    background-color: rgba(61, 133, 198, 1); /* Becomes fully solid on hover */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .header-container {
     display: flex;
     justify-content: space-between; /* Pushes logo left and hamburger right */
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 10px;
     position: relative;
 }
 
@@ -111,11 +122,13 @@ header {
     background-size: cover;
     background-position: center;
     color: var(--pure-white);
-    padding: 100px 20px;
+    padding: 180px 20px 100px;
     text-align: center;
-    min-height: 500px;
+    min-height: 400px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
 .hero-banner h1 {
@@ -123,6 +136,12 @@ header {
     font-weight: 800;
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
+}
+@media (max-width: 768px) {
+    .hero-banner {
+        padding-top: 220px; /* Adjust this number to move it exactly where you want it */
+        min-height: 550px;
+    }
 }
 
 .cta-button {
@@ -418,36 +437,57 @@ header {
     display: none;
 }
 
+/* --- CLEANED MOBILE UTILITIES --- */
 @media (max-width: 768px) {
+    /* 1. Force Logo Left and Hamburger Right */
     .header-container {
-        flex-direction: row !important; /* Forces side-by-side layout */
-        justify-content: space-between !important; /* Pushes Logo left, Menu right */
+        flex-direction: row !important;
+        justify-content: space-between !important;
         padding: 10px 20px;
         align-items: center;
+        height: 80px; /* Keeps header height consistent */
+        position: relative;
     }
 
+    /* 2. Logo Size and Alignment */
     .logo {
         text-align: left !important;
         margin: 0;
-        font-size: 1.1rem;
-        letter-spacing: 0px;
+        font-size: 1rem !important; /* Smaller as requested */
     }
 
+    /* 3. Hamburger Menu Icon */
     .hamburger {
-        display: block !important; /* Ensures the menu icon shows on the right */
+        display: block !important;
+        font-size: 2rem;
+        color: var(--accent-yellow);
     }
 
+    /* 4. THE INDEPENDENT DROPDOWN (Does not push header) */
     .main-nav {
-        display: none;
+        display: none; 
         position: absolute;
-        top: 100%;
+        top: 100%; /* Hangs from the bottom of the blue header */
         left: 0;
         width: 100%;
         background-color: var(--primary-blue);
         z-index: 1000;
+        padding: 20px 0;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.2);
     }
-}
-    
+
+    /* The Toggle Magic */
+    #menu-toggle:checked ~ .main-nav {
+        display: block;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    /* 5. Buttons & Floating UI */
     .mobile-call-btn {
         display: flex;
         position: fixed;
@@ -463,6 +503,12 @@ header {
         box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
+    .back-to-top {
+        bottom: 90px; /* Stays above the call button */
+    }
+}
+
+/* Adjust scroll margin so header doesn't cover section titles */
 :target { scroll-margin-top: 100px; }
 
 /* Hide floating button on very small screens if it covers content, 
@@ -723,6 +769,23 @@ header {
 }
 /* Mobile Rules */
 @media (max-width: 768px) {
+    /* When the menu is CLOSED, show the 3 lines */
+.hamburger .icon {
+    display: inline-block;
+}
+
+/* When the menu is OPEN (checkbox checked), change the icon to X */
+#menu-toggle:checked ~ .hamburger .icon {
+    content: ""; /* Clear the ☰ */
+    display: none;
+}
+
+#menu-toggle:checked ~ .hamburger::after {
+    content: "\2715"; /* This is the unicode for a clean 'X' */
+    font-size: 2.5rem;
+    color: var(--accent-yellow);
+    line-height: 1;
+}
     .hamburger {
         display: block; /* Hamburger icon appears on the right */
     }
@@ -730,7 +793,7 @@ header {
     .main-nav {
         display: none; 
         position: absolute;
-        top: 100%; /* Drops down below the header */
+        top: 80px; /* Drops down below the header */
         left: 0;
         width: 100%;
         background-color: var(--primary-blue);
@@ -748,4 +811,34 @@ header {
     #menu-toggle:checked ~ .main-nav {
         display: block;
     }
+}
+.back-to-top {
+    position: fixed;
+    bottom: 90px; /* Placed above your mobile call button */
+    right: 20px;
+    background-color: var(--accent-yellow);
+    color: #000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.7rem;
+    z-index: 1500;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.back-to-top:hover {
+    transform: scale(1.1);
+    background-color: var(--pure-white);
+}
+
+.back-to-top i {
+    font-size: 1.2rem;
+    margin-bottom: -2px;
 }
