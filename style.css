@@ -50,6 +50,13 @@ header {
     margin: 0 auto;          /* Centers the 1200px container */
     padding: 10px 20px;      /* Changed from 20% to 20px to stop the squishing */
 }
+/* Hide hamburger on desktop */
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    color: var(--accent-yellow);
+    cursor: pointer;
+}
 
 .main-nav ul {
     display: flex;
@@ -667,5 +674,33 @@ header {
     .main-nav ul {
         justify-content: center; /* Centers links on mobile */
         gap: 15px;
+    }
+}
+/* Mobile Styling (Dropdown) */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Show hamburger on mobile */
+    }
+
+    .main-nav {
+        display: none; /* Hide menu by default */
+        width: 100%;
+        position: absolute;
+        top: 100%; /* Drops down below the header */
+        left: 0;
+        background-color: var(--primary-blue);
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .main-nav ul {
+        flex-direction: column; /* Stack links vertically */
+        align-items: center;
+        gap: 20px;
+    }
+
+    /* The "Magic": Show menu when checkbox is checked */
+    #menu-toggle:checked ~ .main-nav {
+        display: block;
     }
 }
