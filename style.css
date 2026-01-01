@@ -50,12 +50,17 @@ header {
     margin: 0 auto;          /* Centers the 1200px container */
     padding: 10px 20px;      /* Changed from 20% to 20px to stop the squishing */
 }
+
 /* Hide hamburger on desktop */
 .hamburger {
     display: none;
     font-size: 2rem;
     color: var(--accent-yellow);
     cursor: pointer;
+}
+/* Hide the checkbox */
+#menu-toggle {
+    display: none;
 }
 
 .main-nav ul {
@@ -700,6 +705,34 @@ header {
     }
 
     /* The "Magic": Show menu when checkbox is checked */
+    #menu-toggle:checked ~ .main-nav {
+        display: block;
+    }
+}
+/* Mobile Rules */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Hamburger icon appears on the right */
+    }
+
+    .main-nav {
+        display: none; 
+        position: absolute;
+        top: 100%; /* Drops down below the header */
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-blue);
+        z-index: 1000;
+        padding: 20px 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    /* The "Toggle" logic */
     #menu-toggle:checked ~ .main-nav {
         display: block;
     }
