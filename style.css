@@ -694,22 +694,27 @@ header:hover {
     font-size: 1.2rem;
     margin-bottom: -2px;
 }
+/* --- 12. Mobile Styles --- */
 @media (max-width: 768px) {
-
-.hero-banner {
-        padding-top: 220px; /* Adjust this number to move it exactly where you want it */
-        min-height: 550px;
+    .container { 
+        padding: 0 20px; 
     }
-     .floating-whatsapp {
-        bottom: 100px; /* Adjust so it doesn't overlap the mobile call bar */
-        width: 50px;
-        height: 50px;
-        font-size: 25px;
-    .container { padding: 0 20px; }
-     }
-    .hamburger { display: block; }
 
-    /* Hide Desktop Nav and setup Dropdown Tab */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Show the hamburger icon */
+    .hamburger { 
+        display: block !important; 
+        z-index: 1100;
+        cursor: pointer;
+    }
+
+    /* Mobile Navigation Dropdown */
     .main-nav {
         display: none;
         position: absolute;
@@ -729,26 +734,40 @@ header:hover {
         gap: 20px;
     }
 
-    /* THE TOGGLE MAGIC */
+    /* THE TOGGLE MAGIC: This opens the menu */
     #menu-toggle:checked ~ .header-container .main-nav {
         display: block !important;
     }
 
-    /* Change Hamburger to X icon */
+    /* Change Hamburger icon to 'X' icon when open */
     #menu-toggle:checked ~ .header-container .hamburger-icon {
         display: none;
     }
+    
     #menu-toggle:checked ~ .header-container .hamburger::after {
-        content: "\2715"; /* The Unicode X */
+        content: "\2715"; /* Unicode X */
         display: block;
         font-size: 2.2rem;
+        color: var(--accent-yellow);
     }
 
+    /* Adjusting other mobile elements */
     .logo { font-size: 1rem !important; }
-    .hero-banner { padding-top: 150px; }
+    
+    .hero-banner { 
+        padding-top: 180px; 
+        min-height: 500px;
+    }
+
     .about-flex { gap: 30px; }
     .about-text h2 { font-size: 2rem; }
-}
 
-/* Fix scroll overlap */
-:target { scroll-margin-top: 100px; }
+    /* Floating buttons placement */
+    .mobile-call-btn {
+        display: flex;
+    }
+    
+    .back-to-top {
+        bottom: 90px;
+    }
+}
