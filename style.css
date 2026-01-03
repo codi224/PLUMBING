@@ -795,25 +795,40 @@ header:hover {
     }
 
     /* Mobile Navigation Dropdown */
-   .main-nav {
-        display: block !important; /* Always block, but moved off-screen */
+  .main-nav {
+        display: block !important;
         position: fixed;
         top: 0;
-        right: -100%; /* Hidden to the right */
-        width: 75%;
+        right: -100%;             
+        
+        /* CHANGE THESE THREE LINES */
+        width: 280px;              /* Set a fixed width for the drawer */
         height: 100vh;
-        background: rgba(61, 133, 198, 0.98); /* Matching your brand blue */
-        backdrop-filter: blur(15px);
-        padding: 100px 0;
-        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0); /* The smooth slide */
+        background: rgba(5, 18, 33, 0.95); /* Darker, slightly transparent blue */
+        
+        padding: 100px 30px;       /* Increased horizontal padding for links */
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5); /* Adds a shadow to separate it from the page */
+        transition: 0.4s ease-in-out;
         z-index: 1050;
     }
 
+    /* Keep the links aligned to the left for a cleaner drawer look */
     .main-nav ul {
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
+        align-items: flex-start; /* Changed from center */
+        gap: 25px;
     }
+    /* This dims the page background when the menu is open */
+#menu-toggle:checked ~ .header-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Dim effect */
+    z-index: 1000;
+}
 
     /* When the checkbox is checked, slide the menu in */
     #menu-toggle:checked ~ .header-container .main-nav {
