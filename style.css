@@ -325,10 +325,17 @@ header:hover {
     transition: 0.3s;
 }
 
-/* 7. Locations */
+/* 7. Locations - Updated for Map Background */
 .section-locations {
-    padding: 80px 0;
-    background-color: #f4f7f9;
+    position: relative;
+    padding: 100px 0;
+    /* This ensures the background map stays dark enough for white text */
+    background: linear-gradient(rgba(5, 12, 33, 0.85), rgba(5, 12, 33, 0.85)), 
+                url('images/map-bg.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax effect */
+    color: #fff;
     text-align: center;
 }
 
@@ -340,28 +347,36 @@ header:hover {
 }
 
 .location-card {
-    background: #fff;
+    /* Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
     font-weight: 700;
+    color: #fff; /* White text for the dark map */
 }
 
 .location-card i {
-    color: var(--primary-blue);
+    color: var(--accent-yellow); /* Yellow icon stands out on dark bg */
     margin-bottom: 10px;
     display: block;
     font-size: 1.5rem;
 }
 
+/* Hover State */
 .location-card:hover {
-    background-color: var(--primary-blue);
-    color: white;
+    background-color: var(--accent-yellow);
+    color: #051221; /* Dark text on yellow background for contrast */
     transform: translateY(-5px);
+    border-color: var(--accent-yellow);
 }
 
-.location-card:hover i { color: white; }
+.location-card:hover i { 
+    color: #051221; 
+}
 
 /* 8. Contact Form */
 .section-contact {
