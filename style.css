@@ -752,8 +752,7 @@ header:hover {
     font-size: 1.2rem;
     margin-bottom: -2px;
 }
-/* --- 12. Mobile Styles --- */
-@/* --- 12. Mobile Styles (Cleaned & Optimized) --- */
+/* --- 12. Mobile Styles (Cleaned & Squared) --- */
 @media (max-width: 768px) {
     .container { 
         padding: 0 20px; 
@@ -765,6 +764,7 @@ header:hover {
         align-items: center;
         width: 100%;
         position: relative;
+        z-index: 1100; /* Keeps header elements above the overlay */
     }
 
     /* 1. The Hamburger Icon Bars */
@@ -772,7 +772,7 @@ header:hover {
         display: flex !important;
         flex-direction: column;
         gap: 5px;
-        z-index: 1100;
+        z-index: 1200; /* Highest layer to ensure it never disappears */
         cursor: pointer;
     }
 
@@ -784,26 +784,34 @@ header:hover {
         border-radius: 2px;
     }
 
-    /* 2. The Sliding Side Drawer (Not Full Screen) */
+    /* 2. The Square Side Drawer */
     .main-nav {
-        display: block !important;
+        display: flex !important; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
         position: fixed;
-        top: 80px;
-        right: -300px; /* Hide completely off-screen */
-        width: 280px;  /* Fixed width for the drawer */
-        height: 50vh;
+        top: 80px;        /* Sits exactly at the bottom of the header */
+        right: -300px;    /* Hidden start point */
+        
+        /* THE SQUARE DIMENSIONS */
+        width: 250px;     
+        height: 250px;    
+        border-radius: 0; /* Sharp corners for the square look */
+        
         background: rgba(5, 18, 33, 0.98); 
-        padding: 100px 30px;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        padding: 20px;
+        box-shadow: -5px 5px 20px rgba(0,0,0,0.4);
         transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1050;
     }
 
-    /* 3. The Click Overlay (Dims the rest of the site) */
+    /* 3. The Click Overlay (Fixed to start BELOW the header) */
     #menu-toggle:checked ~ .header-container::before {
         content: "";
         position: fixed;
-        top: 0;
+        top: 80px; /* IMPORTANT: This stops the overlay from covering the hamburger */
         left: 0;
         width: 100vw;
         height: 100vh;
@@ -828,11 +836,17 @@ header:hover {
         transform: translateY(-8px) rotate(45deg);
     }
 
-    /* 5. Menu Link Styling & Staggered Animation */
+    /* 5. Menu Link Styling (Centered inside the square) */
     .main-nav ul {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 25px;
+        align-items: center; 
+        justify-content: center;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
     }
 
     .main-nav ul li {
@@ -857,4 +871,5 @@ header:hover {
     
     .mobile-call-btn { display: flex; }
     .back-to-top { bottom: 90px; }
+
 } /* End of Media Query */
