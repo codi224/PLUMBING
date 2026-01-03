@@ -764,26 +764,49 @@ header:hover {
         align-items: center;
         width: 100%;
     }
+    .main-nav ul li {
+        opacity: 0;
+        transform: translateX(20px);
+        transition: 0.4s ease;
+    }
 
-    /* Show the hamburger icon */
-    .hamburger { 
-        display: block !important; 
+    #menu-toggle:checked ~ .header-container .main-nav ul li {
+        opacity: 1;
+        transform: translateX(0);
+        /* Staggered delay for each link */
+        transition-delay: 0.3s;
+    }
+}
+
+   /* 2. The Hamburger Bars Styling */
+    .hamburger {
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
         z-index: 1100;
-        cursor: pointer;
+        position: relative;
+    }
+    .bar {
+        width: 30px;
+        height: 3px;
+        background-color: var(--accent-yellow);
+        transition: 0.4s;
+        border-radius: 2px;
     }
 
     /* Mobile Navigation Dropdown */
-    .main-nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 200px;
-        background: var(--primary-blue);
-        padding: 20px 0;
-        border-radius: 0 0 0 15px;
-        box-shadow: -5px 5px 15px rgba(0,0,0,0.2);
-        z-index: 1000;
+   .main-nav {
+        display: block !important; /* Always block, but moved off-screen */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hidden to the right */
+        width: 75%;
+        height: 100vh;
+        background: rgba(61, 133, 198, 0.98); /* Matching your brand blue */
+        backdrop-filter: blur(15px);
+        padding: 100px 0;
+        transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0); /* The smooth slide */
+        z-index: 1050;
     }
 
     .main-nav ul {
@@ -792,22 +815,24 @@ header:hover {
         gap: 20px;
     }
 
-    /* THE TOGGLE MAGIC: This opens the menu */
+    /* When the checkbox is checked, slide the menu in */
     #menu-toggle:checked ~ .header-container .main-nav {
-        display: block !important;
+        right: 0;
     }
 
-    /* Change Hamburger icon to 'X' icon when open */
-    #menu-toggle:checked ~ .header-container .hamburger-icon {
-        display: none;
+    /* 3. Hamburger to "X" Animation */
+    #menu-toggle:checked ~ .header-container .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
     }
-    
-    #menu-toggle:checked ~ .header-container .hamburger::after {
-        content: "\2715"; /* Unicode X */
-        display: block;
-        font-size: 2.2rem;
-        color: var(--accent-yellow);
+
+    #menu-toggle:checked ~ .header-container .bar:nth-child(2) {
+        opacity: 0; /* Hide middle bar */
     }
+
+    #menu-toggle:checked ~ .header-container .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}
 
     /* Adjusting other mobile elements */
     .logo { font-size: 1rem !important; }
