@@ -9,8 +9,11 @@
     --primary-blue: #3d85c6;
     --dark-navy: #051221;
     --pure-white: #ffffff;
+    --off-white: #f8f9fa;
+    --text-muted: #cbd5e0;
     --accent-yellow: #e6be0c;
     --success-green: #28a745;
+    --whatsapp-green: #25D366;
 }
 
 html {
@@ -21,6 +24,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: #333;
+    background-color: var(--pure-white);
 }
 
 .container {
@@ -180,6 +184,15 @@ header:hover {
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
 }
+.hero-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* This is the secret to a professional look */
+    color: var(--accent-yellow);
+    opacity: 0.9;
+}
 
 .cta-button {
     display: inline-block;
@@ -325,13 +338,12 @@ header:hover {
     transition: 0.3s;
 }
 
-/* 7. Locations - Updated for Map Background */
 .section-locations {
     position: relative;
     padding: 100px 0;
     /* This ensures the background map stays dark enough for white text */
     background: linear-gradient(rgba(5, 12, 33, 0.85), rgba(5, 12, 33, 0.85)), 
-                url('images/map-bg.png'); 
+                url('images/plumbers\ at\ work.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Parallax effect */
@@ -350,8 +362,7 @@ header:hover {
     /* Glassmorphism Effect */
     background: rgba(255, 255, 255, 0.05); 
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    
+    border: 1px solid rgba(255, 255, 255, 0.1); 
     padding: 25px;
     border-radius: 12px;
     transition: all 0.3s ease;
@@ -391,6 +402,7 @@ header:hover {
     margin-bottom: 40px;
     text-align: center;
 }
+
 
 .contact-form {
     max-width: 650px;
@@ -462,6 +474,7 @@ header:hover {
     text-align: center;
     font-size: 0.9rem;
 }
+
 
 /* 10. Success Modal */
 .success-modal {
@@ -867,7 +880,7 @@ header:hover {
         min-height: 450px;
     }
 
-    .about-text h2 { font-size: 2rem; }
+    .about-text h2 { font-size: 2rem ; }
     
     .mobile-call-btn { display: flex; }
     .back-to-top { bottom: 90px; }
@@ -904,4 +917,36 @@ header:hover {
     transform: scale(1.1) translateY(-5px);
     background-color: #1ebe57;
     color: white;
+}
+.satisfaction-badge-small {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(230, 190, 12, 0.1);
+    border: 1px solid var(--accent-yellow);
+    padding: 8px 15px;
+    border-radius: 4px;
+    color: var(--accent-yellow);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.footer-column h3 {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Subtle line under footer headings */
+.footer-column h3::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--accent-yellow);
+    margin-top: 8px;
 }
