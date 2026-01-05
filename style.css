@@ -765,27 +765,28 @@ header:hover {
     font-size: 1.2rem;
     margin-bottom: -2px;
 }
-/* --- 12. Mobile Styles (Cleaned & Squared) --- */
+/* --- 12. Mobile Styles (Unified Slide-Down Theme) --- */
 @media (max-width: 768px) {
     .container { 
         padding: 0 20px; 
     }
 
+    /* 1. Header & Hamburger Alignment */
     .header-container {
+        z-index: 1100;
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
-        position: relative;
-        z-index: 1100; /* Keeps header elements above the overlay */
+        /* Matches your primary brand blue */
+        background-color: var(--primary-blue); 
     }
 
-    /* 1. The Hamburger Icon Bars */
     .hamburger {
         display: flex !important;
         flex-direction: column;
         gap: 5px;
-        z-index: 1200; /* Highest layer to ensure it never disappears */
+        z-index: 1200;
         cursor: pointer;
     }
 
@@ -797,44 +798,47 @@ header:hover {
         border-radius: 2px;
     }
 
-    /* 2. The Square Side Drawer */
+    /* 2. THE BLUE SLIDE-DOWN MENU */
     .main-nav {
         display: flex !important; 
         flex-direction: column;
         justify-content: center;
         align-items: center;
         
-        position: fixed;
-        top: 80px;        /* Sits exactly at the bottom of the header */
-        right: -300px;    /* Hidden start point */
+        position: absolute; 
+        top: 100%;          /* Drops exactly from the bottom of the header */
+        left: 0;
+        width: 100%;        
+        background-color: var(--primary-blue); 
         
-        /* THE SQUARE DIMENSIONS */
-        width: 250px;     
-        height: 250px;    
-        border-radius: 0; /* Sharp corners for the square look */
+        /* Slide Logic */
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
         
-        background: rgba(5, 18, 33, 0.98); 
-        padding: 20px;
-        box-shadow: -5px 5px 20px rgba(0,0,0,0.4);
-        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         z-index: 1050;
     }
 
-    /* 3. The Click Overlay (Fixed to start BELOW the header) */
+    /* 3. The Click Overlay */
     #menu-toggle:checked ~ .header-container::before {
         content: "";
         position: fixed;
-        top: 80px; /* IMPORTANT: This stops the overlay from covering the hamburger */
+        top: 80px; 
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.5); 
         z-index: 1000;
     }
 
     /* 4. Triggering the Slide & Icon Morph */
     #menu-toggle:checked ~ .header-container .main-nav {
-        right: 0; /* Slides into view */
+        max-height: 450px;  /* Adjust based on link count */
+        visibility: visible;
+        padding: 30px 0;
     }
 
     #menu-toggle:checked ~ .header-container .bar:nth-child(1) {
@@ -849,41 +853,45 @@ header:hover {
         transform: translateY(-8px) rotate(45deg);
     }
 
-    /* 5. Menu Link Styling (Centered inside the square) */
+    /* 5. Menu Link Styling */
     .main-nav ul {
-        display: flex;
         flex-direction: column;
-        align-items: center; 
-        justify-content: center;
-        gap: 20px;
-        list-style: none;
-        padding: 0;
-        margin: 0;
         width: 100%;
+        gap: 0; /* Managed by link padding */
     }
 
     .main-nav ul li {
+        width: 100%;
         opacity: 0;
-        transform: translateX(20px);
-        transition: 0.4s ease;
+        transform: translateY(-10px);
+        transition: 0.3s ease;
     }
 
     #menu-toggle:checked ~ .header-container .main-nav ul li {
         opacity: 1;
-        transform: translateX(0);
-        transition-delay: 0.3s;
+        transform: translateY(0);
     }
 
-    /* 6. Other Mobile Adjustments */
+    .main-nav ul li a {
+        color: white !important;
+        font-weight: 800;
+        text-transform: uppercase;
+        display: block;
+        padding: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 1.1rem;
+    }
+
+    /* 6. Mobile UI Adjustments */
     .hero-banner { 
         padding-top: 150px; 
         min-height: 450px;
     }
 
-    .about-text h2 { font-size: 2rem ; }
-    
+    .about-text h2 { font-size: 2rem; }
     .mobile-call-btn { display: flex; }
     .back-to-top { bottom: 90px; }
+
     .floating-whatsapp {
         width: 55px;
         height: 55px;
