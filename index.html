@@ -117,7 +117,6 @@
                 </div>
             </div>
         </section>
-
        <section id="contact" class="section-contact">
     <div class="container">
         <div class="contact-header">
@@ -149,8 +148,7 @@
                         <p>24/7 Emergency Service</p>
                     </div>
                 </div>
-            </div>
-
+            </div>         
             <form class="contact-form">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
@@ -171,6 +169,50 @@
             </form>
         </div>
     </div>
+</section>
+<section class="reviews-section dark-theme" id="reviews">
+    <div class="container">
+        <h2 class="section-title" style="color: var(--pure-white);">Client Perspectives</h2>
+        <p class="section-subtitle" style="color: var(--text-muted);">The standard of excellence as defined by those we serve.</p>
+
+        <div class="reviews-grid">
+            <div class="review-card glass-effect">
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Primeline handled our commercial office refit with absolute precision. Their 2-hour emergency response gave us total peace of mind."</p>
+                <div class="reviewer-info">
+                    <span class="reviewer-name">James K.</span>
+                    <span class="reviewer-location">Nairobi Central</span>
+                </div>
+            </div>
+
+            <div class="review-card glass-effect">
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Finally, a plumbing service in Kenya that respects schedules. Clean work, professional team, and fair pricing."</p>
+                <div class="reviewer-info">
+                    <span class="reviewer-name">Sarah M.</span>
+                    <span class="reviewer-location">Karen Estates</span>
+                </div>
+            </div>
+
+            <div class="review-card glass-effect">
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Best leak detection technology I've seen. They found a hidden pipe burst in minutes that others missed for weeks."</p>
+                <div class="reviewer-info">
+                    <span class="reviewer-name">David O.</span>
+                    <span class="reviewer-location">Westlands</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+    <button class="cta-button-outline" onclick="openReviewModal()">Share Your Experience</button>
+</div>
 </section>
 
 <section id="locations" class="section-locations map-background-style">
@@ -233,14 +275,14 @@
     </div>
     
     <div class="footer-bottom">
-        <p>&copy; 2026 Prime Line Plumbing Solutions. All Rights Reserved.</p>
+        <p>&copy; 2026 Primeline Plumbing Solutions. All Rights Reserved.</p>
     </div>
 </footer>
     <div id="success-modal" class="success-modal">
         <div class="modal-content">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
             <h3>Message Sent!</h3>
-            <p>Thank you for contacting Prime Line. We will get back to you shortly.</p>
+            <p>Thank you for contacting Primeline. We will get back to you shortly.</p>
             <button onclick="closeModal()" class="close-btn">Great!</button>
         </div>
     </div>
@@ -280,6 +322,45 @@
             if (modal) { modal.style.display = 'none'; }
             document.querySelector('.contact-form').reset();
         }
+        function openReviewModal() {
+    document.getElementById('reviewModal').style.display = 'flex';
+}
+
+function closeReviewModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+}
+
+// Close if user clicks outside the box
+window.onclick = function(event) {
+    let modal = document.getElementById('reviewModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+function handleReviewSubmit(event) {
+    event.preventDefault(); // Prevents the page from refreshing
+    
+    // 1. Hide the form
+    document.getElementById('reviewFormContainer').style.display = 'none';
+    
+    // 2. Show the success message
+    document.getElementById('reviewSuccessMessage').style.display = 'block';
+    
+    // Optional: Log data or send to server here
+    console.log("Review submitted successfully");
+}
+
+// Update your existing close function to reset the form for the next time
+function closeReviewModal() {
+    document.getElementById('reviewModal').style.display = 'none';
+    
+    // Reset the modal state after it closes so the form comes back
+    setTimeout(() => {
+        document.getElementById('reviewFormContainer').style.display = 'block';
+        document.getElementById('reviewSuccessMessage').style.display = 'none';
+        document.getElementById('reviewForm').reset();
+    }, 500);
+}
     </script>
     <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
@@ -287,5 +368,39 @@
 <a href="https://wa.me/yournumber" class="floating-whatsapp" target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
+<div id="reviewModal" class="modal-overlay">
+   <div class="modal-content-premium">
+    <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+    
+    <div id="reviewFormContainer">
+        <h3>Submit a Review</h3>
+        <p>Your feedback helps us maintain the Primeline Standard.</p>
+        
+        <form id="reviewForm" onsubmit="handleReviewSubmit(event)">
+            <div class="rating-input">
+                <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+                <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+                <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+            </div>
+
+            <div class="input-stack">
+                <input type="text" placeholder="Your Full Name" required>
+                <input type="text" placeholder="Your Location (e.g. Westlands)" required>
+                <textarea placeholder="Share your experience with our engineering team..." rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Perspective</button>
+        </form>
+    </div>
+
+    <div id="reviewSuccessMessage" style="display: none;">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h3>Review Received</h3>
+        <p>Thank you for choosing Primeline Plumbing Solutions.</p>
+        <button class="cta-button-outline" onclick="closeReviewModal()" style="margin-top: 20px;">Return to Site</button>
+    </div>
+</div>
 </body>
 </html>
