@@ -62,6 +62,7 @@ header:hover {
     align-items: center;
     padding: 10px 10px;
     position: relative;
+    padding-bottom: 15px;
 }
 
 /* Hide hamburger on desktop */
@@ -765,8 +766,7 @@ header:hover {
     font-size: 1.2rem;
     margin-bottom: -2px;
 }
-/* --- 12. Mobile Styles (Unified Slide-Down Theme) --- */
-/* --- 12. Mobile Styles (Top-Right Square Dropdown) --- */
+/* --- 12. Mobile Styles (Sticky Header & Professional Magnify Menu) --- */
 @media (max-width: 768px) {
     /* Prevent horizontal scroll glitches */
     body { overflow-x: hidden; }
@@ -775,25 +775,33 @@ header:hover {
         padding: 0 20px; 
     }
 
-    /* 1. Reset Header for Mobile */
+    /* 1. Sticky Header - Physically pushes content while staying at top */
+    header {
+        position: sticky !important; 
+        top: 0;
+        height: auto !important; 
+        background-color: var(--primary-blue);
+        z-index: 2000;
+        transition: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
     .header-container {
         display: flex;
+        flex-wrap: wrap; 
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        position: relative;
-        z-index: 1100;
-        background-color: var(--primary-blue); /* Matches your header */
+        padding: 15px 15px 10px; /* Spacing for logo breathing room */
     }
 
-    /* 2. Hamburger Bars */
+    /* 2. Hamburger & Bars */
     .hamburger {
         display: flex !important;
         flex-direction: column;
         gap: 5px;
         cursor: pointer;
-        padding: 10px;
-        z-index: 1200;
+        order: 2;
     }
 
     .bar {
@@ -804,40 +812,33 @@ header:hover {
         border-radius: 2px;
     }
 
-    /* 3. THE TOP-RIGHT SQUARE DROPDOWN */
+    /* 3. The Navigation - The "Pusher" */
     .main-nav {
-        display: flex !important; 
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
+        display: block !important; 
+        position: relative !important; 
+        width: 100%;                  
+        order: 3;                     
+        top: 0 !important;            
         
-        position: absolute; 
-        top: 100%;          /* Directly below the blue header */
-        right: 0;           /* Sticks it to the top-right corner */
-        
-        /* The Square Look */
-        width: 220px;       
-        background-color: var(--primary-blue); 
-        border-bottom-left-radius: 12px; /* Professional rounded corner */
-        
-        /* Slide Down Animation */
+        /* Expansion Animation */
         max-height: 0;
         overflow: hidden;
         visibility: hidden;
         transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
         
-        box-shadow: -5px 10px 20px rgba(0,0,0,0.3);
-        z-index: 1050;
+        background-color: var(--primary-blue);
     }
 
-    /* 4. Show Menu when Checked */
+    /* 4. Trigger Expansion & Push */
     #menu-toggle:checked ~ .header-container .main-nav {
-        max-height: 450px; /* Adjust if you add more links */
+        max-height: 600px; 
         visibility: visible;
-        padding: 10px 0 20px 0;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1); /* Dark divider line */
+        margin-top: 5px;
     }
 
-    /* 5. Menu Links Styling */
+    /* 5. Professional Menu Links with Magnify Effect */
     .main-nav ul {
         flex-direction: column;
         width: 100%;
@@ -848,41 +849,62 @@ header:hover {
 
     .main-nav ul li {
         width: 100%;
-        text-align: center;
+        overflow: hidden; /* Keeps magnification from overlapping rows */
     }
 
     .main-nav ul li a {
-        display: block;
-        padding: 18px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 25px 0;
         color: white !important;
-        font-weight: 800;
+        font-weight: 800; /* Bolder for professional look */
         text-transform: uppercase;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        letter-spacing: 2.5px; 
         text-decoration: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: 0.3s;
+        
+        /* Darker thin border lines */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08); 
+        
+        /* Smooth Animation Core */
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                    color 0.3s ease, 
+                    background-color 0.3s ease;
+    }
+
+    /* Magnify and Color Change on Hover */
+    @media (hover: hover) {
+        .main-nav ul li a:hover {
+            color: var(--accent-yellow) !important;
+            transform: scale(1.1); /* Magnifies text */
+            background-color: rgba(0, 0, 0, 0.05); /* Subtle highlight */
+        }
+    }
+
+    /* Touch State for Mobile */
+    .main-nav ul li a:active {
+        color: var(--accent-yellow) !important;
+        transform: scale(1.05);
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
     .main-nav ul li:last-child a {
         border-bottom: none;
     }
 
-    /* 6. Icon Animation to X */
-    #menu-toggle:checked ~ .header-container .bar:nth-child(1) {
-        transform: translateY(8px) rotate(-45deg);
-    }
-    #menu-toggle:checked ~ .header-container .bar:nth-child(2) {
-        opacity: 0;
-    }
-    #menu-toggle:checked ~ .header-container .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(45deg);
-    }
+    /* 6. Hamburger to X Animation */
+    #menu-toggle:checked ~ .header-container .bar:nth-child(1) { transform: translateY(8px) rotate(-45deg); }
+    #menu-toggle:checked ~ .header-container .bar:nth-child(2) { opacity: 0; }
+    #menu-toggle:checked ~ .header-container .bar:nth-child(3) { transform: translateY(-8px) rotate(45deg); }
 
-    /* 7. Utility Adjustments */
-    .hero-banner { padding-top: 140px; min-height: 400px; }
+    /* 7. Content Adjustments */
+    .hero-banner { 
+        padding-top: 60px !important; 
+        min-height: 400px; 
+    }
+    
     .about-text h2 { font-size: 2rem; }
-    .mobile-call-btn { display: flex; }
-    .back-to-top { bottom: 90px; }
     
     .floating-whatsapp {
         width: 55px;
@@ -891,7 +913,7 @@ header:hover {
         bottom: 15px;
         left: 15px;
     }
-} /* End of Media Query */
+}
 /* 13. Floating WhatsApp Icon */
 .floating-whatsapp {
     position: fixed;
