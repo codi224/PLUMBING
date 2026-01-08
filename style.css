@@ -166,9 +166,9 @@ header:hover {
 /* 4. Hero Banner */
 .hero-banner {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                      url('images/water-droplets.png.png'); 
+                      url('images/team.jfif'); 
     background-size: cover;
-    background-position: center;
+    background-position: top;
     color: var(--pure-white);
     padding: 180px 20px 100px;
     text-align: center;
@@ -187,7 +187,7 @@ header:hover {
 }
 .hero-tagline {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 4px; /* This is the secret to a professional look */
@@ -1122,4 +1122,30 @@ header:hover {
 @keyframes scaleIn {
     from { transform: scale(0); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+.service-box {
+    position: relative; /* Crucial for the link to stay inside the box */
+    min-height: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.service-link {
+    position: absolute; /* Spans the entire box area */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    text-decoration: none;
+    z-index: 5;
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+    cursor: zoom-in;
 }

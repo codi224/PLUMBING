@@ -7,11 +7,13 @@
     <title>PRIMELINE SOLUTIONS LIMITED</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 </head>
 <body id="top">
   <header>
-    <input type="checkbox" id="menu-toggle" id="menu-toggle" style="display: none;">
+    <input type="checkbox"id="menu-toggle" style="display: none;">
 
     <div class="container header-container">
      <div class="logo">
@@ -57,41 +59,63 @@
                     <p>Reliable and professional plumbing across Kenya.</p>
                     <div class="blue-divider"></div>
                 </div>
-                <div class="services-grid">
-                    <div class="service-box res-com-bg">
-                        <h3>Residential & Commercial</h3>
-                        <p>Complete plumbing services for homes, apartments, and offices.</p>
-                    </div>
-                    <div class="service-box install-bg">
-                        <h3>Plumbing Installations</h3>
-                        <p>Installation of pipes, fittings, toilets, and water sprinklers.</p>
-                    </div>
-                    <div class="service-box leak-bg">
-                        <h3>Leak Detection</h3>
-                        <p>Fast detection and repair of leaking pipes.</p>
-                    </div>
-                    <div class="service-box drain-bg">
-                        <h3>Drain & Sewer Cleaning</h3>
-                        <p>Unblocking and cleaning of drains and sewer lines.</p>
-                    </div>
-                    <div class="service-box tank-bg">
-                        <h3>Water Tank Services</h3>
-                        <p>Installation and maintenance of storage tanks.</p>
-                    </div>
-                    <div class="service-box kitchen-bg">
-                        <h3>Bathroom & Kitchen</h3>
-                        <p>Plumbing for renovations and upgrades.</p>
-                    </div>
-                    <div class="service-box heater-bg">
-                        <h3>Hot Water Systems</h3>
-                        <p>Installation and repair of water heaters.</p>
-                    </div>
-                    <div class="service-box emergency-bg">
-                        <h3>Emergency Plumbing</h3>
-                        <p>24/7 emergency services for urgent repairs.</p>
-                    </div>
-                </div>
-            </div>
+            <div class="services-grid">
+    <div class="service-box res-com-bg">
+        <a href="images/residential.png" class="glightbox service-link" data-title="Residential & Commercial" data-description="Professional plumbing for homes and offices.">
+            <h3>Residential & Commercial</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box install-bg">
+        <a href="images/plumbing.png" class="glightbox service-link" data-title="Plumbing Installations" data-description="Installation of pipes, fittings, and toilets.">
+            <h3>Plumbing Installations</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box leak-bg">
+        <a href="images/leak.png.png" class="glightbox service-link" data-title="Leak Detection" data-description="Advanced detection and repair of hidden leaks.">
+            <h3>Leak Detection</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box drain-bg">
+        <a href="images/drain.png" class="glightbox service-link" data-title="Drain & Sewer Cleaning" data-description="Unblocking and cleaning of sewer lines.">
+            <h3>Drain & Sewer Cleaning</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box tank-bg">
+        <a href="images/tank.png" class="glightbox service-link" data-title="Water Tank Services" data-description="Storage tank installation and cleaning.">
+            <h3>Water Tank Services</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box kitchen-bg">
+        <a href="images/bathroom.png" class="glightbox service-link" data-title="Bathroom & Kitchen" data-description="Plumbing upgrades for renovations.">
+            <h3>Bathroom & Kitchen</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box heater-bg">
+        <a href="images/watersystem1.jfif" class="glightbox service-link" data-title="Hot Water Systems" data-description="Installation and repair of water heaters.">
+            <h3>Hot Water Systems</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+
+    <div class="service-box emergency-bg">
+        <a href="images/emergency.png" class="glightbox service-link" data-title="Emergency Plumbing" data-description="24/7 urgent plumbing repairs.">
+            <h3>Emergency Plumbing</h3>
+            <p>Click to view project</p>
+        </a>
+    </div>
+</div>
         </section>
         <section id="about" class="about-section">
             <div class="container">
@@ -286,7 +310,6 @@
             <button onclick="closeModal()" class="close-btn">Great!</button>
         </div>
     </div>
-</a>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -361,18 +384,41 @@ function closeReviewModal() {
         document.getElementById('reviewForm').reset();
     }, 500);
 }
-    // Wait for the document to load
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.querySelectorAll('.main-nav a');
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.querySelectorAll('.main-nav a, .cta-button, .footer-links a');
 
-        // Close the menu when any link is clicked
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+
+            // Process only internal hash links
+            if (targetId && targetId.startsWith('#') && targetId !== '#') {
+                e.preventDefault(); // Prevent instant jump
+
+                // 1. Close the menu immediately
                 menuToggle.checked = false;
-            });
+
+                // 2. WAIT for the menu animation to finish (0.4s in your CSS)
+                // This ensures the page layout is back to normal height
+                setTimeout(() => {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 100; // Height of your sticky header
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 450); // 450ms matches your 0.4s CSS transition + small buffer
+            }
         });
     });
+});
+
     </script>
     <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
@@ -414,5 +460,15 @@ function closeReviewModal() {
         <button class="cta-button-outline" onclick="closeReviewModal()" style="margin-top: 20px;">Return to Site</button>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+<script type="text/javascript">
+    const lightbox = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: true
+    });
+</script>
 </body>
 </html>
