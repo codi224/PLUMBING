@@ -267,14 +267,16 @@ header:hover {
 }
 
 /* Background Images for Services */
-.res-com-bg   { background-image: url('images/residential.png'); }
-.install-bg   { background-image: url('images/plumbing.png'); }
+.res-com-bg   { background-image: url('images/site4.jfif'); }
+.install-bg   { background-image: url('images/installation1.jfif'); }
 .leak-bg      { background-image: url('images/leak.png.png'); }
 .drain-bg     { background-image: url('images/drain.png'); }
 .tank-bg      { background-image: url('images/tank.png'); }
 .kitchen-bg   { background-image: url('images/bathroom.png'); }
-.heater-bg    { background-image: url('images/hotwater.png'); }
-.emergency-bg { background-image: url('images/emergency.png'); }
+.heater-bg    { background-image: url('images/watersystem1.jfif'); }
+.emergency-bg { background-image: url('images/installation1.jfif'); }
+.site-bg { background-image: url('images/site.jfif'); }
+
 
 /* 6. About Section */
 .about-section {
