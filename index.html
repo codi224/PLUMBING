@@ -61,7 +61,8 @@
                 </div>
             <div class="services-grid">
     <div class="service-box res-com-bg">
-        <a href="images/residential.png" class="glightbox service-link" data-title="Residential & Commercial" data-description="Professional plumbing for homes and offices.">
+     <a href="images/resifential1.jfif" class="glightbox service-link" data-title="Residential & Commercial" data-description="Professional plumbing for homes and offices.">
+        <a href="images/residential2.jfif" class="glightbox service-link" data-title="Residential & Commercial" data-description="Professional plumbing for homes and offices.">
             <h3>Residential & Commercial</h3>
             <p>Click to view project</p>
         </a>
@@ -467,7 +468,12 @@ function closeReviewModal() {
         selector: '.glightbox',
         touchNavigation: true,
         loop: true,
-        autoplayVideos: true
+        zoomable: false,
+        width: 'auto',
+        height: '90vh',
+        // This line ensures the browser tries to display the file as an image
+        openEffect: 'zoom',
+        closeEffect: 'fade'
     });
 </script>
 </body>
