@@ -130,6 +130,608 @@
         </div>
     </div>
 </section>
+<section class="services-section">
+    <div class="container">
+        <div class="services-header">
+            <span class="subtitle">PRECISION & STYLE</span>
+            <h2>Kitchen Products</h2>
+            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                "Where culinary excellence meets professional-grade plumbing performance."
+            </p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-box kitchen-bg">
+                <a href="javascript:void(0)" class="service-link" onclick="toggleKitchenGrid()">
+                    <div class="service-content">
+                        <h3>Kitchen Collection</h3>
+                        <p>Explore our full range of 15+ premium sinks, faucets, and drainage solutions.</p>
+                        <div class="learn-more-btn">
+                            Learn more <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="kitchen-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
+    <div class="container">
+ <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+    
+    <input type="text" id="productSearch" onkeyup="filterProducts()" placeholder="Search kitchen products..." 
+           style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+    
+    <i class="fas fa-times-circle" id="clearSearch" onclick="clearProductSearch()" 
+       style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none;"></i>
+</div>
+        <div class="blue-divider"></div>
+        
+        <div class="product-grid-detailed">
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/taps.png');"><span class="product-badge hot">Hot</span></div>
+                <div class="product-details">
+                    <span class="category-label">Taps</span>
+                    <h3>Faucet tap</h3>
+                    <div class="price-row"><span class="price-current">KSh 3,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/farmhouse.png');"><span class="product-badge offer">Offer</span></div>
+                <div class="product-details">
+                    <span class="category-label">Sinks</span>
+                    <h3>Farmhouse Workstation Sink</h3>
+                    <div class="price-row"><span class="price-current">KSh 42,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/faucet.png');"></div>
+                <div class="product-details">
+                    <span class="category-label">Shower</span>
+                    <h3>Best sink tap to use in the market</h3>
+                    <div class="price-row"><span class="price-current">KSh 12,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/filter-system.jfif');"><span class="product-badge">New</span></div>
+                <div class="product-details">
+                    <span class="category-label">Filtration</span>
+                    <h3>Under-Sink RO Purifier</h3>
+                    <div class="price-row"><span class="price-current">KSh 35,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/lorenzeti.jfif');"></div>
+                <div class="product-details">
+                    <span class="category-label">Accessories</span>
+                    <h3>Lorenzentti shower heater - Bello Bahnor</h3>
+                    <div class="price-row"><span class="price-current">KSh 3,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/double-sink.jfif');"></div>
+                <div class="product-details">
+                    <span class="category-label">Sinks</span>
+                    <h3>Double Bowl Steel Sink</h3>
+                    <div class="price-row"><span class="price-current">KSh 28,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/toilet.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Toilet</span>
+                    <h3>Close coupled toilet</h3>
+                    <div class="price-row"><span class="price-current">KSh 22,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/boiling\ tap.png');"><span class="product-badge">Premium</span></div>
+                <div class="product-details">
+                    <span class="category-label">Mixers</span>
+                    <h3>Instant Boiling Tap</h3>
+                    <div class="price-row"><span class="price-current">KSh 55,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/industrial\ spray-tap.jfif');"></div>
+                <div class="product-details">
+                    <span class="category-label">Faucets</span>
+                    <h3>Industrial Pull-Out Spray</h3>
+                    <div class="price-row"><span class="price-current">KSh 16,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/island-sink.jfif');"><span class="product-badge">New</span></div>
+                <div class="product-details">
+                    <span class="category-label">Sinks</span>
+                    <h3>Kitchen Island Prep Sink</h3>
+                    <div class="price-row"><span class="price-current">KSh 14,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/pot-filler.jfif');"><span class="product-badge hot">Pro Choice</span></div>
+                <div class="product-details">
+                    <span class="category-label">Specialty</span>
+                    <h3>Folding Pot Filler</h3>
+                    <div class="price-row"><span class="price-current">KSh 19,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/granite-sink.jfif');"></div>
+                <div class="product-details">
+                    <span class="category-label">Sinks</span>
+                    <h3>Granite Composite Double</h3>
+                    <div class="price-row"><span class="price-current">KSh 48,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/sensor-tap.jfif');"><span class="product-badge">Premium</span></div>
+                <div class="product-details">
+                    <span class="category-label">Faucets</span>
+                    <h3>Touchless Motion Sensor Tap</h3>
+                    <div class="price-row"><span class="price-current">KSh 29,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/bin-system.jfif');"></div>
+                <div class="product-details">
+                    <span class="category-label">Waste Mgmt</span>
+                    <h3>Under-Sink Dual Waste Bin</h3>
+                    <div class="price-row"><span class="price-current">KSh 9,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/glass-rinser.jfif');"><span class="product-badge offer">25% Off</span></div>
+                <div class="product-details">
+                    <span class="category-label">Accessories</span>
+                    <h3>High-Pressure Glass Rinser</h3>
+                    <div class="price-row">
+                        <span class="price-current">KSh 4,500</span>
+                        <span class="price-old">KSh 6,000</span>
+                    </div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+            <button class="btn-rounded" onclick="toggleKitchenGrid()">
+                <i class="fas fa-chevron-up"></i> Close Catalog
+            </button>
+        </div>
+    </div>
+</section>
+<section class="services-section">
+    <div class="container">
+        <div class="services-header">
+            <span class="subtitle">ELEGANCE & HYGIENE</span>
+            <h2>Bathroom & Sanitaryware</h2>
+            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                "Transforming your private spaces into a sanctuary of comfort and modern efficiency."
+            </p>
+        </div>
+        <div class="services-grid">
+            <div class="service-box bathroom-bg">
+                <a href="javascript:void(0)" class="service-link" onclick="toggleBathroomGrid()">
+                    <div class="service-content">
+                        <h3>Bathroom Collection</h3>
+                        <p>Discover 15+ premium toilets, rain showers, and elegant vanity solutions.</p>
+                        <div class="learn-more-btn">
+                            learn more <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="bathroom-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
+    <div class="container">
+        <div class="blue-divider"></div>
+
+        <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+            <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+            <input type="text" id="bathroomSearch" onkeyup="filterBathroom()" placeholder="Search bathroom products..." 
+                   style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+            <i class="fas fa-times-circle" id="clearBathSearch" onclick="clearBathSearch()" 
+               style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
+        </div>
+
+        <div id="noBathResults" style="display: none; text-align: center; padding: 40px; color: #666;">
+            <h3>No products found</h3>
+            <p>Try searching for "Shower", "Toilet", or "Basin".</p>
+        </div>
+
+        <div class="product-grid-detailed" id="bathroomGrid">
+            <div class="product-item-card" data-category="Toilets">
+                <div class="product-image-box" style="background-image: url('images/wall-toilet.jpg');"><span class="product-badge">Modern</span></div>
+                <div class="product-details">
+                    <span class="category-label">Toilets</span>
+                    <h3>Rimless Wall-Hung Toilet</h3>
+                    <div class="price-row"><span class="price-current">KSh 32,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Showers">
+                <div class="product-image-box" style="background-image: url('images/rain-shower.jpg');"><span class="product-badge hot">Popular</span></div>
+                <div class="product-details">
+                    <span class="category-label">Showers</span>
+                    <h3>Thermostatic Rain Shower</h3>
+                    <div class="price-row"><span class="price-current">KSh 24,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Faucets">
+                <div class="product-image-box" style="background-image: url('images/basin-mixer.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Faucets</span>
+                    <h3>Waterfall Basin Mixer</h3>
+                    <div class="price-row"><span class="price-current">KSh 8,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Tubs">
+                <div class="product-image-box" style="background-image: url('images/tub.jpg');"><span class="product-badge">Luxury</span></div>
+                <div class="product-details">
+                    <span class="category-label">Tubs</span>
+                    <h3>Free-Standing Acrylic Tub</h3>
+                    <div class="price-row"><span class="price-current">KSh 85,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Accessories">
+                <div class="product-image-box" style="background-image: url('images/mirror.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Accessories</span>
+                    <h3>Smart LED Backlit Mirror</h3>
+                    <div class="price-row"><span class="price-current">KSh 15,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Toilets">
+                <div class="product-image-box" style="background-image: url('images/cistern.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Toilets</span>
+                    <h3>Dual-Flush Concealed Cistern</h3>
+                    <div class="price-row"><span class="price-current">KSh 12,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Vanities">
+                <div class="product-image-box" style="background-image: url('images/vanity.jpg');"><span class="product-badge">Offer</span></div>
+                <div class="product-details">
+                    <span class="category-label">Vanities</span>
+                    <h3>Floating Oak Vanity Unit</h3>
+                    <div class="price-row"><span class="price-current">KSh 45,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Faucets">
+                <div class="product-image-box" style="background-image: url('images/tall-mixer.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Faucets</span>
+                    <h3>Tall Countertop Basin Tap</h3>
+                    <div class="price-row"><span class="price-current">KSh 10,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Showers">
+                <div class="product-image-box" style="background-image: url('images/hand-shower.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Showers</span>
+                    <h3>Multi-Function Hand Shower</h3>
+                    <div class="price-row"><span class="price-current">KSh 4,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Drains">
+                <div class="product-image-box" style="background-image: url('images/linear-drain.jpg');"><span class="product-badge">Pro</span></div>
+                <div class="product-details">
+                    <span class="category-label">Drains</span>
+                    <h3>Linear Stainless Floor Drain</h3>
+                    <div class="price-row"><span class="price-current">KSh 6,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Accessories">
+                <div class="product-image-box" style="background-image: url('images/towel-rack.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Accessories</span>
+                    <h3>Heated Electric Towel Rail</h3>
+                    <div class="price-row"><span class="price-current">KSh 18,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Toilets">
+                <div class="product-image-box" style="background-image: url('images/bidet.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Toilets</span>
+                    <h3>Smart Bidet Toilet Seat</h3>
+                    <div class="price-row"><span class="price-current">KSh 22,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Mixers">
+                <div class="product-image-box" style="background-image: url('images/bath-mixer.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Mixers</span>
+                    <h3>Concealed Bath/Shower Valve</h3>
+                    <div class="price-row"><span class="price-current">KSh 14,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Basins">
+                <div class="product-image-box" style="background-image: url('images/bowl-basin.jpg');"><span class="product-badge">New</span></div>
+                <div class="product-details">
+                    <span class="category-label">Basins</span>
+                    <h3>Ceramic Countertop Bowl</h3>
+                    <div class="price-row"><span class="price-current">KSh 9,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card" data-category="Showers">
+                <div class="product-image-box" style="background-image: url('images/glass-screen.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Showers</span>
+                    <h3>Tempered Glass Shower Screen</h3>
+                    <div class="price-row"><span class="price-current">KSh 28,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+            <button class="btn-rounded" onclick="toggleBathroomGrid()">
+                <i class="fas fa-chevron-up"></i> Close 
+            </button>
+        </div>
+    </div>
+</section>
+<section class="services-section">
+    <div class="container">
+        <div class="services-header">
+            <span class="subtitle">DURABILITY & INFRASTRUCTURE</span>
+            <h2>Construction & Piping</h2>
+            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                "Building the invisible foundation of reliability with high-grade industrial materials."
+            </p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-box construction-bg">
+                <a href="javascript:void(0)" class="service-link" onclick="toggleConstructionGrid()">
+                    <div class="service-content">
+                        <h3>Piping & Fittings</h3>
+                        <p>Full inventory of PPR, PVC, HDPE pipes, and heavy-duty valves for any project.</p>
+                        <div class="learn-more-btn">
+                            View Materials <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="construction-full-catalog" class="services-section hidden-grid" style="background-color: #f9f9f9; padding-top: 0;">
+    <div class="container">
+        <div class="blue-divider"></div>
+
+        <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+            <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+            <input type="text" id="constSearch" onkeyup="filterConst()" placeholder="Search pipes, valves, fittings..." 
+                   style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+            <i class="fas fa-times-circle" id="clearConstSearch" onclick="clearConstSearch()" 
+               style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
+        </div>
+
+        <div id="noConstResults" style="display: none; text-align: center; padding: 40px; color: #666;">
+            <h3>Material not found</h3>
+            <p>Try searching for "PPR", "PVC", or "Valve".</p>
+        </div>
+
+        <div class="product-grid-detailed" id="constGrid">
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/ppr-pipe.jpg');"><span class="product-badge">PN20</span></div>
+                <div class="product-details">
+                    <span class="category-label">Piping</span>
+                    <h3>PPR Pipe (20mm x 4m)</h3>
+                    <div class="price-row"><span class="price-current">KSh 1,200</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/gate-valve.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Controls</span>
+                    <h3>Brass Gate Valve (1 Inch)</h3>
+                    <div class="price-row"><span class="price-current">KSh 2,800</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/hdpe-roll.jpg');"><span class="product-badge">Heavy Duty</span></div>
+                <div class="product-details">
+                    <span class="category-label">Piping</span>
+                    <h3>HDPE Pipe Roll (32mm)</h3>
+                    <div class="price-row"><span class="price-current">KSh 14,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/pvc-pipe.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Drainage</span>
+                    <h3>uPVC Waste Pipe (4 Inch)</h3>
+                    <div class="price-row"><span class="price-current">KSh 3,200</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/manhole.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Infrastructure</span>
+                    <h3>Cast Iron Manhole Cover</h3>
+                    <div class="price-row"><span class="price-current">KSh 8,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/gulley-trap.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Drainage</span>
+                    <h3>Master Gulley Trap</h3>
+                    <div class="price-row"><span class="price-current">KSh 1,800</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/ppr-fittings.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Fittings</span>
+                    <h3>PPR Elbow & Tee Pack (Mixed)</h3>
+                    <div class="price-row"><span class="price-current">KSh 5,000</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/ball-valve.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Controls</span>
+                    <h3>PVC Ball Valve (Stopcock)</h3>
+                    <div class="price-row"><span class="price-current">KSh 950</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/flexible-connector.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Fittings</span>
+                    <h3>Braided Flexible Connectors</h3>
+                    <div class="price-row"><span class="price-current">KSh 1,400</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/water-meter.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Measurement</span>
+                    <h3>Residential Water Meter</h3>
+                    <div class="price-row"><span class="price-current">KSh 4,200</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/pressure-pump.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Pumps</span>
+                    <h3>Automatic Pressure Pump</h3>
+                    <div class="price-row"><span class="price-current">KSh 18,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/tank-connector.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Fittings</span>
+                    <h3>Tank Connector (Large)</h3>
+                    <div class="price-row"><span class="price-current">KSh 1,200</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/solvent.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Consumables</span>
+                    <h3>PVC Solvent Cement (500ml)</h3>
+                    <div class="price-row"><span class="price-current">KSh 850</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/thread-tape.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Consumables</span>
+                    <h3>PTFE Thread Seal Tape (Box)</h3>
+                    <div class="price-row"><span class="price-current">KSh 1,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <div class="product-item-card">
+                <div class="product-image-box" style="background-image: url('images/ppr-machine.jpg');"></div>
+                <div class="product-details">
+                    <span class="category-label">Tools</span>
+                    <h3>PPR Pipe Welding Machine</h3>
+                    <div class="price-row"><span class="price-current">KSh 6,500</span></div>
+                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+            <button class="btn-rounded" onclick="toggleConstructionGrid()">
+                <i class="fas fa-chevron-up"></i> Close Materials
+            </button>
+        </div>
+    </div>
+</section>
         <section id="about" class="about-section">
             <div class="container">
                 <div class="about-flex">
@@ -431,7 +1033,127 @@ function closeReviewModal() {
         });
     });
 });
+function toggleKitchenGrid() {
+    const grid = document.getElementById('kitchen-full-catalog');
+    const isOpening = !grid.classList.contains('show-grid');
+    
+    if (isOpening) {
+        // OPENING logic
+        grid.classList.add('show-grid');
+        setTimeout(() => {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        // CLOSING logic
+        // 1. Find the section title to scroll back to
+        const scrollTarget = document.querySelector('.subtitle'); 
+        
+        // 2. Scroll up first
+        window.scrollTo({
+            top: scrollTarget.offsetTop - 100, 
+            behavior: 'smooth'
+        });
 
+        // 3. Hide the grid after a small delay so the scroll feels natural
+        setTimeout(() => {
+            grid.classList.remove('show-grid');
+        }, 300);
+    }
+}
+function clearProductSearch() {
+    const input = document.getElementById('productSearch');
+    input.value = '';
+    filterProducts(); // This resets the grid visibility
+}
+
+// Update your existing filterProducts function slightly:
+function filterProducts() {
+    const input = document.getElementById('productSearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const filter = input.value.toLowerCase();
+    
+    // Show/Hide clear button
+    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+
+    const cards = document.getElementsByClassName('product-item-card');
+    const noResults = document.getElementById('noResults');
+    let visibleCount = 0;
+
+    for (let i = 0; i < cards.length; i++) {
+        const title = cards[i].querySelector('h3').innerText.toLowerCase();
+        const category = cards[i].querySelector('.category-label').innerText.toLowerCase();
+        
+        if (title.includes(filter) || category.includes(filter)) {
+            cards[i].style.display = ""; 
+            visibleCount++;
+        } else {
+            cards[i].style.display = "none"; 
+        }
+    }
+    noResults.style.display = visibleCount === 0 ? "block" : "none";
+}
+function toggleBathroomGrid() {
+    const grid = document.getElementById('bathroom-full-catalog');
+    if (!grid.classList.contains('show-grid')) {
+        grid.classList.add('show-grid');
+        setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth' }); }, 100);
+    } else {
+        const portal = document.querySelector('.bathroom-bg');
+        window.scrollTo({ top: portal.offsetTop - 150, behavior: 'smooth' });
+        setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
+    }
+}
+
+function filterBathroom() {
+    const input = document.getElementById('bathroomSearch');
+    const clearBtn = document.getElementById('clearBathSearch');
+    const filter = input.value.toLowerCase();
+    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+
+    const cards = document.querySelectorAll('#bathroomGrid .product-item-card');
+    let count = 0;
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(filter)) {
+            card.style.display = "";
+            count++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+    document.getElementById('noBathResults').style.display = count === 0 ? "block" : "none";
+}
+
+function clearBathSearch() {
+    document.getElementById('bathroomSearch').value = '';
+    filterBathroom();
+}
+
+function toggleConstructionGrid() {
+    // 1. Find the hidden catalog by its ID
+    const grid = document.getElementById('construction-full-catalog');
+    
+    // 2. Check if it's already open
+    const isOpening = !grid.classList.contains('show-grid');
+    
+    if (isOpening) {
+        // 3. Add the class to drop it down/show it
+        grid.classList.add('show-grid');
+        
+        // 4. Smooth scroll so the user sees the products immediately
+        setTimeout(() => {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    } else {
+        // 5. Close it and scroll back up to the portal card
+        const portal = document.querySelector('.construction-bg');
+        window.scrollTo({ top: portal.offsetTop - 100, behavior: 'smooth' });
+        
+        setTimeout(() => {
+            grid.classList.remove('show-grid');
+        }, 400);
+    }
+}
     </script>
     <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
