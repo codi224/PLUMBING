@@ -1,3 +1,8 @@
+/* ============================================================
+   PRIMELINE PLUMBING SOLUTIONS - STYLESHEET
+   Corrected Version
+   ============================================================ */
+
 /* 1. Global Setup */
 * {
     box-sizing: border-box;
@@ -25,6 +30,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: var(--pure-white);
+    overflow-x: hidden;
 }
 
 .container {
@@ -34,35 +40,39 @@ body {
     padding: 0 40px;
 }
 
-/* 2. Header & Logo Styling */
+/* Adjust scroll margin so header doesn't cover section titles */
+:target {
+    scroll-margin-top: 100px;
+}
+
+
+/* ============================================================
+   2. Header & Logo
+   ============================================================ */
 header {
-    /* We change the solid color to a semi-transparent version (RGBA) */
-    background-color: rgba(61, 133, 198, 0.95); 
-    
-    /* This creates the "frosted glass" look through the header */
+    background-color: rgba(61, 133, 198, 0.95);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* For Safari support */
-    
+    -webkit-backdrop-filter: blur(10px);
     padding: 10px 0;
     width: 100%;
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: all 0.3s ease; /* Makes any changes look smooth */
+    transition: all 0.3s ease;
 }
+
 header:hover {
-    background-color: rgba(61, 133, 198, 1); /* Becomes fully solid on hover */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background-color: rgba(61, 133, 198, 1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between; /* Pushes logo left and hamburger right */
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 10px;
+    padding: 10px 10px 15px;
     position: relative;
-    padding-bottom: 15px;
 }
 
 /* Hide hamburger on desktop */
@@ -72,18 +82,11 @@ header:hover {
     color: var(--accent-yellow);
     cursor: pointer;
 }
-/* Hide the checkbox */
+
 #menu-toggle {
     display: none;
 }
 
-.main-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 30px;               /* Space between individual links */
-    margin: 0;
-    padding: 0;
-}
 .logo {
     display: inline-flex;
     flex-direction: column;
@@ -110,12 +113,11 @@ header:hover {
     line-height: 0.9;
 }
 
-/* 3. The Solutions Styling */
 .solutions-container {
     width: 100%;
-    margin-top: 8px; /* Space between the words and the line */
-    padding-top: 6px; /* Space between the line and the text */
-    border-top: 2px solid var(--accent-yellow); /* The Line */
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 2px solid var(--accent-yellow);
     display: flex;
 }
 
@@ -125,20 +127,18 @@ header:hover {
     font-weight: 700;
     color: var(--pure-white);
     text-transform: uppercase;
-    
-    /* This forces the text to spread out to the full width of the line */
     display: flex;
     justify-content: space-between;
-    letter-spacing: normal; /* We let Flexbox handle the spacing */
-}
-
-/* Optional: If the stretch doesn't look right, 
-   manually adjust letter-spacing to fit the line length */
-.solutions-text {
-    letter-spacing: 6.2px; 
+    letter-spacing: 6.2px;
     text-align: center;
 }
-/* 3. Navigation */
+
+
+/* ============================================================
+   3. Navigation
+   ============================================================ */
+
+/* FIX #9: Only one .main-nav ul rule — gap: 20px kept, gap: 30px removed */
 .main-nav ul {
     display: flex;
     list-style: none;
@@ -161,11 +161,49 @@ header:hover {
     color: var(--accent-yellow);
     transform: translateY(-2px);
 }
+/* ============================================================
+   Cart Icon Header Button
+   ============================================================ */
+#headerCartBtn {
+    position: relative;
+    background: none;
+    border: none;
+    color: #e6be0c;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.2s ease;
+}
 
-/* 4. Hero Banner */
+#headerCartBtn:hover {
+    transform: scale(1.15);
+}
+
+#cartBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #f1c40f;
+    color: #333;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================
+   4. Hero Banner
+   ============================================================ */
 .hero-banner {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                      url('images/team.jfif'); 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                      url('images/team.jfif');
     background-size: cover;
     background-position: top;
     color: var(--pure-white);
@@ -184,12 +222,22 @@ header:hover {
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
 }
+.hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;         /* bigger — was 1.2rem */
+    font-weight: 800;          /* bold — was 500 */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent-yellow);
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
 .hero-tagline {
     font-family: 'Inter', sans-serif;
     font-size: 1.2rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 4px; /* This is the secret to a professional look */
+    letter-spacing: 4px;
     color: var(--accent-yellow);
     opacity: 0.9;
 }
@@ -212,11 +260,27 @@ header:hover {
     background-color: var(--pure-white);
 }
 
-/* 5. Services Grid */
+#hero-title {
+    transition: opacity 1.5s ease-out;
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+
+/* ============================================================
+   5. Services Section
+   ============================================================ */
 .services-section {
     padding: 100px 0;
     background-color: #fcfcfc;
     text-align: center;
+}
+
+.services-header {
+    margin-bottom: 10px;
 }
 
 .services-grid {
@@ -226,6 +290,7 @@ header:hover {
     margin-top: 50px;
 }
 
+/* FIX #12: Single unified .service-box rule */
 .service-box {
     position: relative;
     min-height: 350px;
@@ -242,7 +307,8 @@ header:hover {
 }
 
 .service-box:hover {
-    transform: translateY(-15px);
+    transform: translateY(-10px);
+    cursor: zoom-in;
 }
 
 .service-box::before {
@@ -253,7 +319,8 @@ header:hover {
     z-index: 1;
 }
 
-.service-box h3, .service-box p {
+.service-box h3,
+.service-box p {
     position: relative;
     z-index: 2;
     text-align: left;
@@ -265,34 +332,73 @@ header:hover {
     margin-bottom: 10px;
 }
 
-/* Background Images for Services */
-.res-com-bg   { background-image: url('images/site4.jfif'); }
-.install-bg   { background-image: url('images/installation1.jfif'); }
-.leak-bg      { background-image: url('images/leak.png'); }
-.drain-bg     { background-image: url('images/drain.png'); }
-.tank-bg      { background-image: url('images/tank.png'); }
-.kitchen-bg   { background-image: url('images/bathroom.png'); }
-.heater-bg    { background-image: url('images/watersystem1.jfif'); }
-.emergency-bg { background-image: url('images/installation1.jfif'); }
-.site-bg { background-image: url('images/site.jfif'); }
-/* Detailed Grid Layout */
-#productSearch:focus {
-    border-color: #0a192f;
-    box-shadow: 0 0 10px rgba(10, 25, 47, 0.1);
+.service-box:hover h3 {
+    color: var(--pure-white) !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-.search-container i {
-    pointer-events: none;
-}
-#clearSearch {
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    transition: color 0.2s ease;
+/* Ensure the text content sits above the dark overlay */
+.service-content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
 }
 
-#clearSearch:hover {
-    color: #0a192f !important; /* Makes it darker when hovered */
+.service-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    text-decoration: none;
+    z-index: 5;
 }
+
+/* Learn More Button */
+.learn-more-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: var(--accent-yellow);
+    color: #000;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-box:hover .learn-more-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+.res-com-bg         { background-image: url('images/site4.jfif'); }
+.install-bg         { background-image: url('images/installation1.jfif'); }
+.leak-bg            { background-image: url('images/leak.png'); }
+.drain-bg           { background-image: url('images/drain.png'); }
+.tank-bg            { background-image: url('images/tank.png'); }
+.heater-bg          { background-image: url('images/watersystem1.jfif'); }
+.emergency-bg       { background-image: url('images/installation1.jfif'); }
+.site-bg            { background-image: url('images/site.jfif'); }
+.bathroom-upgrade-bg { background-image: url('images/bathroom.png'); }
+
+/* FIX #1: Single .kitchen-bg rule — points to the kitchen portal image */
+.kitchen-bg         { background-image: url('images/x.png'); }
+
+/* Catalog portal backgrounds */
+.bathroom-bg        { background-image: url('images/bathroomwall.png'); }
+.construction-bg    { background-image: url('images/costructionwall.png'); }
+
+
+/* ============================================================
+   6. Product Catalog Grid
+   ============================================================ */
 .product-grid-detailed {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -300,35 +406,38 @@ header:hover {
     padding: 40px 0;
 }
 
-/* This ensures the items look consistent regardless of content length */
+/* FIX #2: Single unified .product-item-card rule */
 .product-item-card {
     display: flex;
     flex-direction: column;
     height: 100%;
     background: #fff;
-    border-radius: 12px; /* Smooth corners for the cards too */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.product-details {
-    padding: 20px;
-    flex-grow: 1; /* Pushes the WhatsApp button to the bottom */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .product-item-card:hover {
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
 }
 
-/* Image Container with Badges */
+/* FIX #2: Single unified .product-details rule — keeps flex layout AND text-align */
+.product-details {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
 .product-image-box {
     height: 220px;
     background-size: cover;
     background-position: center;
     position: relative;
+    border-radius: 12px 12px 0 0;
 }
 
 .product-badge {
@@ -341,16 +450,11 @@ header:hover {
     font-weight: 800;
     text-transform: uppercase;
     color: #fff;
+    background: #555;
 }
 
-.product-badge.hot { background: var(--primary-blue); }
+.product-badge.hot   { background: var(--primary-blue); }
 .product-badge.offer { background: #e31e24; }
-
-/* Product Info Styling */
-.product-details {
-    padding: 20px;
-    text-align: left;
-}
 
 .category-label {
     font-size: 0.7rem;
@@ -382,7 +486,7 @@ header:hover {
     margin-left: 10px;
 }
 
-/* WhatsApp Button */
+/* WhatsApp Order Button */
 .whatsapp-order-btn {
     display: flex;
     align-items: center;
@@ -395,100 +499,78 @@ header:hover {
     border-radius: 6px;
     font-weight: 700;
     font-size: 0.85rem;
-    transition: 0.3s;
+    transition: background 0.3s ease;
+    margin-bottom: 8px;
 }
 
 .whatsapp-order-btn:hover {
     background: #1ebe57;
 }
-/* Ensure the text content sits above the dark overlay */
-.service-content {
-    position: relative;
-    z-index: 5;
-    width: 100%;
+
+/* Search Bar */
+#productSearch:focus,
+#bathroomSearch:focus,
+#constSearch:focus {
+    border-color: #0a192f;
+    box-shadow: 0 0 10px rgba(10, 25, 47, 0.1);
 }
 
-/* 1. The "Learn More" Button (Hidden by default) */
-.learn-more-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 25px;
-    background-color: var(--accent-yellow);
-    color: #000;
-    font-weight: 800;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    border-radius: 5px;
-    
-    /* Animation: invisible and slightly lower */
-    opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.search-container i {
+    pointer-events: none;
 }
 
-/* 2. Hover Interaction: Slide the button up and fade in */
-.service-box:hover .learn-more-btn {
-    opacity: 1;
-    transform: translateY(0);
+#clearSearch,
+#clearBathSearch,
+#clearConstSearch {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    transition: color 0.2s ease;
 }
 
-/* 3. Subtle text glow on hover to match your screenshot style */
-.service-box:hover h3 {
-    color: var(--pure-white) !important;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+#clearSearch:hover,
+#clearBathSearch:hover,
+#clearConstSearch:hover {
+    color: #0a192f !important;
 }
 
-/* 4. Ensure the background image for kitchen is set */
-.kitchen-bg {
-    background-image: url('images/x.png'); /* Replace with your image path */
-}
-.bathroom-bg {
-    background-image: url('images/bathroomwall.png'); /* Replace with your image path */
-}
-.construction-bg {
-    background-image: url('images/costructionwall.png'); /* Replace with your image path */
-}
-/* The grid starts hidden */
+/* Hidden / Show Grid Animation */
 .hidden-grid {
-    display: none; 
+    display: none;
     opacity: 0;
     transition: opacity 0.5s ease;
 }
 
-/* This class will be added by JavaScript */
 .show-grid {
     display: block !important;
     opacity: 1;
     animation: fadeIn 0.6s ease-in-out;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .show-grid .product-item-card {
     animation: fadeInUp 0.5s ease forwards;
 }
 
-/* Adds a slight delay to each card for a smooth "wave" effect */
-.product-item-card:nth-child(1) { animation-delay: 0.1s; }
-.product-item-card:nth-child(2) { animation-delay: 0.2s; }
-.product-item-card:nth-child(3) { animation-delay: 0.3s; }
-/* ... and so on */
+.product-item-card:nth-child(1)  { animation-delay: 0.05s; }
+.product-item-card:nth-child(2)  { animation-delay: 0.10s; }
+.product-item-card:nth-child(3)  { animation-delay: 0.15s; }
+.product-item-card:nth-child(4)  { animation-delay: 0.20s; }
+.product-item-card:nth-child(5)  { animation-delay: 0.25s; }
+.product-item-card:nth-child(6)  { animation-delay: 0.30s; }
+
+/* Close / Round Button */
 .btn-rounded {
-    /* Smooth, pill-shaped corners */
-    border-radius: 50px !important; 
-    
-    /* Ensuring consistent padding for the shape */
+    border-radius: 50px !important;
     padding: 12px 35px !important;
-    
-    /* Visual style */
     border: 2px solid #0a192f;
     color: #0a192f;
     background: transparent;
@@ -513,12 +595,13 @@ header:hover {
 }
 
 .btn-rounded:hover i {
-    transform: translateY(-3px); /* Arrow moves up slightly on hover */
+    transform: translateY(-3px);
 }
 
 
-
-/* 6. About Section */
+/* ============================================================
+   7. About Section
+   ============================================================ */
 .about-section {
     padding: 100px 0;
     background-color: #fff;
@@ -550,11 +633,19 @@ header:hover {
     letter-spacing: 2px;
     font-size: 0.9rem;
 }
+
 .blue-divider {
     width: 60px;
     height: 3px;
     background-color: var(--primary-blue);
-    margin: 20px auto; /* This centers the line */
+    margin: 20px auto;
+}
+
+.counter-wrapper {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    margin: 20px 0;
 }
 
 .perks-list {
@@ -587,17 +678,26 @@ header:hover {
     transition: 0.3s;
 }
 
+
+/* ============================================================
+   8. Locations Section
+   ============================================================ */
 .section-locations {
     position: relative;
     padding: 100px 0;
-    /* This ensures the background map stays dark enough for white text */
-    background: linear-gradient(rgba(5, 12, 33, 0.85), rgba(5, 12, 33, 0.85)), 
-                url('images/plumbers\ at\ work.png'); 
+    /* FIX #6: Encoded space in filename as %20 */
+    background: linear-gradient(rgba(5, 12, 33, 0.85), rgba(5, 12, 33, 0.85)),
+                url('images/plumbers%20at%20work.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Parallax effect */
+    background-attachment: fixed;
     color: #fff;
     text-align: center;
+}
+
+.location-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
 }
 
 .locations-grid {
@@ -608,40 +708,41 @@ header:hover {
 }
 
 .location-card {
-    /* Glassmorphism Effect */
-    background: rgba(255, 255, 255, 0.05); 
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
     border-radius: 12px;
     transition: all 0.3s ease;
     font-weight: 700;
-    color: #fff; /* White text for the dark map */
+    color: #fff;
 }
 
 .location-card i {
-    color: var(--accent-yellow); /* Yellow icon stands out on dark bg */
+    color: var(--accent-yellow);
     margin-bottom: 10px;
     display: block;
     font-size: 1.5rem;
 }
 
-/* Hover State */
 .location-card:hover {
     background-color: var(--accent-yellow);
-    color: #051221; /* Dark text on yellow background for contrast */
+    color: #051221;
     transform: translateY(-5px);
     border-color: var(--accent-yellow);
 }
 
-.location-card:hover i { 
-    color: #051221; 
+.location-card:hover i {
+    color: #051221;
 }
 
-/* 8. Contact Form */
+
+/* ============================================================
+   9. Contact Section
+   ============================================================ */
 .section-contact {
     background-color: var(--primary-blue);
-    padding: 100px 0;
+    padding: 60px 0 0;
     color: white;
 }
 
@@ -652,136 +753,38 @@ header:hover {
     text-align: center;
 }
 
-
-.contact-form {
-    max-width: 650px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 50px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    ;
+.contact-header {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
-.contact-form input, 
-.contact-form textarea {
+.contact-header h2 {
+    color: white;
+}
+
+.contact-header p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* FIX #2/#3: Single .contact-form rule — clean, no duplication */
+.contact-form {
+    width: 100%;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
     width: 100%;
     padding: 18px;
     margin-bottom: 20px;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
-}
-
-.submit-btn {
-    width: 100%;
-    background-color: var(--accent-yellow);
-    color: #000;
-    padding: 20px;
-    font-size: 1.1rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.submit-btn:hover {
-    background-color: var(--pure-white);
-    transform: scale(1.02);
-}
-
-/* 9. Footer */
-.main-footer {
-    background-color: var(--dark-navy);
-    color: #e2e8f0;
-    padding: 80px 0 20px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px;
-}
-
-.footer-column h3 {
-    color: var(--accent-yellow);
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    font-size: 1rem;
-}
-
-.footer-links { list-style: none; }
-.footer-links li { margin-bottom: 12px; }
-.footer-links a { color: #cbd5e0; text-decoration: none; transition: 0.3s; }
-.footer-links a:hover { color: var(--accent-yellow); padding-left: 5px; }
-
-.footer-bottom {
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-
-/* 10. Success Modal */
-.success-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(5, 18, 33, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 50px;
-    border-radius: 25px;
-    text-align: center;
-    max-width: 450px;
+    background: #f9f9f9;
     color: #333;
 }
 
-/* 11. Mobile Utilities */
-.mobile-call-btn {
-    display: none;
-}
-
-    /* 5. Buttons & Floating UI */
-    .mobile-call-btn {
-        display: flex;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: var(--success-green);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 800;
-        z-index: 2000;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    .back-to-top {
-        bottom: 90px; /* Stays above the call button */
-    }
-
-/* Adjust scroll margin so header doesn't cover section titles */
-:target { scroll-margin-top: 100px; }
-
-/* Hide floating button on very small screens if it covers content, 
-   or keep it for high conversions */
-.contact-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
+/* Contact Info Cards */
 .contact-wrapper {
     display: flex;
     gap: 60px;
@@ -817,15 +820,6 @@ header:hover {
     color: var(--accent-yellow);
 }
 
-.contact-form {
-    flex: 1.5;
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-/* Styling Input Groups with Icons */
 .input-group {
     position: relative;
     margin-bottom: 20px;
@@ -838,9 +832,9 @@ header:hover {
     color: #999;
 }
 
-.input-group input, 
+.input-group input,
 .input-group textarea {
-    padding-left: 45px !important; /* Move text over for the icon */
+    padding-left: 45px !important;
     border: 1px solid #ddd !important;
     background: #f9f9f9 !important;
     color: #333 !important;
@@ -850,10 +844,10 @@ header:hover {
     border-color: var(--primary-blue) !important;
     background: white !important;
 }
-/* Contact Grid Layout */
+
 .contact-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -883,358 +877,111 @@ header:hover {
     text-transform: uppercase;
 }
 
-/* Brand Hover Colors */
-.contact-method-card.wa:hover { background-color: #25D366; border-color: #25D366; }
-.contact-method-card.fb:hover { background-color: #1877F2; border-color: #1877F2; }
-.contact-method-card.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border-color: transparent; }
+.contact-method-card.wa:hover   { background-color: #25D366; border-color: #25D366; }
+.contact-method-card.fb:hover   { background-color: #1877F2; border-color: #1877F2; }
+.contact-method-card.ig:hover   { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border-color: transparent; }
 .contact-method-card.mail:hover { background-color: var(--accent-yellow); border-color: var(--accent-yellow); color: #000; }
 
 .contact-method-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Emergency Box */
-/* Removes the default underline and color from the link */
+/* Submit Button (used in review modal) */
+.submit-btn {
+    width: 100%;
+    background-color: var(--accent-yellow);
+    color: #000;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: var(--pure-white);
+    transform: scale(1.02);
+}
+
+
+/* ============================================================
+   10. Emergency Call Box
+   ============================================================ */
 .emergency-link-wrapper {
     text-decoration: none;
-    display: block; /* Makes the whole area clickable */
+    display: block;
     width: 100%;
 }
 
+/* FIX #4: Single unified .emergency-call-box rule */
 .emergency-call-box {
     background: var(--accent-yellow);
     color: #051221;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 28px;
+    border-radius: 14px;
     text-align: center;
     transition: transform 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
 }
 
-/* Adds a nice interaction effect when hovered */
 .emergency-link-wrapper:hover .emergency-call-box {
     transform: scale(1.02);
-    background-color: #a28813; /* Slightly brighter yellow on hover */
-}
-.emergency-call-box {
-    background: var(--accent-yellow);
-    color: #000;
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
+    background-color: #c9a50a;
 }
 
 .emergency-call-box h4 {
     text-transform: uppercase;
     font-size: 0.9rem;
     margin-bottom: 5px;
+    color: #051221;
 }
 
 .emergency-call-box p {
     font-size: 1.5rem;
     font-weight: 900;
-}
-.social-icon-wrapper {
-    display: flex;
-    gap: 20px;
-    justify-content: center; /* Centers the icons */
-    padding: 20px 0;
-}
-
-.icon-link {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.05); /* Very subtle transparent background */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%; /* Makes them perfect circles */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth "pop" effect */
-}
-
-/* Hover States with Brand Colors */
-.icon-link.wa:hover { 
-    background-color: #25D366; 
-    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); 
-}
-
-.icon-link.fb:hover { 
-    background-color: #1877F2; 
-    box-shadow: 0 0 20px rgba(24, 119, 242, 0.4); 
-}
-
-.icon-link.ig:hover { 
-    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); 
-    box-shadow: 0 0 20px rgba(220, 39, 67, 0.4); 
-}
-
-.icon-link.mail:hover { 
-    background-color: var(--accent-yellow); 
-    color: #000; 
-    box-shadow: 0 0 20px rgba(230, 190, 12, 0.4); 
-}
-
-.icon-link:hover {
-    transform: translateY(-8px) scale(1.1); /* Lifts and grows slightly */
-    border-color: transparent;
+    color: #051221;
 }
 
 
-.back-to-top {
-    position: fixed;
-    bottom: 90px; /* Placed above your mobile call button */
-    right: 20px;
-    background-color: var(--accent-yellow);
-    color: #000;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 0.7rem;
-    z-index: 1500;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-}
-
-.back-to-top:hover {
-    transform: scale(1.1);
-    background-color: var(--pure-white);
-}
-
-.back-to-top i {
-    font-size: 1.2rem;
-    margin-bottom: -2px;
-}
-/* --- 12. Mobile Styles (Sticky Header & Professional Magnify Menu) --- */
-@media (max-width: 768px) {
-    /* Prevent horizontal scroll glitches */
-    body { overflow-x: hidden; }
-
-    .container { 
-        padding: 0 20px; 
-    }
-
-    /* 1. Sticky Header - Physically pushes content while staying at top */
-    header {
-        position: sticky !important; 
-        top: 0;
-        height: auto !important; 
-        background-color: var(--primary-blue);
-        z-index: 2000;
-        transition: none;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .header-container {
-        display: flex;
-        flex-wrap: wrap; 
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 15px 15px 10px; /* Spacing for logo breathing room */
-    }
-
-    /* 2. Hamburger & Bars */
-    .hamburger {
-        display: flex !important;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        order: 2;
-    }
-
-    .bar {
-        width: 28px;
-        height: 3px;
-        background-color: var(--accent-yellow);
-        transition: 0.4s ease;
-        border-radius: 2px;
-    }
-
-    /* 3. The Navigation - The "Pusher" */
-    .main-nav {
-        display: block !important; 
-        position: relative !important; 
-        width: 100%;                  
-        order: 3;                     
-        top: 0 !important;            
-        
-        /* Expansion Animation */
-        max-height: 0;
-        overflow: hidden;
-        visibility: hidden;
-        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
-        
-        background-color: var(--primary-blue);
-    }
-
-    /* 4. Trigger Expansion & Push */
-    #menu-toggle:checked ~ .header-container .main-nav {
-        max-height: 600px; 
-        visibility: visible;
-        padding-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1); /* Dark divider line */
-        margin-top: 5px;
-    }
-
-    /* 5. Professional Menu Links with Magnify Effect */
-    .main-nav ul {
-        flex-direction: column;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
-
-    .main-nav ul li {
-        width: 100%;
-        overflow: hidden; /* Keeps magnification from overlapping rows */
-    }
-
-    .main-nav ul li a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 25px 0;
-        color: white !important;
-        font-weight: 800; /* Bolder for professional look */
-        text-transform: uppercase;
-        font-size: 0.95rem;
-        letter-spacing: 2.5px; 
-        text-decoration: none;
-        
-        /* Darker thin border lines */
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08); 
-        
-        /* Smooth Animation Core */
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                    color 0.3s ease, 
-                    background-color 0.3s ease;
-    }
-
-    /* Magnify and Color Change on Hover */
-    @media (hover: hover) {
-        .main-nav ul li a:hover {
-            color: var(--accent-yellow) !important;
-            transform: scale(1.1); /* Magnifies text */
-            background-color: rgba(0, 0, 0, 0.05); /* Subtle highlight */
-        }
-    }
-
-    /* Touch State for Mobile */
-    .main-nav ul li a:active {
-        color: var(--accent-yellow) !important;
-        transform: scale(1.05);
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .main-nav ul li:last-child a {
-        border-bottom: none;
-    }
-
-    /* 6. Hamburger to X Animation */
-    #menu-toggle:checked ~ .header-container .bar:nth-child(1) { transform: translateY(8px) rotate(-45deg); }
-    #menu-toggle:checked ~ .header-container .bar:nth-child(2) { opacity: 0; }
-    #menu-toggle:checked ~ .header-container .bar:nth-child(3) { transform: translateY(-8px) rotate(45deg); }
-
-    /* 7. Content Adjustments */
-    .hero-banner { 
-        padding-top: 60px !important; 
-        min-height: 400px; 
-    }
-    
-    .about-text h2 { font-size: 2rem; }
-    
-    .floating-whatsapp {
-        width: 55px;
-        height: 55px;
-        font-size: 28px;
-        bottom: 15px;
-        left: 15px;
-    }
-}
-/* 13. Floating WhatsApp Icon */
-.floating-whatsapp {
-    position: fixed;
-    bottom: 20px;
-    left: 20px; /* Placed on the left to avoid clashing with Call/Back-to-top */
-    background-color: #25D366; /* Official WhatsApp Green */
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 2500; /* Stays above everything else */
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.floating-whatsapp:hover {
-    transform: scale(1.1) translateY(-5px);
-    background-color: #1ebe57;
-    color: white;
-}
-.satisfaction-badge-small {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(230, 190, 12, 0.1);
-    border: 1px solid var(--accent-yellow);
-    padding: 8px 15px;
-    border-radius: 4px;
-    color: var(--accent-yellow);
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    width: fit-content;
-}
-
-.footer-column h3 {
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-/* Subtle line under footer headings */
-.footer-column h3::after {
-    content: "";
-    display: block;
-    width: 30px;
-    height: 2px;
-    background: var(--accent-yellow);
-    margin-top: 8px;
-}
+/* ============================================================
+   11. Reviews Section
+   ============================================================ */
 .reviews-section.dark-theme {
     position: relative;
     padding: 100px 0;
-    /* Using the exact background style from your Locations section */
-    background: linear-gradient(rgba(5, 12, 33, 0.92), rgba(5, 12, 33, 0.92)), 
-                url('images/map-bg.png'); 
+    background: linear-gradient(rgba(5, 12, 33, 0.92), rgba(5, 12, 33, 0.92)),
+                url('images/map-bg.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Maintains the parallax effect */
+    background-attachment: fixed;
     color: var(--pure-white);
 }
 
-/* Glassmorphism Effect for Review Cards */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.section-subtitle {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
 .review-card.glass-effect {
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1249,12 +996,24 @@ header:hover {
     transform: translateY(-10px);
 }
 
-/* Star colors to match the theme */
 .rating {
     color: var(--accent-yellow);
     font-size: 0.9rem;
     margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(230, 190, 12, 0.3); /* Soft glow */
+    text-shadow: 0 0 10px rgba(230, 190, 12, 0.3);
+}
+
+.review-text {
+    color: rgba(255, 255, 255, 0.85);
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.reviewer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .reviewer-name {
@@ -1271,7 +1030,7 @@ header:hover {
     text-transform: uppercase;
     opacity: 0.7;
 }
-/* Button Styling */
+
 .cta-button-outline {
     background: transparent;
     border: 2px solid var(--accent-yellow);
@@ -1282,6 +1041,7 @@ header:hover {
     letter-spacing: 2px;
     cursor: pointer;
     transition: 0.3s;
+    border-radius: 4px;
 }
 
 .cta-button-outline:hover {
@@ -1289,7 +1049,167 @@ header:hover {
     color: var(--dark-navy);
 }
 
-/* Modal Overlay */
+
+/* ============================================================
+   12. Footer
+   ============================================================ */
+.main-footer {
+    background-color: var(--dark-navy);
+    color: #e2e8f0;
+    padding: 80px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+}
+
+.footer-column h3 {
+    color: var(--accent-yellow);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.footer-column h3::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: var(--accent-yellow);
+    margin-top: 8px;
+}
+
+.footer-logo {
+    font-size: 1.5rem !important;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #cbd5e0;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-yellow);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.satisfaction-badge-small {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(230, 190, 12, 0.1);
+    border: 1px solid var(--accent-yellow);
+    padding: 8px 15px;
+    border-radius: 4px;
+    color: var(--accent-yellow);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.social-icon-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.icon-link {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-link.tk:hover  { background-color: #000; box-shadow: 0 0 20px rgba(0,0,0,0.4); }
+.icon-link.wa:hover  { background-color: #25D366; box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
+.icon-link.fb:hover  { background-color: #1877F2; box-shadow: 0 0 20px rgba(24, 119, 242, 0.4); }
+.icon-link.ig:hover  { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); box-shadow: 0 0 20px rgba(220, 39, 67, 0.4); }
+.icon-link.mail:hover { background-color: var(--accent-yellow); color: #000; box-shadow: 0 0 20px rgba(230, 190, 12, 0.4); }
+
+.icon-link:hover {
+    transform: translateY(-8px) scale(1.1);
+    border-color: transparent;
+}
+
+
+/* ============================================================
+   13. Modals
+   ============================================================ */
+.success-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 18, 33, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 50px;
+    border-radius: 25px;
+    text-align: center;
+    max-width: 450px;
+    color: #333;
+}
+
+.modal-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--dark-navy);
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: var(--accent-yellow);
+    border: none;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: var(--dark-navy);
+    color: white;
+}
+
+/* Review Modal */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -1301,7 +1221,6 @@ header:hover {
     justify-content: center;
 }
 
-/* Modal Box */
 .modal-content-premium {
     background: var(--dark-navy);
     border: 1px solid rgba(230, 190, 12, 0.4);
@@ -1323,7 +1242,6 @@ header:hover {
     cursor: pointer;
 }
 
-/* Star Input Logic */
 .rating-input {
     display: flex;
     flex-direction: row-reverse;
@@ -1338,15 +1256,36 @@ header:hover {
 .rating-input label:hover,
 .rating-input label:hover ~ label { color: var(--accent-yellow); }
 
-.modal-content-premium input, .modal-content-premium textarea {
+.modal-content-premium input,
+.modal-content-premium textarea {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     padding: 12px;
     margin-bottom: 15px;
     border-radius: 5px;
 }
+
+.input-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-stack input,
+.input-stack textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
 .success-icon {
     font-size: 5rem;
     color: var(--accent-yellow);
@@ -1367,42 +1306,372 @@ header:hover {
     margin: 10px auto;
 }
 
-/* Animation for the checkmark popping in */
 @keyframes scaleIn {
     from { transform: scale(0); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-.service-box {
-    position: relative; /* Crucial for the link to stay inside the box */
-    min-height: 350px;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.4s ease;
+    to   { transform: scale(1); opacity: 1; }
 }
 
-.service-link {
-    position: absolute; /* Spans the entire box area */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+
+/* ============================================================
+   14. Floating UI Elements
+   ============================================================ */
+
+/* Floating WhatsApp */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1) translateY(-5px);
+    background-color: #1ebe57;
+    color: white;
+}
+
+/* Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background-color: var(--accent-yellow);
+    color: #000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 30px;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    z-index: 5;
+    font-weight: 800;
+    font-size: 0.7rem;
+    z-index: 1500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
 }
 
-.service-box:hover {
-    transform: translateY(-10px);
-    cursor: zoom-in;
-}
-#hero-title {
-    transition: opacity 1.5s ease-out; /* Smooth fade over 1.5 seconds */
-    opacity: 1;
+.back-to-top:hover {
+    transform: scale(1.1);
+    background-color: var(--pure-white);
 }
 
-.fade-out {
-    opacity: 0 !important;
+.back-to-top i {
+    font-size: 1.2rem;
+    margin-bottom: -2px;
+}
+
+/* FIX #7: .mobile-call-btn hidden globally, only shown inside media query */
+.mobile-call-btn {
+    display: none;
+}
+
+
+/* ============================================================
+   15. Mobile Responsive Styles
+   ============================================================ */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    header {
+        position: sticky !important;
+        top: 0;
+        height: auto !important;
+        background-color: var(--primary-blue);
+        z-index: 2000;
+        transition: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 15px 15px 10px;
+    }
+
+    .hamburger {
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        order: 2;
+    }
+
+    .bar {
+        width: 28px;
+        height: 3px;
+        background-color: var(--accent-yellow);
+        transition: 0.4s ease;
+        border-radius: 2px;
+    }
+
+    .main-nav {
+        display: block !important;
+        position: relative !important;
+        width: 100%;
+        order: 3;
+        top: 0 !important;
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+        background-color: var(--primary-blue);
+    }
+
+    #menu-toggle:checked ~ .header-container .main-nav {
+        max-height: 600px;
+        visibility: visible;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        margin-top: 5px;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .main-nav ul li {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .main-nav ul li a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 25px 0;
+        color: white !important;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.95rem;
+        letter-spacing: 2.5px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                    color 0.3s ease,
+                    background-color 0.3s ease;
+    }
+
+    .main-nav ul li a:active {
+        color: var(--accent-yellow) !important;
+        transform: scale(1.05);
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .main-nav ul li:last-child a {
+        border-bottom: none;
+    }
+
+    /* Hamburger → X animation */
+    #menu-toggle:checked ~ .header-container .bar:nth-child(1) { transform: translateY(8px) rotate(-45deg); }
+    #menu-toggle:checked ~ .header-container .bar:nth-child(2) { opacity: 0; }
+    #menu-toggle:checked ~ .header-container .bar:nth-child(3) { transform: translateY(-8px) rotate(45deg); }
+
+    .hero-banner {
+        padding-top: 60px !important;
+        min-height: 400px;
+    }
+
+    .about-text h2 {
+        font-size: 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-grid-detailed {
+        grid-template-columns: 1fr;
+    }
+
+    .about-flex {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .about-image {
+        max-width: 100%;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    /* Show mobile call button only on mobile */
+    .mobile-call-btn {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--success-green);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 800;
+        z-index: 2000;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .floating-whatsapp {
+        width: 55px;
+        height: 55px;
+        font-size: 28px;
+        bottom: 15px;
+        left: 15px;
+    }
+}
+
+/* Hover effect for non-touch devices only */
+@media (hover: hover) {
+    .main-nav ul li a:hover {
+        color: var(--accent-yellow) !important;
+        transform: scale(1.1);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+/* ============================================================
+   16. Add to Cart Button & Qty Selector
+   ============================================================ */
+.add-to-cart-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background: #e6be0c;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart-btn:hover { background: #c9a50a; }
+.add-to-cart-btn.added { background: #27ae60; color: #fff; }
+
+.qty-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.qty-selector button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.qty-selector button:hover {
+    background: #e6be0c;
+    border-color: #e6be0c;
+}
+
+.item-quantity {
+    width: 50px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Cart Drawer Items */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.cart-item-price {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 3px;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.cart-qty-btn {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.cart-qty-btn:hover {
+    background: #e6be0c;
+    border-color: #e6be0c;
+}
+
+.cart-qty-input {
+    width: 38px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.cart-remove-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: 4px;
+    transition: color 0.2s;
+}
+
+.cart-remove-btn:hover {
+    color: #c0392b;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRIMELINE SOLUTIONS LIMITED</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -19,23 +19,23 @@
     <input type="checkbox" id="menu-toggle" style="display: none;">
 
     <div class="container header-container">
-     <div class="logo">
-    <div class="logo-row">
-        <span class="big-p">P</span>
-        <div class="logo-text-stack">
-            <span>RIMELINE</span>
-            <span>LUMBING</span>
+      <div class="logo">
+        <div class="logo-row">
+            <span class="big-p">P</span>
+            <div class="logo-text-stack">
+                <span>RIMELINE</span>
+                <span>LUMBING</span>
+            </div>
         </div>
-    </div>
-    <div class="solutions-container">
-        <span class="solutions-text">SOLUTIONS</span>
-    </div>
-</div>
-<label for="menu-toggle" class="hamburger">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-</label>
+        <div class="solutions-container">
+            <span class="solutions-text">SOLUTIONS</span>
+        </div>
+      </div>
+      <label for="menu-toggle" class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </label>
         <nav class="main-nav">
             <ul>
                 <li><a href="#services">Services</a></li>
@@ -44,918 +44,1296 @@
                 <li><a href="#contact">Contact Us</a></li>
             </ul>
         </nav>
+      <button onclick="openCart()" id="headerCartBtn">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartBadge">0</span>
+</button>
     </div>
-</header>
+  </header>
+
     <section class="hero-banner">
         <div class="container">
+            <!-- FIX #7: Only one <h1> on the page. Typewriter uses h1, static title demoted to <p> -->
             <h1 id="hero-title" class="hero-text"></h1>
-            <h1>Primeline Plumbing Solutions</h1>
-            <p>ENGINEERING RELIABILITY.DELIVERING EXCELLENCE</p>
+            <p class="hero-subtitle">Primeline Plumbing Solutions</p>
+            <!-- FIX #8: Added space after period -->
+            <p>ENGINEERING RELIABILITY. DELIVERING EXCELLENCE</p>
             <a href="#contact" class="cta-button">Contact Us</a>
         </div>
     </section>
+
     <main>
-     <section id="services" class="services-section">
-    <div class="container">
-        <div class="services-header">
-            <span class="top-line">WHAT WE DO</span>
-            <h2>Our Plumbing Services</h2>
-            <p>Reliable and professional plumbing across Kenya.</p>
+      <section id="services" class="services-section">
+        <div class="container">
+            <div class="services-header">
+                <span class="top-line">WHAT WE DO</span>
+                <h2>Our Plumbing Services</h2>
+                <p>Reliable and professional plumbing across Kenya.</p>
+                <div class="blue-divider"></div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-box res-com-bg">
+                    <div class="service-content">
+                        <h3>Residential &amp; Commercial</h3>
+                        <p>Professional plumbing for homes and offices.</p>
+                    </div>
+                </div>
+
+                <div class="service-box install-bg">
+                    <div class="service-content">
+                        <h3>Plumbing Installations</h3>
+                        <p>Installation of pipes, fittings, and toilets.</p>
+                    </div>
+                </div>
+
+                <div class="service-box leak-bg">
+                    <div class="service-content">
+                        <h3>Leak Detection</h3>
+                        <p>Advanced detection and repair of hidden leaks.</p>
+                    </div>
+                </div>
+
+                <div class="service-box drain-bg">
+                    <div class="service-content">
+                        <h3>Drain &amp; Sewer Cleaning</h3>
+                        <p>Unblocking and cleaning of sewer lines.</p>
+                    </div>
+                </div>
+
+                <div class="service-box tank-bg">
+                    <div class="service-content">
+                        <h3>Water Tank Services</h3>
+                        <p>Storage tank installation and cleaning.</p>
+                    </div>
+                </div>
+
+                <!-- FIX #9: Renamed class from kitchen-bg to bathroom-upgrade-bg to avoid conflict -->
+                <div class="service-box bathroom-upgrade-bg">
+                    <div class="service-content">
+                        <h3>Bathroom Upgrades</h3>
+                        <p>Plumbing upgrades for renovations.</p>
+                    </div>
+                </div>
+
+                <div class="service-box site-bg">
+                    <div class="service-content">
+                        <h3>Contract Management</h3>
+                        <p>Tailored plumbing maintenance for property managers and corporate facilities.</p>
+                    </div>
+                </div>
+
+                <div class="service-box heater-bg">
+                    <div class="service-content">
+                        <h3>Hot Water Systems</h3>
+                        <p>Installation and repair of water heaters.</p>
+                    </div>
+                </div>
+
+                <div class="service-box emergency-bg">
+                    <div class="service-content">
+                        <h3>Emergency Plumbing</h3>
+                        <p>24/7 urgent plumbing repairs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section class="services-section">
+        <div class="container">
+            <div class="services-header">
+                <span class="subtitle">PRECISION &amp; STYLE</span>
+                <h2>Kitchen Products</h2>
+                <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                    "Where culinary excellence meets professional-grade plumbing performance."
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-box kitchen-bg">
+                    <a href="javascript:void(0)" class="service-link" onclick="toggleKitchenGrid()">
+                        <div class="service-content">
+                            <h3>Kitchen Collection</h3>
+                            <p>Explore our full range of 15+ premium sinks, faucets, and drainage solutions.</p>
+                            <div class="learn-more-btn">
+                                Learn More <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section id="kitchen-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
+        <div class="container">
+            <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                <input type="text" id="productSearch" onkeyup="filterProducts()" placeholder="Search kitchen products..."
+                       style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+                <i class="fas fa-times-circle" id="clearSearch" onclick="clearProductSearch()"
+                   style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none;"></i>
+            </div>
             <div class="blue-divider"></div>
-        </div>
 
-        <div class="services-grid">
-            <div class="service-box res-com-bg">
-                <div class="service-content">
-                    <h3>Residential & Commercial</h3>
-                    <p>Professional plumbing for homes and offices.</p>
-                </div>
+            <!-- FIX #5: Added missing noResults element for kitchen grid -->
+            <div id="noResults" style="display: none; text-align: center; padding: 40px; color: #666;">
+                <h3>No products found</h3>
+                <p>Try searching for "Sink", "Faucet", or "Tap".</p>
             </div>
 
-            <div class="service-box install-bg">
-                <div class="service-content">
-                    <h3>Plumbing Installations</h3>
-                    <p>Installation of pipes, fittings, and toilets.</p>
-                </div>
-            </div>
-
-            <div class="service-box leak-bg">
-                <div class="service-content">
-                    <h3>Leak Detection</h3>
-                    <p>Advanced detection and repair of hidden leaks.</p>
-                </div>
-            </div>
-
-            <div class="service-box drain-bg">
-                <div class="service-content">
-                    <h3>Drain & Sewer Cleaning</h3>
-                    <p>Unblocking and cleaning of sewer lines.</p>
-                </div>
-            </div>
-
-            <div class="service-box tank-bg">
-                <div class="service-content">
-                    <h3>Water Tank Services</h3>
-                    <p>Storage tank installation and cleaning.</p>
-                </div>
-            </div>
-
-            <div class="service-box kitchen-bg">
-                <div class="service-content">
-                    <h3>Bathroom upgrades</h3>
-                    <p>Plumbing upgrades for renovations.</p>
-                </div>
-            </div>
-
-            <div class="service-box site-bg">
-                <div class="service-content">
-                    <h3>Contract Management</h3>
-                    <p>Tailored plumbing maintenance for property managers and corporate facilities.</p>
-                </div>
-            </div>
-
-            <div class="service-box heater-bg">
-                <div class="service-content">
-                    <h3>Hot Water Systems</h3>
-                    <p>Installation and repair of water heaters.</p>
-                </div>
-            </div>
-            
-
-            <div class="service-box emergency-bg">
-                <div class="service-content">
-                    <h3>Emergency Plumbing</h3>
-                    <p>24/7 urgent plumbing repairs.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="services-section">
-    <div class="container">
-        <div class="services-header">
-            <span class="subtitle">PRECISION & STYLE</span>
-            <h2>Kitchen Products</h2>
-            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
-                "Where culinary excellence meets professional-grade plumbing performance."
-            </p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-box kitchen-bg">
-                <a href="javascript:void(0)" class="service-link" onclick="toggleKitchenGrid()">
-                    <div class="service-content">
-                        <h3>Kitchen Collection</h3>
-                        <p>Explore our full range of 15+ premium sinks, faucets, and drainage solutions.</p>
-                        <div class="learn-more-btn">
-                            Learn more <i class="fas fa-arrow-right"></i>
+            <!-- FIX #4: Added id="kitchenGrid" so filterProducts() scopes correctly -->
+            <div class="product-grid-detailed" id="kitchenGrid">
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/taps.png');"><span class="product-badge hot">Hot</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Taps</span>
+                        <h3>Faucet Tap</h3>
+                        <div class="price-row"><span class="price-current">KSh 3,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
                         </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="kitchen-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
-    <div class="container">
- <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
-    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
-    
-    <input type="text" id="productSearch" onkeyup="filterProducts()" placeholder="Search kitchen products..." 
-           style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
-    
-    <i class="fas fa-times-circle" id="clearSearch" onclick="clearProductSearch()" 
-       style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none;"></i>
-</div>
-        <div class="blue-divider"></div>
-        
-        <div class="product-grid-detailed">
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/taps.png');"><span class="product-badge hot">Hot</span></div>
-                <div class="product-details">
-                    <span class="category-label">Taps</span>
-                    <h3>Faucet tap</h3>
-                    <div class="price-row"><span class="price-current">KSh 3,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/farmhouse.png');"><span class="product-badge offer">Offer</span></div>
-                <div class="product-details">
-                    <span class="category-label">Sinks</span>
-                    <h3>Farmhouse Workstation Sink</h3>
-                    <div class="price-row"><span class="price-current">KSh 42,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/faucet.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Shower</span>
-                    <h3>Best sink tap to use in the market</h3>
-                    <div class="price-row"><span class="price-current">KSh 12,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/filter-system.jfif');"><span class="product-badge">New</span></div>
-                <div class="product-details">
-                    <span class="category-label">Filtration</span>
-                    <h3>Under-Sink RO Purifier</h3>
-                    <div class="price-row"><span class="price-current">KSh 35,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-          
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/double-sink.jfif');"></div>
-                <div class="product-details">
-                    <span class="category-label">Sinks</span>
-                    <h3>Double Bowl Steel Sink</h3>
-                    <div class="price-row"><span class="price-current">KSh 28,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-          
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/boiling\ tap.png');"><span class="product-badge">Premium</span></div>
-                <div class="product-details">
-                    <span class="category-label">Mixers</span>
-                    <h3>Instant Boiling Tap</h3>
-                    <div class="price-row"><span class="price-current">KSh 55,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/industrial\ spray-tap.jfif');"></div>
-                <div class="product-details">
-                    <span class="category-label">Faucets</span>
-                    <h3>Industrial Pull-Out Spray</h3>
-                    <div class="price-row"><span class="price-current">KSh 16,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/island-sink.jfif');"><span class="product-badge">New</span></div>
-                <div class="product-details">
-                    <span class="category-label">Sinks</span>
-                    <h3>Kitchen Island Prep Sink</h3>
-                    <div class="price-row"><span class="price-current">KSh 14,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/pot-filler.jfif');"><span class="product-badge hot">Pro Choice</span></div>
-                <div class="product-details">
-                    <span class="category-label">Specialty</span>
-                    <h3>Folding Pot Filler</h3>
-                    <div class="price-row"><span class="price-current">KSh 19,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/granite-sink.jfif');"></div>
-                <div class="product-details">
-                    <span class="category-label">Sinks</span>
-                    <h3>Granite Composite Double</h3>
-                    <div class="price-row"><span class="price-current">KSh 48,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/sensor-tap.jfif');"><span class="product-badge">Premium</span></div>
-                <div class="product-details">
-                    <span class="category-label">Faucets</span>
-                    <h3>Touchless Motion Sensor Tap</h3>
-                    <div class="price-row"><span class="price-current">KSh 29,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/bin-system.jfif');"></div>
-                <div class="product-details">
-                    <span class="category-label">Waste Mgmt</span>
-                    <h3>Under-Sink Dual Waste Bin</h3>
-                    <div class="price-row"><span class="price-current">KSh 9,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/glass-rinser.jfif');"><span class="product-badge offer">25% Off</span></div>
-                <div class="product-details">
-                    <span class="category-label">Accessories</span>
-                    <h3>High-Pressure Glass Rinser</h3>
-                    <div class="price-row">
-                        <span class="price-current">KSh 4,500</span>
-                        <span class="price-old">KSh 6,000</span>
-                    </div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
-            <button class="btn-rounded" onclick="toggleKitchenGrid()">
-                <i class="fas fa-chevron-up"></i> Close 
-            </button>
-        </div>
-    </div>
-</section>
-<section class="services-section">
-    <div class="container">
-        <div class="services-header">
-            <span class="subtitle">ELEGANCE & HYGIENE</span>
-            <h2>Bathroom & Sanitaryware</h2>
-            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
-                "Transforming your private spaces into a sanctuary of comfort and modern efficiency."
-            </p>
-        </div>
-        <div class="services-grid">
-            <div class="service-box bathroom-bg">
-                <a href="javascript:void(0)" class="service-link" onclick="toggleBathroomGrid()">
-                    <div class="service-content">
-                        <h3>Bathroom Collection</h3>
-                        <p>Discover 15+ premium toilets, rain showers, and elegant vanity solutions.</p>
-                        <div class="learn-more-btn">
-                            learn more <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="bathroom-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
-    <div class="container">
-
-        <div class="blue-divider"></div>
-
-        <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
-            <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
-            <input type="text" id="bathroomSearch" onkeyup="filterBathroom()" placeholder="Search bathroom products..." 
-                   style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
-            <i class="fas fa-times-circle" id="clearBathSearch" onclick="clearBathSearch()" 
-               style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
-        </div>
-
-        <div id="noBathResults" style="display: none; text-align: center; padding: 40px; color: #666;">
-            <h3>No products found</h3>
-            <p>Try searching for "Shower", "Toilet", or "Basin".</p>
-        </div>
-
-        <div class="product-grid-detailed" id="bathroomGrid">
-            <div class="product-item-card" data-category="Toilets">
-                <div class="product-image-box" style="background-image: url('images/wallhung.png');"><span class="product-badge">Modern</span></div>
-                <div class="product-details">
-                    <span class="category-label">Toilets</span>
-                    <h3>Rimless Wall-Hung Toilet</h3>
-                    <div class="price-row"><span class="price-current">KSh 32,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Showers">
-                <div class="product-image-box" style="background-image: url('images/thermostaticshower.png');"><span class="product-badge hot">Popular</span></div>
-                <div class="product-details">
-                    <span class="category-label">Showers</span>
-                    <h3>Thermostatic Rain Shower</h3>
-                    <div class="price-row"><span class="price-current">KSh 24,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Faucets">
-                <div class="product-image-box" style="background-image: url('images/watefallbasinmixer.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Faucets</span>
-                    <h3>Waterfall Basin Mixer</h3>
-                    <div class="price-row"><span class="price-current">KSh 8,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Tubs">
-                <div class="product-image-box" style="background-image: url('images/tab.png');"><span class="product-badge">Luxury</span></div>
-                <div class="product-details">
-                    <span class="category-label">Tubs</span>
-                    <h3>Free-Standing Acrylic Tub</h3>
-                    <div class="price-row"><span class="price-current">KSh 85,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Accessories">
-                <div class="product-image-box" style="background-image: url('images/Ledmirror.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Accessories</span>
-                    <h3>Smart LED Backlit Mirror</h3>
-                    <div class="price-row"><span class="price-current">KSh 15,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Toilets">
-                <div class="product-image-box" style="background-image: url('images/cistern.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Toilets</span>
-                    <h3>Dual-Flush Concealed Cistern</h3>
-                    <div class="price-row"><span class="price-current">KSh 12,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Vanities">
-                <div class="product-image-box" style="background-image: url('images/vanity.png');"><span class="product-badge">Offer</span></div>
-                <div class="product-details">
-                    <span class="category-label">Vanities</span>
-                    <h3>Floating Oak Vanity Unit</h3>
-                    <div class="price-row"><span class="price-current">KSh 45,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Faucets">
-                <div class="product-image-box" style="background-image: url('images/tallmixer.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Faucets</span>
-                    <h3>Tall Countertop Basin Tap</h3>
-                    <div class="price-row"><span class="price-current">KSh 10,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/toilet.jpg');"></div>
-                <div class="product-details">
-                    <span class="category-label">Toilet</span>
-                    <h3>Close coupled toilet</h3>
-                    <div class="price-row"><span class="price-current">KSh 22,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Showers">
-                <div class="product-image-box" style="background-image: url('images/hand-shower.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Showers</span>
-                    <h3>Multi-Function Hand Shower</h3>
-                    <div class="price-row"><span class="price-current">KSh 4,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/lorenzeti.jfif');"></div>
-                <div class="product-details">
-                    <span class="category-label">Accessories</span>
-                    <h3>Lorenzentti shower heater - Bello Bahnor</h3>
-                    <div class="price-row"><span class="price-current">KSh 3,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Accessories">
-                <div class="product-image-box" style="background-image: url('images/towel-rack.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Accessories</span>
-                    <h3>Heated Electric Towel Rail</h3>
-                    <div class="price-row"><span class="price-current">KSh 18,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Toilets">
-                <div class="product-image-box" style="background-image: url('images/bidet.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Toilets</span>
-                    <h3> Bidet Smart Toilet Seat</h3>
-                    <div class="price-row"><span class="price-current">KSh 22,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Mixers">
-                <div class="product-image-box" style="background-image: url('images/bath-mixer.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Mixers</span>
-                    <h3>Concealed Bath/Shower Valve</h3>
-                    <div class="price-row"><span class="price-current">KSh 14,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Basins">
-                <div class="product-image-box" style="background-image: url('images/bowl-basin.png');"><span class="product-badge">New</span></div>
-                <div class="product-details">
-                    <span class="category-label">Basins</span>
-                    <h3>Ceramic Countertop Bowl</h3>
-                    <div class="price-row"><span class="price-current">KSh 9,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card" data-category="Showers">
-                <div class="product-image-box" style="background-image: url('images/glass-screen.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Showers</span>
-                    <h3>Tempered Glass Shower Screen</h3>
-                    <div class="price-row"><span class="price-current">KSh 28,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
-            <button class="btn-rounded" onclick="toggleBathroomGrid()">
-                <i class="fas fa-chevron-up"></i> Close 
-            </button>
-        </div>
-    </div>
-</section>
-<section class="services-section">
-    <div class="container">
-        <div class="services-header">
-            <span class="subtitle">DURABILITY & INFRASTRUCTURE</span>
-            <h2>Construction & Piping</h2>
-            <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
-                "Building the invisible foundation of reliability with high-grade industrial materials."
-            </p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-box construction-bg">
-                <a href="javascript:void(0)" class="service-link" onclick="toggleConstructionGrid()">
-                    <div class="service-content">
-                        <h3>Piping & Fittings</h3>
-                        <p>Full inventory of PPR, PVC, HDPE pipes, and heavy-duty valves for any project.</p>
-                        <div class="learn-more-btn">
-                            View Materials <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="construction-full-catalog" class="services-section hidden-grid" style="background-color: #f9f9f9; padding-top: 0;">
-    <div class="container">
-        <div class="blue-divider"></div>
-
-        <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
-            <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
-            <input type="text" id="constSearch" onkeyup="filterConst()" placeholder="Search pipes, valves, fittings..." 
-                   style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
-            <i class="fas fa-times-circle" id="clearConstSearch" onclick="clearConstSearch()" 
-               style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
-        </div>
-
-        <div id="noConstResults" style="display: none; text-align: center; padding: 40px; color: #666;">
-            <h3>Material not found</h3>
-            <p>Try searching for "PPR", "PVC", or "Valve".</p>
-        </div>
-
-        <div class="product-grid-detailed" id="constGrid">
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/ppr-pipe.png');"><span class="product-badge">PN20</span></div>
-                <div class="product-details">
-                    <span class="category-label">Piping</span>
-                    <h3>PPR Pipe (20mm x 4m)</h3>
-                    <div class="price-row"><span class="price-current">KSh 1,200</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/gate-valve.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Controls</span>
-                    <h3>Brass Gate Valve (1 Inch)</h3>
-                    <div class="price-row"><span class="price-current">KSh 2,800</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/hdpe-roll.png');"><span class="product-badge">Heavy Duty</span></div>
-                <div class="product-details">
-                    <span class="category-label">Piping</span>
-                    <h3>HDPE Pipe Roll (32mm)</h3>
-                    <div class="price-row"><span class="price-current">KSh 14,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/pvc-pipe.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Drainage</span>
-                    <h3>uPVC Waste Pipe (4 Inch)</h3>
-                    <div class="price-row"><span class="price-current">KSh 3,200</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/manhole.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Infrastructure</span>
-                    <h3>Cast Iron Manhole Cover</h3>
-                    <div class="price-row"><span class="price-current">KSh 8,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/mastergulley.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Drainage</span>
-                    <h3>Master Gulley Trap</h3>
-                    <div class="price-row"><span class="price-current">KSh 1,800</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/ppr-fittings.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Fittings</span>
-                    <h3>PPR Elbow & Tee Pack (Mixed)</h3>
-                    <div class="price-row"><span class="price-current">KSh 5,000</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/ball-valve.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Controls</span>
-                    <h3>PVC Ball Valve (Stopcock)</h3>
-                    <div class="price-row"><span class="price-current">KSh 950</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/braided-connectors.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Fittings</span>
-                    <h3>Braided Flexible Connectors</h3>
-                    <div class="price-row"><span class="price-current">KSh 1,400</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/water-meter.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Measurement</span>
-                    <h3>Residential Water Meter</h3>
-                    <div class="price-row"><span class="price-current">KSh 4,200</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/pressure-pump.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Pumps</span>
-                    <h3>Automatic Pressure Pump</h3>
-                    <div class="price-row"><span class="price-current">KSh 18,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/tank-connector.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Fittings</span>
-                    <h3>Tank Connector (Large)</h3>
-                    <div class="price-row"><span class="price-current">KSh 1,200</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/solvent.png');"></div>
-                <div class="product-details">
-                    <span class="category-label">Consumables</span>
-                    <h3>PVC Solvent Cement (500ml)</h3>
-                    <div class="price-row"><span class="price-current">KSh 850</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/thread-tape.jpg');"></div>
-                <div class="product-details">
-                    <span class="category-label">Consumables</span>
-                    <h3>PTFE Thread Seal Tape (Box)</h3>
-                    <div class="price-row"><span class="price-current">KSh 1,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-
-            <div class="product-item-card">
-                <div class="product-image-box" style="background-image: url('images/ppr-machine.jpg');"></div>
-                <div class="product-details">
-                    <span class="category-label">Tools</span>
-                    <h3>PPR Pipe Welding Machine</h3>
-                    <div class="price-row"><span class="price-current">KSh 6,500</span></div>
-                    <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
-            <button class="btn-rounded" onclick="toggleConstructionGrid()">
-                <i class="fas fa-chevron-up"></i> Close 
-            </button>
-        </div>
-    </div>
-</section>
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="about-flex">
-                    <div class="about-text">
-                        <span class="subtitle">Trusted Excellence</span>
-                        <h2>Expert Plumbing Services You Can Rely On</h2>
-                        
-                        <div class="counter-wrapper">
-                            <span id="counter">0</span>% Satisfaction Rate
-                        </div>
-
-                        <ul class="perks-list">
-                            <li><i class="fas fa-check-circle"></i> Plumbing Installations</li>
-                            <li><i class="fas fa-check-circle"></i> Certified & Insured Plumbers</li>
-                            <li><i class="fas fa-check-circle"></i> Modern Leak Detection Technology</li>
-                        </ul>
-                        <a href="#contact" class="cta-button" style="background:#0a192f; color:white;">Learn More</a>
-                    </div>
-                    <div class="about-image">
-                        <img src="images/companycard.jfif" alt="Prime Line Plumbers at work">
-                    </div>
-                </div>
-            </div>
-        </section>
-       <section id="contact" class="section-contact">
-    <div class="container">
-        <div class="contact-header">
-            <span class="subtitle">GET IN TOUCH</span>
-            <h2>Request Professional Help</h2>
-            <p>Our team is ready to assist you 24/7 with any plumbing emergency.</p>
-        </div>
-<section id="contact-help" style="background-color: #3b76b9; padding: 60px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div class="container" style="max-width: 1100px; margin: 0 auto;">
-        
-        <div style="text-align: center; margin-bottom: 40px;">
-            <h2 style="color: white; font-size: 2.2rem; margin-bottom: 10px;">Request Professional Help</h2>
-            <div style="width: 60px; height: 3px; background: #f1c40f; margin: 0 auto;"></div>
-        </div>
-
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 40px;">
-
-            <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
-                
-                <a href="tel:+254727935046" style="text-decoration: none; display: block;">
-                    <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);" 
-                         onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                         onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                        <div style="margin-right: 20px;">
-                            <i class="fas fa-phone-alt" style="color: #f1c40f; font-size: 1.8rem; transform: rotate(90deg);"></i>
-                        </div>
-                        <div>
-                            <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Call Us</span>
-                            <span style="color: white; font-size: 1rem; opacity: 0.9;">+254 727 935 046</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="mailto:primeline98@gmail.com" style="text-decoration: none; display: block;">
-                    <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);"
-                         onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                         onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                        <div style="margin-right: 20px;">
-                            <i class="fas fa-envelope" style="color: #f1c40f; font-size: 1.8rem;"></i>
-                        </div>
-                        <div>
-                            <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Email Us</span>
-                            <span style="color: white; font-size: 1rem; opacity: 0.9;">primeline98@gmail.com</span>
-                        </div>
-                    </div>
-                </a>
-
-                <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="margin-right: 20px;">
-                        <i class="fas fa-clock" style="color: #f1c40f; font-size: 1.8rem;"></i>
-                    </div>
-                    <div>
-                        <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Working Hours</span>
-                        <span style="color: white; font-size: 1rem; opacity: 0.9;">24/7 Emergency Service</span>
-                    </div>
-                </div>
-            </div>
-
-            <div style="flex: 1.2; min-width: 350px;">
-                <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-                    <form action="#">
-                        <div style="margin-bottom: 20px; position: relative;">
-                            <i class="fas fa-user" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
-                            <input type="text" placeholder="Full Name" style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9;">
-                        </div>
-                        <div style="margin-bottom: 20px; position: relative;">
-                            <i class="fas fa-envelope" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
-                            <input type="email" placeholder="Email Address" style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9;">
-                        </div>
-                        <div style="margin-bottom: 20px; position: relative;">
-                            <i class="fas fa-tools" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
-                            <select style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9; color: #666;">
-                                <option>Select Service</option>
-                                <option>Plumbing Installation</option>
-                                <option>Maintenance & Repair</option>
-                                <option>Material Supply</option>
-                            </select>
-                        </div>
-                        <div style="margin-bottom: 20px;">
-                            <textarea placeholder="Tell us about your project..." rows="4" style="width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9; resize: none;"></textarea>
-                        </div>
-                        <button type="submit" style="width: 100%; padding: 15px; background-color: #f1c40f; border: none; border-radius: 8px; color: #333; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.3s;"
-                                onmouseover="this.style.backgroundColor='#e1b30d'" 
-                                onmouseout="this.style.backgroundColor='#f1c40f'">
-                            Send Request
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
                         </button>
-                    </form>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/farmhouse.png');"><span class="product-badge offer">Offer</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Sinks</span>
+                        <h3>Farmhouse Workstation Sink</h3>
+                        <div class="price-row"><span class="price-current">KSh 42,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/faucet.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Shower</span>
+                        <h3>Best Sink Tap</h3>
+                        <div class="price-row"><span class="price-current">KSh 12,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/filter-system.jfif');"><span class="product-badge">New</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Filtration</span>
+                        <h3>Under-Sink RO Purifier</h3>
+                        <div class="price-row"><span class="price-current">KSh 35,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/double-sink.jfif');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Sinks</span>
+                        <h3>Double Bowl Steel Sink</h3>
+                        <div class="price-row"><span class="price-current">KSh 28,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FIX #10: Encoded spaces in image URLs as %20 -->
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/boiling%20tap.png');"><span class="product-badge">Premium</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Mixers</span>
+                        <h3>Instant Boiling Tap</h3>
+                        <div class="price-row"><span class="price-current">KSh 55,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FIX #10: Encoded spaces in image URLs as %20 -->
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/industrial%20spray-tap.jfif');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Faucets</span>
+                        <h3>Industrial Pull-Out Spray</h3>
+                        <div class="price-row"><span class="price-current">KSh 16,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/island-sink.jfif');"><span class="product-badge">New</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Sinks</span>
+                        <h3>Kitchen Island Prep Sink</h3>
+                        <div class="price-row"><span class="price-current">KSh 14,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/pot-filler.jfif');"><span class="product-badge hot">Pro Choice</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Specialty</span>
+                        <h3>Folding Pot Filler</h3>
+                        <div class="price-row"><span class="price-current">KSh 19,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/granite-sink.jfif');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Sinks</span>
+                        <h3>Granite Composite Double</h3>
+                        <div class="price-row"><span class="price-current">KSh 48,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/sensor-tap.jfif');"><span class="product-badge">Premium</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Faucets</span>
+                        <h3>Touchless Motion Sensor Tap</h3>
+                        <div class="price-row"><span class="price-current">KSh 29,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/bin-system.jfif');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Waste Mgmt</span>
+                        <h3>Under-Sink Dual Waste Bin</h3>
+                        <div class="price-row"><span class="price-current">KSh 9,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/glass-rinser.jfif');"><span class="product-badge offer">25% Off</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Accessories</span>
+                        <h3>High-Pressure Glass Rinser</h3>
+                        <div class="price-row">
+                            <span class="price-current">KSh 4,500</span>
+                            <span class="price-old">KSh 6,000</span>
+                        </div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
                 </div>
             </div>
 
+            <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+                <button class="btn-rounded" onclick="toggleKitchenGrid()">
+                    <i class="fas fa-chevron-up"></i> Close
+                </button>
+            </div>
         </div>
-    </div>
-</section>
-<section class="reviews-section dark-theme" id="reviews">
-    <div class="container">
-        <h2 class="section-title" style="color: var(--pure-white);">Client Perspectives</h2>
-        <p class="section-subtitle" style="color: var(--text-muted);">The standard of excellence as defined by those we serve.</p>
+      </section>
 
-        <div class="reviews-grid">
-            <div class="review-card glass-effect">
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="review-text">"Primeline handled our commercial office refit with absolute precision. Their immediate emergency response gave us total peace of mind."</p>
-                <div class="reviewer-info">
-                    <span class="reviewer-name">James K.</span>
-                    <span class="reviewer-location">Nairobi Central</span>
-                </div>
+      <section class="services-section">
+        <div class="container">
+            <div class="services-header">
+                <span class="subtitle">ELEGANCE &amp; HYGIENE</span>
+                <h2>Bathroom &amp; Sanitaryware</h2>
+                <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                    "Transforming your private spaces into a sanctuary of comfort and modern efficiency."
+                </p>
             </div>
-
-            <div class="review-card glass-effect">
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="review-text">"Finally, a plumbing service in Kenya that respects schedules. Clean work, professional team, and fair pricing."</p>
-                <div class="reviewer-info">
-                    <span class="reviewer-name">Sarah M.</span>
-                    <span class="reviewer-location">Karen Estates</span>
-                </div>
-            </div>
-
-            <div class="review-card glass-effect">
-                <div class="rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="review-text">"Best leak detection technology I've seen. They found a hidden pipe burst in minutes that others missed for weeks."</p>
-                <div class="reviewer-info">
-                    <span class="reviewer-name">David O.</span>
-                    <span class="reviewer-location">Westlands</span>
+            <div class="services-grid">
+                <div class="service-box bathroom-bg">
+                    <a href="javascript:void(0)" class="service-link" onclick="toggleBathroomGrid()">
+                        <div class="service-content">
+                            <h3>Bathroom Collection</h3>
+                            <p>Discover 15+ premium toilets, rain showers, and elegant vanity solutions.</p>
+                            <div class="learn-more-btn">
+                                Learn More <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    <div style="text-align: center; margin-top: 50px;">
-    <button class="cta-button-outline" onclick="openReviewModal()">Share Your Experience</button>
-</div>
-</section>
+      </section>
 
-<section id="locations" class="section-locations map-background-style">
-    <div class="map-overlay"></div> <div class="container location-content">
-        <h2>Areas We Serve</h2>
-        <p>Providing 24/7 plumbing support across major hubs in Kenya.</p>
-        
-        <div class="locations-grid">
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nairobi</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Mombasa</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Kisumu</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nakuru</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Eldoret</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Thika</span></div>
+      <section id="bathroom-full-catalog" class="services-section hidden-grid" style="background-color: #fff; padding-top: 0;">
+        <div class="container">
+            <div class="blue-divider"></div>
+
+            <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                <input type="text" id="bathroomSearch" onkeyup="filterBathroom()" placeholder="Search bathroom products..."
+                       style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+                <i class="fas fa-times-circle" id="clearBathSearch" onclick="clearBathSearch()"
+                   style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
+            </div>
+
+            <div id="noBathResults" style="display: none; text-align: center; padding: 40px; color: #666;">
+                <h3>No products found</h3>
+                <p>Try searching for "Shower", "Toilet", or "Basin".</p>
+            </div>
+
+            <div class="product-grid-detailed" id="bathroomGrid">
+                <div class="product-item-card" data-category="Toilets">
+                    <div class="product-image-box" style="background-image: url('images/wallhung.png');"><span class="product-badge">Modern</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Toilets</span>
+                        <h3>Rimless Wall-Hung Toilet</h3>
+                        <div class="price-row"><span class="price-current">KSh 32,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Showers">
+                    <div class="product-image-box" style="background-image: url('images/thermostaticshower.png');"><span class="product-badge hot">Popular</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Showers</span>
+                        <h3>Thermostatic Rain Shower</h3>
+                        <div class="price-row"><span class="price-current">KSh 24,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Faucets">
+                    <div class="product-image-box" style="background-image: url('images/watefallbasinmixer.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Faucets</span>
+                        <h3>Waterfall Basin Mixer</h3>
+                        <div class="price-row"><span class="price-current">KSh 8,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FIX #minor: tub.png (was tab.png) -->
+                <div class="product-item-card" data-category="Tubs">
+                    <div class="product-image-box" style="background-image: url('images/tub.png');"><span class="product-badge">Luxury</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Tubs</span>
+                        <h3>Free-Standing Acrylic Tub</h3>
+                        <div class="price-row"><span class="price-current">KSh 85,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Accessories">
+                    <div class="product-image-box" style="background-image: url('images/Ledmirror.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Accessories</span>
+                        <h3>Smart LED Backlit Mirror</h3>
+                        <div class="price-row"><span class="price-current">KSh 15,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Toilets">
+                    <div class="product-image-box" style="background-image: url('images/cistern.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Toilets</span>
+                        <h3>Dual-Flush Concealed Cistern</h3>
+                        <div class="price-row"><span class="price-current">KSh 12,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Vanities">
+                    <div class="product-image-box" style="background-image: url('images/vanity.png');"><span class="product-badge">Offer</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Vanities</span>
+                        <h3>Floating Oak Vanity Unit</h3>
+                        <div class="price-row"><span class="price-current">KSh 45,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Faucets">
+                    <div class="product-image-box" style="background-image: url('images/tallmixer.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Faucets</span>
+                        <h3>Tall Countertop Basin Tap</h3>
+                        <div class="price-row"><span class="price-current">KSh 10,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Toilets">
+                    <div class="product-image-box" style="background-image: url('images/toilet.jpg');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Toilets</span>
+                        <h3>Close Coupled Toilet</h3>
+                        <div class="price-row"><span class="price-current">KSh 22,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Showers">
+                    <div class="product-image-box" style="background-image: url('images/hand-shower.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Showers</span>
+                        <h3>Multi-Function Hand Shower</h3>
+                        <div class="price-row"><span class="price-current">KSh 4,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="product-item-card" data-category="Accessories">
+                    <div class="product-image-box" style="background-image: url('images/lorenzeti.jfif');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Accessories</span>
+                        <h3>Lorenzetti Shower Heater - Bello Banho</h3>
+                        <div class="price-row"><span class="price-current">KSh 3,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Accessories">
+                    <div class="product-image-box" style="background-image: url('images/towel-rack.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Accessories</span>
+                        <h3>Heated Electric Towel Rail</h3>
+                        <div class="price-row"><span class="price-current">KSh 18,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FIX minor: Removed leading space before "Bidet" -->
+                <div class="product-item-card" data-category="Toilets">
+                    <div class="product-image-box" style="background-image: url('images/bidet.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Toilets</span>
+                        <h3>Bidet Smart Toilet Seat</h3>
+                        <div class="price-row"><span class="price-current">KSh 22,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Mixers">
+                    <div class="product-image-box" style="background-image: url('images/bath-mixer.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Mixers</span>
+                        <h3>Concealed Bath/Shower Valve</h3>
+                        <div class="price-row"><span class="price-current">KSh 14,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Basins">
+                    <div class="product-image-box" style="background-image: url('images/bowl-basin.png');"><span class="product-badge">New</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Basins</span>
+                        <h3>Ceramic Countertop Bowl</h3>
+                        <div class="price-row"><span class="price-current">KSh 9,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card" data-category="Showers">
+                    <div class="product-image-box" style="background-image: url('images/glass-screen.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Showers</span>
+                        <h3>Tempered Glass Shower Screen</h3>
+                        <div class="price-row"><span class="price-current">KSh 28,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+                <button class="btn-rounded" onclick="toggleBathroomGrid()">
+                    <i class="fas fa-chevron-up"></i> Close
+                </button>
+            </div>
         </div>
-    </div>
-</section>
+      </section>
+
+      <section class="services-section">
+        <div class="container">
+            <div class="services-header">
+                <span class="subtitle">DURABILITY &amp; INFRASTRUCTURE</span>
+                <h2>Construction &amp; Piping</h2>
+                <p style="max-width: 600px; margin: 15px auto; color: #666; font-style: italic;">
+                    "Building the invisible foundation of reliability with high-grade industrial materials."
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-box construction-bg">
+                    <a href="javascript:void(0)" class="service-link" onclick="toggleConstructionGrid()">
+                        <div class="service-content">
+                            <h3>Piping &amp; Fittings</h3>
+                            <p>Full inventory of PPR, PVC, HDPE pipes, and heavy-duty valves for any project.</p>
+                            <div class="learn-more-btn">
+                                View Materials <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section id="construction-full-catalog" class="services-section hidden-grid" style="background-color: #f9f9f9; padding-top: 0;">
+        <div class="container">
+            <div class="blue-divider"></div>
+
+            <div class="search-container" style="max-width: 500px; margin: 0 auto 30px auto; position: relative;">
+                <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                <input type="text" id="constSearch" onkeyup="filterConst()" placeholder="Search pipes, valves, fittings..."
+                       style="width: 100%; padding: 15px 45px 15px 50px; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+                <i class="fas fa-times-circle" id="clearConstSearch" onclick="clearConstSearch()"
+                   style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer; display: none; z-index: 10;"></i>
+            </div>
+
+            <div id="noConstResults" style="display: none; text-align: center; padding: 40px; color: #666;">
+                <h3>Material not found</h3>
+                <p>Try searching for "PPR", "PVC", or "Valve".</p>
+            </div>
+
+            <div class="product-grid-detailed" id="constGrid">
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/ppr-pipe.png');"><span class="product-badge">PN20</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Piping</span>
+                        <h3>PPR Pipe (20mm x 4m)</h3>
+                        <div class="price-row"><span class="price-current">KSh 1,200</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/gate-valve.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Controls</span>
+                        <h3>Brass Gate Valve (1 Inch)</h3>
+                        <div class="price-row"><span class="price-current">KSh 2,800</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/hdpe-roll.png');"><span class="product-badge">Heavy Duty</span></div>
+                    <div class="product-details">
+                        <span class="category-label">Piping</span>
+                        <h3>HDPE Pipe Roll (32mm)</h3>
+                        <div class="price-row"><span class="price-current">KSh 14,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/pvc-pipe.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Drainage</span>
+                        <h3>uPVC Waste Pipe (4 Inch)</h3>
+                        <div class="price-row"><span class="price-current">KSh 3,200</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/manhole.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Infrastructure</span>
+                        <h3>Cast Iron Manhole Cover</h3>
+                        <div class="price-row"><span class="price-current">KSh 8,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/mastergulley.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Drainage</span>
+                        <h3>Master Gulley Trap</h3>
+                        <div class="price-row"><span class="price-current">KSh 1,800</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/ppr-fittings.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Fittings</span>
+                        <h3>PPR Elbow &amp; Tee Pack (Mixed)</h3>
+                        <div class="price-row"><span class="price-current">KSh 5,000</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/ball-valve.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Controls</span>
+                        <h3>PVC Ball Valve (Stopcock)</h3>
+                        <div class="price-row"><span class="price-current">KSh 950</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/braided-connectors.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Fittings</span>
+                        <h3>Braided Flexible Connectors</h3>
+                        <div class="price-row"><span class="price-current">KSh 1,400</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/water-meter.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Measurement</span>
+                        <h3>Residential Water Meter</h3>
+                        <div class="price-row"><span class="price-current">KSh 4,200</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/pressure-pump.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Pumps</span>
+                        <h3>Automatic Pressure Pump</h3>
+                        <div class="price-row"><span class="price-current">KSh 18,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/tank-connector.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Fittings</span>
+                        <h3>Tank Connector (Large)</h3>
+                        <div class="price-row"><span class="price-current">KSh 1,200</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/solvent.png');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Consumables</span>
+                        <h3>PVC Solvent Cement (500ml)</h3>
+                        <div class="price-row"><span class="price-current">KSh 850</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/thread-tape.jpg');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Consumables</span>
+                        <h3>PTFE Thread Seal Tape (Box)</h3>
+                        <div class="price-row"><span class="price-current">KSh 1,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-item-card">
+                    <div class="product-image-box" style="background-image: url('images/ppr-machine.jpg');"></div>
+                    <div class="product-details">
+                        <span class="category-label">Tools</span>
+                        <h3>PPR Pipe Welding Machine</h3>
+                        <div class="price-row"><span class="price-current">KSh 6,500</span></div>
+                        <a href="https://wa.me/254727935046" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <div class="qty-selector" style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                            <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">−</button>
+                            <input type="number" class="item-quantity" value="1" min="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:4px;text-align:center;">
+                            <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))" style="width:28px;height:28px;border:1px solid #ddd;border-radius:4px;background:#f5f5f5;cursor:pointer;font-size:1rem;">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart(this)">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding-bottom: 40px;">
+                <button class="btn-rounded" onclick="toggleConstructionGrid()">
+                    <i class="fas fa-chevron-up"></i> Close
+                </button>
+            </div>
+        </div>
+      </section>
+
+      <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-flex">
+                <div class="about-text">
+                    <span class="subtitle">Trusted Excellence</span>
+                    <h2>Expert Plumbing Services You Can Rely On</h2>
+
+                    <div class="counter-wrapper">
+                        <span id="counter">0</span>% Satisfaction Rate
+                    </div>
+
+                    <ul class="perks-list">
+                        <li><i class="fas fa-check-circle"></i> Plumbing Installations</li>
+                        <li><i class="fas fa-check-circle"></i> Certified &amp; Insured Plumbers</li>
+                        <li><i class="fas fa-check-circle"></i> Modern Leak Detection Technology</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="background:#0a192f; color:white;">Learn More</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/companycard.jfif" alt="Prime Line Plumbers at work">
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- FIX #3: Properly structured contact section — no nested section inside unclosed section -->
+      <section id="contact" class="section-contact">
+        <div class="container">
+            <div class="contact-header">
+                <span class="subtitle">GET IN TOUCH</span>
+                <h2>Request Professional Help</h2>
+                <p>Our team is ready to assist you 24/7 with any plumbing emergency.</p>
+            </div>
+        </div>
+      </section>
+
+      <section id="contact-help" style="background-color: #3b76b9; padding: 60px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div class="container" style="max-width: 1100px; margin: 0 auto;">
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="color: white; font-size: 2.2rem; margin-bottom: 10px;">Get In Touch</h2>
+                <div style="width: 60px; height: 3px; background: #f1c40f; margin: 0 auto;"></div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 40px;">
+
+                <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+
+                    <a href="tel:+254727935046" style="text-decoration: none; display: block;">
+                        <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);"
+                             onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                             onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                            <div style="margin-right: 20px;">
+                                <i class="fas fa-phone-alt" style="color: #f1c40f; font-size: 1.8rem; transform: rotate(90deg);"></i>
+                            </div>
+                            <div>
+                                <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Call Us</span>
+                                <span style="color: white; font-size: 1rem; opacity: 0.9;">+254 727 935 046</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="mailto:primeline98@gmail.com" style="text-decoration: none; display: block;">
+                        <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);"
+                             onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                             onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                            <div style="margin-right: 20px;">
+                                <i class="fas fa-envelope" style="color: #f1c40f; font-size: 1.8rem;"></i>
+                            </div>
+                            <div>
+                                <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Email Us</span>
+                                <span style="color: white; font-size: 1rem; opacity: 0.9;">primeline98@gmail.com</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div style="background-color: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.1);">
+                        <div style="margin-right: 20px;">
+                            <i class="fas fa-clock" style="color: #f1c40f; font-size: 1.8rem;"></i>
+                        </div>
+                        <div>
+                            <span style="display: block; color: white; font-weight: bold; font-size: 1.2rem; margin-bottom: 4px;">Working Hours</span>
+                            <span style="color: white; font-size: 1rem; opacity: 0.9;">24/7 Emergency Service</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="flex: 1.2; min-width: 350px;">
+                    <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                        <form class="contact-form" action="#">
+                            <div style="margin-bottom: 20px; position: relative;">
+                                <i class="fas fa-user" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
+                                <input type="text" placeholder="Full Name" style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9;">
+                            </div>
+                            <div style="margin-bottom: 20px; position: relative;">
+                                <i class="fas fa-envelope" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
+                                <input type="email" placeholder="Email Address" style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9;">
+                            </div>
+                            <div style="margin-bottom: 20px; position: relative;">
+                                <i class="fas fa-tools" style="position: absolute; left: 15px; top: 15px; color: #ccc;"></i>
+                                <select style="width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9; color: #666;">
+                                    <option>Select Service</option>
+                                    <option>Plumbing Installation</option>
+                                    <option>Maintenance &amp; Repair</option>
+                                    <option>Material Supply</option>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <textarea placeholder="Tell us about your project..." rows="4" style="width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 8px; outline: none; background: #f9f9f9; resize: none;"></textarea>
+                            </div>
+                            <button type="submit" style="width: 100%; padding: 15px; background-color: #f1c40f; border: none; border-radius: 8px; color: #333; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.3s;"
+                                    onmouseover="this.style.backgroundColor='#e1b30d'"
+                                    onmouseout="this.style.backgroundColor='#f1c40f'">
+                                Send Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </section>
+
+      <section class="reviews-section dark-theme" id="reviews">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--pure-white);">Client Perspectives</h2>
+            <p class="section-subtitle" style="color: var(--text-muted);">The standard of excellence as defined by those we serve.</p>
+
+            <div class="reviews-grid">
+                <div class="review-card glass-effect">
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Primeline handled our commercial office refit with absolute precision. Their immediate emergency response gave us total peace of mind."</p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">James K.</span>
+                        <span class="reviewer-location">Nairobi Central</span>
+                    </div>
+                </div>
+
+                <div class="review-card glass-effect">
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Finally, a plumbing service in Kenya that respects schedules. Clean work, professional team, and fair pricing."</p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">Sarah M.</span>
+                        <span class="reviewer-location">Karen Estates</span>
+                    </div>
+                </div>
+
+                <div class="review-card glass-effect">
+                    <div class="rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Best leak detection technology I've seen. They found a hidden pipe burst in minutes that others missed for weeks."</p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">David O.</span>
+                        <span class="reviewer-location">Westlands</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px;">
+            <button class="cta-button-outline" onclick="openReviewModal()">Share Your Experience</button>
+        </div>
+      </section>
+
+      <section id="locations" class="section-locations map-background-style">
+        <div class="map-overlay"></div>
+        <div class="container location-content">
+            <h2>Areas We Serve</h2>
+            <p>Providing 24/7 plumbing support across major hubs in Kenya.</p>
+
+            <div class="locations-grid">
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nairobi</span></div>
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Mombasa</span></div>
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Kisumu</span></div>
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nakuru</span></div>
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Eldoret</span></div>
+                <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Thika</span></div>
+            </div>
+        </div>
+      </section>
     </main>
-<footer class="main-footer">
-    <div class="container footer-grid">
-        <div class="footer-column">
-            <h3 class="footer-logo" style="letter-spacing: 2px;">PRIMELINE</h3>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">
-                Engineering excellence and plumbing reliability for Kenya's premier properties.
-            </p>
-            
-            <div class="satisfaction-badge-small">
-                <i class="fas fa-check-circle"></i>
-                <span>Guaranteed Workmanship</span>
-            </div>
 
-            <div class="social-icon-wrapper">
-                <a href="https://www.tiktok.com/@stanleykihanya?_r=1&_t=ZS-93erd8wtVEC" class="icon-link tk" target="_blank">
-                 <i class="fab fa-tiktok"></i>
-               </a>
-                <a href="#" class="icon-link fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="icon-link ig" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:primeline98@gmail.com" class="icon-link mail"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h3 class="footer-logo" style="letter-spacing: 2px;">PRIMELINE</h3>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">
+                    Engineering excellence and plumbing reliability for Kenya's premier properties.
+                </p>
 
-        <div class="footer-column">
-            <h3>Quick Links</h3>
-            <ul class="footer-links">
-                <li><a href="#top">Home</a></li>
-                <li><a href="#services">Our Services</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Get a Quote</a></li>
-            </ul>
-        </div>     
-
-        <div class="footer-column">
-            <h3>Support Center</h3>
-            <p style="margin-bottom: 10px;"><i class="fas fa-envelope"></i> primeline98@gmail.com</p>
-            
-            <a href="tel:+254727935046" class="emergency-link-wrapper">
-                <div class="emergency-call-box">
-                    <h4><i class="fas fa-phone-alt"></i> 24/7 EMERGENCY</h4>
-                    <p>+254 727 935 046</p>
+                <div class="satisfaction-badge-small">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Guaranteed Workmanship</span>
                 </div>
-            </a>
+
+                <div class="social-icon-wrapper">
+                    <a href="https://www.tiktok.com/@stanleykihanya?_r=1&_t=ZS-93erd8wtVEC" class="icon-link tk" target="_blank">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="icon-link fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="icon-link ig" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:primeline98@gmail.com" class="icon-link mail"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#top">Home</a></li>
+                    <li><a href="#services">Our Services</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Get a Quote</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Support Center</h3>
+                <p style="margin-bottom: 10px;"><i class="fas fa-envelope"></i> primeline98@gmail.com</p>
+
+                <a href="tel:+254727935046" class="emergency-link-wrapper">
+                    <div class="emergency-call-box">
+                        <h4><i class="fas fa-phone-alt"></i> 24/7 EMERGENCY</h4>
+                        <p>+254 727 935 046</p>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <p>&copy; 2026 Primeline Plumbing Solutions. All Rights Reserved.</p>
-    </div>
-</footer>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Primeline Plumbing Solutions. All Rights Reserved.</p>
+        </div>
+    </footer>
+
     <div id="success-modal" class="success-modal">
         <div class="modal-content">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
@@ -965,333 +1343,422 @@
         </div>
     </div>
 
-
-    <script>
-    const text = "Welcome to ";
-    const speed = 70; 
-    let i = 0;
-
-    function typeWriter() {
-        const element = document.getElementById("hero-title");
-        
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, speed);
-        } else {
-            // Text is finished! Wait 2 seconds, then disappear
-            setTimeout(() => {
-                element.classList.add("fade-out");
-            }, 2000); 
-        }
-    }
-
-    window.onload = typeWriter;
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Counter Logic
-            let count = 0;
-            const counterElement = document.getElementById("counter");
-            if (counterElement) {
-                const interval = setInterval(() => {
-                    if (count >= 100) {
-                        clearInterval(interval);
-                    } else {
-                        count++;
-                        counterElement.textContent = count;
-                    }
-                }, 20);
-            }
-
-            // 2. Form Submission
-            const contactForm = document.querySelector('.contact-form');
-            const modal = document.getElementById('success-modal');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    if (modal) { modal.style.display = 'flex'; }
-                });
-            }
-        });
-
-        // 3. Modal Close
-        function closeModal() {
-            const modal = document.getElementById('success-modal');
-            if (modal) { modal.style.display = 'none'; }
-            document.querySelector('.contact-form').reset();
-        }
-        function openReviewModal() {
-    document.getElementById('reviewModal').style.display = 'flex';
-}
-
-function closeReviewModal() {
-    document.getElementById('reviewModal').style.display = 'none';
-}
-
-// Close if user clicks outside the box
-window.onclick = function(event) {
-    let modal = document.getElementById('reviewModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-function handleReviewSubmit(event) {
-    event.preventDefault(); // Prevents the page from refreshing
-    
-    // 1. Hide the form
-    document.getElementById('reviewFormContainer').style.display = 'none';
-    
-    // 2. Show the success message
-    document.getElementById('reviewSuccessMessage').style.display = 'block';
-    
-    // Optional: Log data or send to server here
-    console.log("Review submitted successfully");
-}
-
-// Update your existing close function to reset the form for the next time
-function closeReviewModal() {
-    document.getElementById('reviewModal').style.display = 'none';
-    
-    // Reset the modal state after it closes so the form comes back
-    setTimeout(() => {
-        document.getElementById('reviewFormContainer').style.display = 'block';
-        document.getElementById('reviewSuccessMessage').style.display = 'none';
-        document.getElementById('reviewForm').reset();
-    }, 500);
-}
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.querySelectorAll('.main-nav a, .cta-button, .footer-links a');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-
-            // Process only internal hash links
-            if (targetId && targetId.startsWith('#') && targetId !== '#') {
-                e.preventDefault(); // Prevent instant jump
-
-                // 1. Close the menu immediately
-                menuToggle.checked = false;
-
-                // 2. WAIT for the menu animation to finish (0.4s in your CSS)
-                // This ensures the page layout is back to normal height
-                setTimeout(() => {
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = 100; // Height of your sticky header
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 450); // 450ms matches your 0.4s CSS transition + small buffer
-            }
-        });
-    });
-});
-function toggleKitchenGrid() {
-    const grid = document.getElementById('kitchen-full-catalog');
-    const isOpening = !grid.classList.contains('show-grid');
-    
-    if (isOpening) {
-        // OPENING logic
-        grid.classList.add('show-grid');
-        setTimeout(() => {
-            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    } else {
-        // CLOSING logic
-        // 1. Find the section title to scroll back to
-        const scrollTarget = document.querySelector('.subtitle'); 
-        
-        // 2. Scroll up first
-        window.scrollTo({
-            top: scrollTarget.offsetTop - 100, 
-            behavior: 'smooth'
-        });
-
-        // 3. Hide the grid after a small delay so the scroll feels natural
-        setTimeout(() => {
-            grid.classList.remove('show-grid');
-        }, 300);
-    }
-}
-function clearProductSearch() {
-    const input = document.getElementById('productSearch');
-    input.value = '';
-    filterProducts(); // This resets the grid visibility
-}
-
-// Update your existing filterProducts function slightly:
-function filterProducts() {
-    const input = document.getElementById('productSearch');
-    const clearBtn = document.getElementById('clearSearch');
-    const filter = input.value.toLowerCase();
-    
-    // Show/Hide clear button
-    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
-
-    const cards = document.getElementsByClassName('product-item-card');
-    const noResults = document.getElementById('noResults');
-    let visibleCount = 0;
-
-    for (let i = 0; i < cards.length; i++) {
-        const title = cards[i].querySelector('h3').innerText.toLowerCase();
-        const category = cards[i].querySelector('.category-label').innerText.toLowerCase();
-        
-        if (title.includes(filter) || category.includes(filter)) {
-            cards[i].style.display = ""; 
-            visibleCount++;
-        } else {
-            cards[i].style.display = "none"; 
-        }
-    }
-    noResults.style.display = visibleCount === 0 ? "block" : "none";
-}
-function toggleBathroomGrid() {
-    const grid = document.getElementById('bathroom-full-catalog');
-    if (!grid.classList.contains('show-grid')) {
-        grid.classList.add('show-grid');
-        setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth' }); }, 100);
-    } else {
-        const portal = document.querySelector('.bathroom-bg');
-        window.scrollTo({ top: portal.offsetTop - 150, behavior: 'smooth' });
-        setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
-    }
-}
-
-function filterBathroom() {
-    const input = document.getElementById('bathroomSearch');
-    const clearBtn = document.getElementById('clearBathSearch');
-    const filter = input.value.toLowerCase();
-    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
-
-    const cards = document.querySelectorAll('#bathroomGrid .product-item-card');
-    let count = 0;
-    cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(filter)) {
-            card.style.display = "";
-            count++;
-        } else {
-            card.style.display = "none";
-        }
-    });
-    document.getElementById('noBathResults').style.display = count === 0 ? "block" : "none";
-}
-
-function clearBathSearch() {
-    document.getElementById('bathroomSearch').value = '';
-    filterBathroom();
-}
-
-function toggleConstructionGrid() {
-    // 1. Find the hidden catalog by its ID
-    const grid = document.getElementById('construction-full-catalog');
-    
-    // 2. Check if it's already open
-    const isOpening = !grid.classList.contains('show-grid');
-    
-    if (isOpening) {
-        // 3. Add the class to drop it down/show it
-        grid.classList.add('show-grid');
-        
-        // 4. Smooth scroll so the user sees the products immediately
-        setTimeout(() => {
-            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    } else {
-        // 5. Close it and scroll back up to the portal card
-        const portal = document.querySelector('.construction-bg');
-        window.scrollTo({ top: portal.offsetTop - 100, behavior: 'smooth' });
-        
-        setTimeout(() => {
-            grid.classList.remove('show-grid');
-        }, 400);
-    }
-}
-function filterConst() {
-    // 1. Get input elements
-    let input = document.getElementById('constSearch');
-    let filter = input.value.toLowerCase();
-    let grid = document.getElementById('constGrid');
-    let cards = grid.getElementsByClassName('product-item-card');
-    let clearBtn = document.getElementById('clearConstSearch');
-    let noResults = document.getElementById('noConstResults');
-    let visibleCount = 0;
-
-    // 2. Toggle clear button visibility
-    clearBtn.style.display = filter.length > 0 ? 'block' : 'none';
-
-    // 3. Loop through cards and filter
-    for (let i = 0; i < cards.length; i++) {
-        // Search inside the <h3> tag for the product name
-        let title = cards[i].querySelector('h3').innerText;
-        // Search inside the category label as well
-        let category = cards[i].querySelector('.category-label').innerText;
-        
-        if (title.toLowerCase().indexOf(filter) > -1 || category.toLowerCase().indexOf(filter) > -1) {
-            cards[i].style.display = "";
-            visibleCount++;
-        } else {
-            cards[i].style.display = "none";
-        }
-    }
-    function clearConstSearch() {
-    let input = document.getElementById('constSearch');
-    input.value = "";
-    filterConst(); // Reset the grid
-    input.focus();
-}
-
-    // 4. Show "Not Found" message if no matches
-    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-}
-    </script>
+    <!-- ===== CART DRAWER ===== -->
+    <div id="cartOverlay" onclick="closeCart()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;"></div>
+    <div id="cartDrawer" style="position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100%;background:#fff;z-index:9999;box-shadow:-4px 0 20px rgba(0,0,0,0.15);display:flex;flex-direction:column;transition:right 0.35s cubic-bezier(.4,0,.2,1);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid #eee;background:#0a192f;">
+            <h3 style="margin:0;color:#fff;font-size:1.2rem;"><i class="fas fa-shopping-cart" style="margin-right:8px;color:#f1c40f;"></i>Your Cart <span id="cartCount" style="background:#f1c40f;color:#333;border-radius:50%;padding:2px 8px;font-size:0.85rem;margin-left:6px;">0</span></h3>
+            <button onclick="closeCart()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button>
+        </div>
+        <div id="cartItems" style="flex:1;overflow-y:auto;padding:16px 24px;"></div>
+        <div style="padding:16px 24px;border-top:1px solid #eee;background:#f9f9f9;">
+            <div style="display:flex;justify-content:space-between;font-size:1rem;margin-bottom:6px;">
+                <span style="color:#666;">Subtotal</span>
+                <span id="cartSubtotal" style="font-weight:700;color:#0a192f;">KSh 0</span>
+            </div>
+            <div id="cartEmpty" style="text-align:center;color:#aaa;padding:10px 0;font-size:0.95rem;">Your cart is empty.</div>
+            <a id="cartWhatsapp" href="#" target="_blank" style="display:none;width:100%;margin-top:12px;padding:14px;background:#25d366;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;text-align:center;text-decoration:none;border-radius:8px;">
+                <i class="fab fa-whatsapp"></i> Send Order via WhatsApp
+            </a>
+            <button onclick="clearCart()" id="clearCartBtn" style="display:none;width:100%;margin-top:8px;padding:10px;background:#fff;color:#e74c3c;border:1px solid #e74c3c;border-radius:8px;font-size:0.9rem;cursor:pointer;">
+                <i class="fas fa-trash"></i> Clear Cart
+            </button>
+        </div>
+    </div>
     <a href="#" class="back-to-top" id="backToTop">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<a href="https://wa.me/254727935046" class="floating-whatsapp" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
-<div id="reviewModal" class="modal-overlay">
-   <div class="modal-content-premium">
-    <span class="close-modal" onclick="closeReviewModal()">&times;</span>
-    
-    <div id="reviewFormContainer">
-        <h3>Submit a Review</h3>
-        <p>Your feedback helps us maintain the Primeline Standard.</p>
-        
-        <form id="reviewForm" onsubmit="handleReviewSubmit(event)">
-            <div class="rating-input">
-                <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
-                <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
-                <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
-                <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
-                <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <a href="https://wa.me/254727935046" class="floating-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- FIX #2: Corrected review modal HTML structure — div and form nesting fully repaired -->
+    <div id="reviewModal" class="modal-overlay">
+        <div class="modal-content-premium">
+            <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+
+            <div id="reviewFormContainer">
+                <h3>Submit a Review</h3>
+                <p>Your feedback helps us maintain the Primeline Standard.</p>
+
+                <form id="reviewForm" onsubmit="handleReviewSubmit(event)">
+                    <div class="rating-input">
+                        <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+                        <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+                        <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+                        <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+                        <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+                    </div>
+
+                    <div class="input-stack">
+                        <input type="text" placeholder="Your Full Name" required>
+                        <input type="text" placeholder="Your Location (e.g. Westlands)" required>
+                        <textarea placeholder="Share your experience with our engineering team..." rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Perspective</button>
+                </form>
+            </div>
+
+            <div id="reviewSuccessMessage" style="display: none;">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h3>Review Received</h3>
+                <p>Thank you for choosing Primeline Plumbing Solutions.</p>
+                <button class="cta-button-outline" onclick="closeReviewModal()" style="margin-top: 20px;">Return to Site</button>
             </div>
         </div>
-
-            <div class="input-stack">
-                <input type="text" placeholder="Your Full Name" required>
-                <input type="text" placeholder="Your Location (e.g. Westlands)" required>
-                <textarea placeholder="Share your experience with our engineering team..." rows="4" required></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Submit Perspective</button>
-        </form>
     </div>
 
-    <div id="reviewSuccessMessage" style="display: none;">
-        <i class="fas fa-check-circle success-icon"></i>
-        <h3>Review Received</h3>
-        <p>Thank you for choosing Primeline Plumbing Solutions.</p>
-        <button class="cta-button-outline" onclick="closeReviewModal()" style="margin-top: 20px;">Return to Site</button>
-    </div>
-</div>
+    <script>
+    // FIX #6: Use a single DOMContentLoaded listener for all initialisation
+    document.addEventListener("DOMContentLoaded", () => {
+
+        // --- Typewriter ---
+        const text = "Welcome to ";
+        const speed = 70;
+        let i = 0;
+        function typeWriter() {
+            const element = document.getElementById("hero-title");
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                setTimeout(() => { element.classList.add("fade-out"); }, 2000);
+            }
+        }
+        typeWriter();
+
+        // FIX #bonus: Counter now triggers on scroll into view, not immediately on load
+        const counterElement = document.getElementById("counter");
+        let counterStarted = false;
+        if (counterElement) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !counterStarted) {
+                    counterStarted = true;
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        if (count >= 100) {
+                            clearInterval(interval);
+                        } else {
+                            count++;
+                            counterElement.textContent = count;
+                        }
+                    }, 20);
+                }
+            });
+            observer.observe(counterElement);
+        }
+
+        // --- Form Submission ---
+        const contactForm = document.querySelector('.contact-form');
+        const modal = document.getElementById('success-modal');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (modal) { modal.style.display = 'flex'; }
+            });
+        }
+
+        // --- Smooth scroll nav links ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.querySelectorAll('.main-nav a, .cta-button, .footer-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#') && targetId !== '#') {
+                    e.preventDefault();
+                    menuToggle.checked = false;
+                    setTimeout(() => {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = 100;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                        }
+                    }, 450);
+                }
+            });
+        });
+    });
+
+    // --- Modal Close ---
+    function closeModal() {
+        const modal = document.getElementById('success-modal');
+        if (modal) { modal.style.display = 'none'; }
+        const form = document.querySelector('.contact-form');
+        if (form) { form.reset(); }
+    }
+
+    // --- Review Modal ---
+    function openReviewModal() {
+        document.getElementById('reviewModal').style.display = 'flex';
+    }
+
+    function closeReviewModal() {
+        document.getElementById('reviewModal').style.display = 'none';
+        setTimeout(() => {
+            document.getElementById('reviewFormContainer').style.display = 'block';
+            document.getElementById('reviewSuccessMessage').style.display = 'none';
+            document.getElementById('reviewForm').reset();
+        }, 500);
+    }
+
+    window.onclick = function(event) {
+        let modal = document.getElementById('reviewModal');
+        if (event.target == modal) { modal.style.display = "none"; }
+    };
+
+    function handleReviewSubmit(event) {
+        event.preventDefault();
+        document.getElementById('reviewFormContainer').style.display = 'none';
+        document.getElementById('reviewSuccessMessage').style.display = 'block';
+    }
+
+    // --- Kitchen Grid Toggle ---
+    function toggleKitchenGrid() {
+        const grid = document.getElementById('kitchen-full-catalog');
+        const isOpening = !grid.classList.contains('show-grid');
+        if (isOpening) {
+            grid.classList.add('show-grid');
+            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+        } else {
+            const scrollTarget = document.querySelector('.subtitle');
+            window.scrollTo({ top: scrollTarget.offsetTop - 100, behavior: 'smooth' });
+            setTimeout(() => { grid.classList.remove('show-grid'); }, 300);
+        }
+    }
+
+    // FIX #4 & #5: filterProducts now scopes to kitchenGrid only and noResults element exists
+    function filterProducts() {
+        const input = document.getElementById('productSearch');
+        const clearBtn = document.getElementById('clearSearch');
+        const filter = input.value.toLowerCase();
+        clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+
+        const cards = document.querySelectorAll('#kitchenGrid .product-item-card');
+        const noResults = document.getElementById('noResults');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const category = card.querySelector('.category-label').innerText.toLowerCase();
+            if (title.includes(filter) || category.includes(filter)) {
+                card.style.display = "";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    function clearProductSearch() {
+        const input = document.getElementById('productSearch');
+        input.value = '';
+        filterProducts();
+    }
+
+    // --- Bathroom Grid Toggle ---
+    function toggleBathroomGrid() {
+        const grid = document.getElementById('bathroom-full-catalog');
+        if (!grid.classList.contains('show-grid')) {
+            grid.classList.add('show-grid');
+            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth' }); }, 100);
+        } else {
+            const portal = document.querySelector('.bathroom-bg');
+            window.scrollTo({ top: portal.offsetTop - 150, behavior: 'smooth' });
+            setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
+        }
+    }
+
+    function filterBathroom() {
+        const input = document.getElementById('bathroomSearch');
+        const clearBtn = document.getElementById('clearBathSearch');
+        const filter = input.value.toLowerCase();
+        clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+
+        const cards = document.querySelectorAll('#bathroomGrid .product-item-card');
+        let count = 0;
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (text.includes(filter)) {
+                card.style.display = "";
+                count++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+        document.getElementById('noBathResults').style.display = count === 0 ? "block" : "none";
+    }
+
+    function clearBathSearch() {
+        document.getElementById('bathroomSearch').value = '';
+        filterBathroom();
+    }
+
+    // --- Construction Grid Toggle ---
+    function toggleConstructionGrid() {
+        const grid = document.getElementById('construction-full-catalog');
+        const isOpening = !grid.classList.contains('show-grid');
+        if (isOpening) {
+            grid.classList.add('show-grid');
+            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+        } else {
+            const portal = document.querySelector('.construction-bg');
+            window.scrollTo({ top: portal.offsetTop - 100, behavior: 'smooth' });
+            setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
+        }
+    }
+
+    function filterConst() {
+        let input = document.getElementById('constSearch');
+        let filter = input.value.toLowerCase();
+        let grid = document.getElementById('constGrid');
+        let cards = grid.getElementsByClassName('product-item-card');
+        let clearBtn = document.getElementById('clearConstSearch');
+        let noResults = document.getElementById('noConstResults');
+        let visibleCount = 0;
+
+        clearBtn.style.display = filter.length > 0 ? 'block' : 'none';
+
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].querySelector('h3').innerText;
+            let category = cards[i].querySelector('.category-label').innerText;
+            if (title.toLowerCase().indexOf(filter) > -1 || category.toLowerCase().indexOf(filter) > -1) {
+                cards[i].style.display = "";
+                visibleCount++;
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // FIX #1: clearConstSearch moved OUTSIDE filterConst so it's globally accessible
+    function clearConstSearch() {
+        let input = document.getElementById('constSearch');
+        input.value = "";
+        filterConst();
+        input.focus();
+    }
+
+    // ===== CART SYSTEM =====
+    let cart = [];
+
+    function addToCart(btn) {
+        const card = btn.closest('.product-item-card');
+        const name = card.querySelector('h3').innerText.trim();
+        const priceEl = card.querySelector('.price-current');
+        const priceText = priceEl ? priceEl.innerText.trim() : 'KSh 0';
+        const priceNum = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
+        const qtyInput = card.querySelector('.item-quantity');
+        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+        const existing = cart.find(i => i.name === name);
+        if (existing) {
+            existing.qty += qty;
+        } else {
+            cart.push({ name, price: priceNum, priceText, qty });
+        }
+
+        // Flash button
+        btn.classList.add('added');
+        btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+        setTimeout(() => {
+            btn.classList.remove('added');
+            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+        }, 1500);
+
+        updateCartUI();
+        openCart();
+    }
+
+    function updateCartUI() {
+        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+
+        // Badge
+        const badge = document.getElementById('cartBadge');
+        const countEl = document.getElementById('cartCount');
+        badge.textContent = totalItems;
+        countEl.textContent = totalItems;
+        badge.style.display = totalItems > 0 ? 'flex' : 'none';
+
+        // Subtotal
+        document.getElementById('cartSubtotal').textContent = 'KSh ' + total.toLocaleString();
+
+        // Empty state
+        const emptyEl = document.getElementById('cartEmpty');
+        const waBtn = document.getElementById('cartWhatsapp');
+        const clearBtn = document.getElementById('clearCartBtn');
+        emptyEl.style.display = cart.length === 0 ? 'block' : 'none';
+        waBtn.style.display = cart.length > 0 ? 'block' : 'none';
+        clearBtn.style.display = cart.length > 0 ? 'block' : 'none';
+
+        // Items
+        const container = document.getElementById('cartItems');
+        container.innerHTML = '';
+        cart.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div style="flex:1;">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">${item.priceText} each</div>
+                    <div class="cart-item-controls">
+                        <button class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)">−</button>
+                        <input class="cart-qty-input" type="number" value="${item.qty}" min="1" onchange="setCartQty(${idx}, this.value)">
+                        <button class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
+                        <button class="cart-remove-btn" onclick="removeFromCart(${idx})"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                </div>
+                <div style="font-weight:700;color:#0a192f;white-space:nowrap;">KSh ${(item.price * item.qty).toLocaleString()}</div>`;
+            container.appendChild(div);
+        });
+
+        // WhatsApp order link
+        if (cart.length > 0) {
+            let msg = 'Hello Primeline Plumbing Solutions, I would like to order:\n\n';
+            cart.forEach(i => {
+                msg += `• ${i.name} x${i.qty} @ ${i.priceText} each\n`;
+            });
+            msg += `\nTotal: KSh ${total.toLocaleString()}`;
+            waBtn.href = 'https://wa.me/254727935046?text=' + encodeURIComponent(msg);
+        }
+    }
+
+    function changeCartQty(idx, delta) {
+        cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+        updateCartUI();
+    }
+
+    function setCartQty(idx, val) {
+        cart[idx].qty = Math.max(1, parseInt(val) || 1);
+        updateCartUI();
+    }
+
+    function removeFromCart(idx) {
+        cart.splice(idx, 1);
+        updateCartUI();
+    }
+
+    function clearCart() {
+        cart = [];
+        updateCartUI();
+    }
+
+    function openCart() {
+        document.getElementById('cartDrawer').style.right = '0';
+        document.getElementById('cartOverlay').style.display = 'block';
+    }
+
+    function closeCart() {
+        document.getElementById('cartDrawer').style.right = '-420px';
+        document.getElementById('cartOverlay').style.display = 'none';
+    }
+    </script>
 </body>
 </html>
