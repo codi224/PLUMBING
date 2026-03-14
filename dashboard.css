@@ -109,6 +109,7 @@ button { font-family: var(--font); cursor: pointer; }
 .card-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.8px; color: rgba(61,133,198,0.75); text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
 .card-title i { color: var(--accent-yellow); }
 
+
 /* BADGES */
 .badge { display: inline-block; padding: 3px 11px; border-radius: 50px; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
 .badge.active    { background: rgba(40,167,69,0.12);  color: #5de07a; border: 1px solid rgba(40,167,69,0.3); }
