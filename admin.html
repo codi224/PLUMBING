@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plumber Admin — Primeline</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Done</span></div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="mark"><i class="fas fa-tint"></i></div>
+      <h2>PRIMELINE</h2>
+      <p>Plumber Admin Panel</p>
+    </div>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-field">
+      <label>Email</label>
+      <input type="email" id="adminEmail" placeholder="admin@primelineplumbing.co.ke">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-submit" onclick="doLogin()">Sign In to Admin Panel</button>
+    <p class="login-note">Authorised Primeline staff only</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminWrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon"><i class="fas fa-tint"></i></span>
+        <div>
+          <span class="logo-name">Primeline</span>
+          <span class="logo-sub">Admin Panel</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <div class="nav-item active" onclick="showPanel('overview',this)"><i class="fas fa-th-large"></i><span>Overview</span></div>
+        <div class="nav-section-label">Clients</div>
+        <div class="nav-item" onclick="showPanel('clients',this)"><i class="fas fa-users"></i><span>All Clients</span></div>
+        <div class="nav-section-label">Manage</div>
+        <div class="nav-item" onclick="showPanel('projects',this)"><i class="fas fa-hard-hat"></i><span>Projects</span></div>
+        <div class="nav-item" onclick="showPanel('quotes',this)"><i class="fas fa-file-invoice"></i><span>Quotations</span></div>
+        <div class="nav-item" onclick="showPanel('invoices',this)"><i class="fas fa-receipt"></i><span>Invoices</span></div>
+        <div class="nav-item" onclick="showPanel('photos',this)"><i class="fas fa-images"></i><span>Progress Photos</span></div>
+        <div class="nav-item" onclick="showPanel('documents',this)"><i class="fas fa-folder"></i><span>Documents</span></div>
+        <div class="nav-item" onclick="showPanel('messages',this)"><i class="fas fa-comments"></i><span>Messages</span></div>
+        <div class="nav-item" onclick="showPanel('notifications',this)"><i class="fas fa-bell"></i><span>Notifications</span></div>
+        <div class="nav-section-label">Settings</div>
+        <div class="nav-item" onclick="showPanel('profile',this)"><i class="fas fa-id-badge"></i><span>Plumber Profile</span></div>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="topbar-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')"><i class="fas fa-bars"></i></button>
+        <span class="topbar-title" id="pageTitle">Overview</span>
+        <span class="topbar-badge">ADMIN</span>
+      </div>
+
+      <div class="content">
+
+        <!-- OVERVIEW -->
+        <div class="panel active" id="panel-overview">
+          <div class="section-header">
+            <div><div class="section-title">Admin Overview</div><div class="section-sub">Real-time summary of all client activity</div></div>
+          </div>
+          <div class="stats-row">
+            <div class="stat"><div class="stat-icon">👥</div><div class="stat-val" id="ovClients">—</div><div class="stat-lbl">Total Clients</div></div>
+            <div class="stat"><div class="stat-icon">🔨</div><div class="stat-val" id="ovProjects">—</div><div class="stat-lbl">Active Projects</div></div>
+            <div class="stat"><div class="stat-icon">📄</div><div class="stat-val" id="ovQuotes">—</div><div class="stat-lbl">Pending Quotes</div></div>
+            <div class="stat"><div class="stat-icon">💬</div><div class="stat-val" id="ovMessages">—</div><div class="stat-lbl">Unread Messages</div></div>
+            <div class="stat"><div class="stat-icon">🧾</div><div class="stat-val" id="ovUnpaid">—</div><div class="stat-lbl">Unpaid Invoices</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-clock"></i> Recent Requests</div>
+            <div id="recentRequests"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- ALL CLIENTS -->
+        <div class="panel" id="panel-clients">
+          <div class="section-header">
+            <div><div class="section-title">All Clients</div><div class="section-sub">Search by email to select a client and manage their account</div></div>
+          </div>
+          <div class="client-search-wrap">
+            <i class="fas fa-search"></i>
+            <input class="client-search" id="clientSearchInput" placeholder="Search client by email..." oninput="searchClients()">
+          </div>
+          <div class="card">
+            <div id="clientList"><div class="empty"><i class="fas fa-search"></i><p>Search for a client above to view and select their account.</p></div></div>
+          </div>
+          <div class="card" id="selectedClientCard" style="display:none; border-color: rgba(230,190,12,0.3);">
+            <div class="card-title"><i class="fas fa-user-check"></i> Selected Client</div>
+            <div id="selectedClientInfo"></div>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="panel" id="panel-projects">
+          <div class="section-header">
+            <div><div class="section-title">Projects</div><div class="section-sub">Create and update client projects</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> New / Update Project</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Client UID <span style="color:rgba(230,190,12,0.6);font-size:0.7rem;">(select from Clients tab first)</span></label>
+                <input class="form-input" id="projUID" placeholder="Client UID auto-fills after selection" readonly style="opacity:0.6;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Title</label>
+                <input class="form-input" id="projTitle" placeholder="e.g. Bathroom Refit — Karen">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Location</label>
+                <input class="form-input" id="projLocation" placeholder="e.g. Karen, Nairobi">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="projStatus">
+                  <option value="pending">Pending</option>
+                  <option value="active">Active</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Start Date</label>
+                <input class="form-input" id="projStart" type="date">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Current Phase</label>
+                <input class="form-input" id="projPhase" placeholder="e.g. Pipe installation">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Progress — <span id="progVal">0</span>%</label>
+                <input type="range" id="projProgress" min="0" max="100" value="0" oninput="document.getElementById('progVal').textContent=this.value; document.getElementById('progBar').style.width=this.value+'%'">
+                <div class="progress-bar"><div class="progress-fill" id="progBar" style="width:0%"></div></div>
+              </div>
+            </div>
+            <button class="form-submit" onclick="saveProject()"><i class="fas fa-save" style="margin-right:8px;"></i>Save Project</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-list"></i> All Projects</div>
+            <div id="projectsTable"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- QUOTATIONS -->
+        <div class="panel" id="panel-quotes">
+          <div class="section-header">
+            <div><div class="section-title">Quotations</div><div class="section-sub">Send itemised material quotes to clients</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> New Quotation</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Client UID</label>
+                <input class="form-input" id="quoteUID" placeholder="Auto-fills from Clients tab" readonly style="opacity:0.6;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Quote Title</label>
+                <input class="form-input" id="quoteTitle" placeholder="e.g. Materials for Karen Refit">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Name</label>
+                <input class="form-input" id="quoteProjName" placeholder="e.g. Bathroom Refit — Karen">
+              </div>
+            </div>
+            <div style="margin: 14px 0 6px;">
+              <label class="form-label">Line Items</label>
+            </div>
+            <div id="quoteLines">
+              <div class="quote-line">
+                <input class="form-input" placeholder="Item name (e.g. PPR Pipe 20mm x 4m)">
+                <input class="form-input qty" placeholder="Qty" type="number" min="1" value="1">
+                <input class="form-input price" placeholder="KSh" type="number" min="0">
+                <button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+            <button class="add-line-btn" onclick="addQuoteLine()"><i class="fas fa-plus"></i> Add Line Item</button>
+            <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.82rem;color:rgba(203,213,224,0.5);">Quote Total</span>
+              <span style="font-size:1.1rem;font-weight:800;color:var(--pure-white);" id="quoteTotal">KSh 0</span>
+            </div>
+            <button class="form-submit" onclick="sendQuote()"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send Quote to Client</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-list"></i> Sent Quotes</div>
+            <div id="quotesTable"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- INVOICES -->
+        <div class="panel" id="panel-invoices">
+          <div class="section-header">
+            <div><div class="section-title">Invoices</div><div class="section-sub">Create and manage client invoices</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-plus-circle"></i> New Invoice</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Client UID</label>
+                <input class="form-input" id="invUID" placeholder="Auto-fills from Clients tab" readonly style="opacity:0.6;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Invoice Number</label>
+                <input class="form-input" id="invNo" placeholder="e.g. INV-2026-001">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <input class="form-input" id="invDesc" placeholder="e.g. Bathroom refit — labour & materials">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Amount (KSh)</label>
+                <input class="form-input" id="invAmount" type="number" placeholder="e.g. 85000">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Due Date</label>
+                <input class="form-input" id="invDue" type="date">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="invStatus">
+                  <option value="unpaid">Unpaid</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </div>
+            </div>
+            <button class="form-submit" onclick="saveInvoice()"><i class="fas fa-save" style="margin-right:8px;"></i>Save Invoice</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-list"></i> All Invoices</div>
+            <div id="invoicesTable"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- PROGRESS PHOTOS -->
+        <div class="panel" id="panel-photos">
+          <div class="section-header">
+            <div><div class="section-title">Progress Photos</div><div class="section-sub">Upload site photos that will appear in the client's dashboard</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-upload"></i> Upload Photos</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Client UID</label>
+                <input class="form-input" id="photoUID" placeholder="Auto-fills from Clients tab" readonly style="opacity:0.6;">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Caption</label>
+                <input class="form-input" id="photoCaption" placeholder="e.g. Pipework complete — day 3">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Photo URL</label>
+                <input class="form-input" id="photoURL" placeholder="Paste image URL (Firebase Storage, Imgur, etc.)">
+                <small style="color:rgba(203,213,224,0.35);font-size:0.72rem;margin-top:4px;">Upload your photo to Firebase Storage first and paste the download URL here.</small>
+              </div>
+            </div>
+            <button class="form-submit" onclick="savePhoto()"><i class="fas fa-upload" style="margin-right:8px;"></i>Upload Photo</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-images"></i> Uploaded Photos</div>
+            <div id="photosTable"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="panel" id="panel-documents">
+          <div class="section-header">
+            <div><div class="section-title">Documents</div><div class="section-sub">Upload certificates, warranties, and permits for clients</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-upload"></i> Upload Document</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Client UID</label>
+                <input class="form-input" id="docUID" placeholder="Auto-fills from Clients tab" readonly style="opacity:0.6;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Document Name</label>
+                <input class="form-input" id="docName" placeholder="e.g. Completion Certificate">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Document Type</label>
+                <select class="form-select" id="docType">
+                  <option value="pdf">PDF</option>
+                  <option value="doc">Word Doc</option>
+                  <option value="image">Image</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Document URL</label>
+                <input class="form-input" id="docURL" placeholder="Paste document URL from Firebase Storage or Google Drive">
+              </div>
+            </div>
+            <button class="form-submit" onclick="saveDocument()"><i class="fas fa-save" style="margin-right:8px;"></i>Save Document</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-list"></i> Uploaded Documents</div>
+            <div id="docsTable"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="panel" id="panel-messages">
+          <div class="section-header">
+            <div><div class="section-title">Messages</div><div class="section-sub">Reply to client messages as the plumber</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-user"></i> Messaging Client</div>
+            <div id="msgClientName" style="font-size:0.85rem;color:rgba(203,213,224,0.5);margin-bottom:16px;">Select a client from the Clients tab first</div>
+            <div class="msg-thread" id="adminMsgThread"></div>
+            <div class="msg-send-row">
+              <input class="msg-input" id="adminMsgInput" placeholder="Type a reply as plumber..." onkeydown="if(event.key==='Enter')sendAdminMessage()">
+              <button class="msg-send-btn" onclick="sendAdminMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="panel" id="panel-notifications">
+          <div class="section-header">
+            <div><div class="section-title">Push Notifications</div><div class="section-sub">Send alerts directly to a client's dashboard</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-bell"></i> Send Notification</div>
+            <div class="form-group full" style="margin-bottom:14px;">
+              <label class="form-label">Client UID</label>
+              <input class="form-input" id="notifUID" placeholder="Auto-fills from Clients tab" readonly style="opacity:0.6;">
+            </div>
+            <div style="margin-bottom:14px;">
+              <label class="form-label" style="display:block;margin-bottom:8px;">Type</label>
+              <div class="notif-type-grid">
+                <div class="notif-type-btn selected" onclick="selectNotifType(this,'info')"><i class="fas fa-info-circle" style="color:#3d85c6;"></i>Info</div>
+                <div class="notif-type-btn" onclick="selectNotifType(this,'success')"><i class="fas fa-check-circle" style="color:#28a745;"></i>Success</div>
+                <div class="notif-type-btn" onclick="selectNotifType(this,'warning')"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i>Warning</div>
+                <div class="notif-type-btn" onclick="selectNotifType(this,'quote')"><i class="fas fa-file-invoice" style="color:#e6be0c;"></i>Quote</div>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Title</label>
+                <input class="form-input" id="notifTitle" placeholder="e.g. Quote Ready for Review">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Time Label</label>
+                <input class="form-input" id="notifTime" placeholder="e.g. Just now">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Message Body</label>
+                <textarea class="form-textarea" id="notifBody" placeholder="e.g. Your plumber has submitted a new quotation for your Karen project. Please review and approve."></textarea>
+              </div>
+            </div>
+            <button class="form-submit" onclick="sendNotification()"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send Notification</button>
+          </div>
+        </div>
+
+        <!-- PLUMBER PROFILE -->
+        <div class="panel" id="panel-profile">
+          <div class="section-header">
+            <div><div class="section-title">Plumber Profile</div><div class="section-sub">This card appears in every client's dashboard for verification</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-id-badge"></i> Edit Profile Card</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input class="form-input" id="pName" placeholder="e.g. John Kamau" oninput="updateProfilePreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Role / Specialisation</label>
+                <input class="form-input" id="pRole" placeholder="e.g. Senior Plumbing Technician" oninput="updateProfilePreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input class="form-input" id="pPhone" placeholder="+254 7XX XXX XXX">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Experience</label>
+                <input class="form-input" id="pExp" placeholder="e.g. 8 years" oninput="updateProfilePreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Verification / Badge ID</label>
+                <input class="form-input" id="pBadge" placeholder="e.g. PL-2024-0042" oninput="updateProfilePreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Photo URL</label>
+                <input class="form-input" id="pPhoto" placeholder="Paste profile photo URL" oninput="updateProfilePreview()">
+              </div>
+            </div>
+            <button class="form-submit" onclick="saveProfile()"><i class="fas fa-save" style="margin-right:8px;"></i>Save & Publish Profile</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fas fa-eye"></i> Client Preview</div>
+            <p style="font-size:0.8rem;color:rgba(203,213,224,0.4);margin-bottom:16px;">This is exactly how the profile card will appear to every client on their dashboard.</p>
+            <div class="profile-preview" id="profilePreview">
+              <div class="profile-avatar-wrap">
+                <div class="profile-avatar" id="previewAvatar"><i class="fas fa-user"></i></div>
+                <div class="verified-badge"><i class="fas fa-check"></i></div>
+              </div>
+              <div class="profile-info">
+                <h3 id="previewName">Plumber Name</h3>
+                <div class="role" id="previewRole">Specialisation &bull; Experience</div>
+                <div class="id-tag"><i class="fas fa-shield-alt"></i> <span id="previewBadge">Badge ID</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore, collection, doc, addDoc, setDoc, getDocs,
+    query, where, orderBy, onSnapshot, serverTimestamp, updateDoc, getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
+    authDomain: "primeline-plumbing.firebaseapp.com",
+    projectId: "primeline-plumbing",
+    storageBucket: "primeline-plumbing.firebasestorage.app",
+    messagingSenderId: "115563321966",
+    appId: "1:115563321966:web:a71fca315dc4572e26a47f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let selectedUID = null;
+  let selectedEmail = null;
+  let msgUnsubscribe = null;
+  let notifType = 'info';
+
+  // ── AUTH ──
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'block';
+      loadOverview();
+      loadProfile();
+    } else {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('adminWrap').style.display = 'none';
+    }
+  });
+
+  window.doLogin = async function() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const pass  = document.getElementById('adminPass').value;
+    const errEl = document.getElementById('loginError');
+    errEl.style.display = 'none';
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } catch(e) {
+      errEl.style.display = 'block';
+      errEl.textContent = e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential'
+        ? 'Incorrect email or password.' : 'Login failed. Please try again.';
+    }
+  };
+
+  window.doLogout = async function() {
+    if (msgUnsubscribe) msgUnsubscribe();
+    await signOut(auth);
+  };
+
+  // ── NAVIGATION ──
+  const panelTitles = { overview:'Overview', clients:'All Clients', projects:'Projects', quotes:'Quotations', invoices:'Invoices', photos:'Progress Photos', documents:'Documents', messages:'Messages', notifications:'Push Notifications', profile:'Plumber Profile' };
+
+  window.showPanel = function(name, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    if (el) el.classList.add('active');
+    document.getElementById('pageTitle').textContent = panelTitles[name] || name;
+    if (name === 'quotes')    loadQuotesTable();
+    if (name === 'projects')  loadProjectsTable();
+    if (name === 'invoices')  loadInvoicesTable();
+    if (name === 'photos')    loadPhotosTable();
+    if (name === 'documents') loadDocsTable();
+    if (name === 'messages')  loadMessages();
+  };
+
+  // ── TOAST ──
+  function toast(msg, isError = false) {
+    const el = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    el.className = 'toast' + (isError ? ' error' : '');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  // ── OVERVIEW ──
+  async function loadOverview() {
+    const [clients, projects, quotes, messages, invoices] = await Promise.all([
+      getDocs(collection(db,'users')),
+      getDocs(query(collection(db,'projects'), where('status','==','active'))),
+      getDocs(query(collection(db,'quotes'), where('status','==','awaiting'))),
+      getDocs(collection(db,'messages')),
+      getDocs(query(collection(db,'invoices'), where('status','==','unpaid')))
+    ]);
+    document.getElementById('ovClients').textContent  = clients.size;
+    document.getElementById('ovProjects').textContent = projects.size;
+    document.getElementById('ovQuotes').textContent   = quotes.size;
+    document.getElementById('ovMessages').textContent = messages.size;
+    document.getElementById('ovUnpaid').textContent   = invoices.size;
+
+    const reqSnap = await getDocs(query(collection(db,'requests'), orderBy('createdAt','desc')));
+    const el = document.getElementById('recentRequests');
+    if (reqSnap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i><p>No service requests yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Email</th><th>Service</th><th>Priority</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      ${reqSnap.docs.slice(0,10).map(d => { const r=d.data(); return `<tr><td>${r.email||'—'}</td><td>${r.service||'—'}</td><td>${r.priority||'—'}</td><td>${r.preferredDate||'—'}</td><td><span class="badge ${r.status||'pending'}">${(r.status||'pending').toUpperCase()}</span></td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  }
+
+  // ── CLIENT SEARCH ──
+  window.searchClients = async function() {
+    const q = document.getElementById('clientSearchInput').value.trim().toLowerCase();
+    const el = document.getElementById('clientList');
+    if (!q) { el.innerHTML = '<div class="empty"><i class="fas fa-search"></i><p>Type to search.</p></div>'; return; }
+    el.innerHTML = '<div class="spinner"></div>';
+    const snap = await getDocs(collection(db,'users'));
+    const matches = snap.docs.filter(d => (d.data().email||'').toLowerCase().includes(q));
+    if (matches.length === 0) { el.innerHTML = '<div class="empty"><i class="fas fa-user-slash"></i><p>No clients found. Note: clients appear here only after they have logged in at least once.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Email</th><th>UID</th><th>Action</th></tr></thead><tbody>
+      ${matches.map(d => `<tr><td>${d.data().email||d.id}</td><td style="font-size:0.75rem;opacity:0.5;">${d.id}</td><td><button class="btn yellow sm" onclick="selectClient('${d.id}','${d.data().email||d.id}')"><i class="fas fa-user-check"></i> Select</button></td></tr>`).join('')}
+    </tbody></table></div>`;
+  };
+
+  window.selectClient = function(uid, email) {
+    selectedUID   = uid;
+    selectedEmail = email;
+    ['projUID','quoteUID','invUID','photoUID','docUID','notifUID'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = uid;
+    });
+    document.getElementById('msgClientName').textContent = 'Messaging: ' + email;
+    const card = document.getElementById('selectedClientCard');
+    card.style.display = 'block';
+    document.getElementById('selectedClientInfo').innerHTML = `
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="flex:1;">
+          <div style="font-weight:700;color:#fff;font-size:0.95rem;">${email}</div>
+          <div style="font-size:0.75rem;color:rgba(203,213,224,0.4);margin-top:3px;font-family:monospace;">${uid}</div>
+        </div>
+        <span class="badge active">SELECTED</span>
+      </div>`;
+    toast('Client selected: ' + email);
+    loadMessages();
+  };
+
+  // ── PROJECTS ──
+  window.saveProject = async function() {
+    const uid = document.getElementById('projUID').value.trim();
+    if (!uid) { toast('Select a client first from the Clients tab', true); return; }
+    const title    = document.getElementById('projTitle').value.trim();
+    const location = document.getElementById('projLocation').value.trim();
+    const status   = document.getElementById('projStatus').value;
+    const startDate= document.getElementById('projStart').value;
+    const phase    = document.getElementById('projPhase').value.trim();
+    const progress = parseInt(document.getElementById('projProgress').value);
+    if (!title) { toast('Please enter a project title', true); return; }
+    await addDoc(collection(db,'projects'), { uid, title, location, status, startDate, phase, progress, createdAt: serverTimestamp() });
+    toast('Project saved successfully');
+    loadProjectsTable();
+    document.getElementById('projTitle').value = '';
+    document.getElementById('projPhase').value = '';
+  };
+
+  async function loadProjectsTable() {
+    const snap = await getDocs(query(collection(db,'projects'), orderBy('createdAt','desc')));
+    const el = document.getElementById('projectsTable');
+    if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Title</th><th>Location</th><th>Status</th><th>Progress</th><th>Phase</th></tr></thead><tbody>
+      ${snap.docs.map(d => { const p=d.data(); return `<tr><td style="font-weight:600;color:#fff;">${p.title||'—'}</td><td>${p.location||'—'}</td><td><span class="badge ${p.status||'pending'}">${(p.status||'pending').toUpperCase()}</span></td><td><div style="width:80px;background:rgba(61,133,198,0.1);border-radius:3px;height:5px;"><div style="width:${p.progress||0}%;height:100%;background:linear-gradient(90deg,#3d85c6,#e6be0c);border-radius:3px;"></div></div><small style="color:rgba(203,213,224,0.4);font-size:0.7rem;">${p.progress||0}%</small></td><td>${p.phase||'—'}</td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  }
+
+  // ── QUOTATIONS ──
+  window.addQuoteLine = function() {
+    const div = document.createElement('div');
+    div.className = 'quote-line';
+    div.innerHTML = `<input class="form-input" placeholder="Item name"><input class="form-input qty" placeholder="Qty" type="number" min="1" value="1"><input class="form-input price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()"><button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>`;
+    document.getElementById('quoteLines').appendChild(div);
+    updateQuoteTotal();
+  };
+
+  window.removeLine = function(btn) {
+    btn.closest('.quote-line').remove();
+    updateQuoteTotal();
+  };
+
+  function updateQuoteTotal() {
+    const prices = [...document.querySelectorAll('#quoteLines .price')].map(i => parseFloat(i.value)||0);
+    const qtys   = [...document.querySelectorAll('#quoteLines .qty')].map(i => parseInt(i.value)||1);
+    const total  = prices.reduce((s,p,i) => s + p*(qtys[i]||1), 0);
+    document.getElementById('quoteTotal').textContent = 'KSh ' + total.toLocaleString();
+  }
+
+  window.sendQuote = async function() {
+    const uid = document.getElementById('quoteUID').value.trim();
+    if (!uid) { toast('Select a client first', true); return; }
+    const title    = document.getElementById('quoteTitle').value.trim();
+    const projName = document.getElementById('quoteProjName').value.trim();
+    if (!title) { toast('Please enter a quote title', true); return; }
+    const lines = document.querySelectorAll('#quoteLines .quote-line');
+    const items = [...lines].map(line => {
+      const inputs = line.querySelectorAll('input');
+      return { name: inputs[0].value, qty: parseInt(inputs[1].value)||1, price: (parseFloat(inputs[2].value)||0) * (parseInt(inputs[1].value)||1) };
+    }).filter(i => i.name);
+    if (!items.length) { toast('Add at least one line item', true); return; }
+    const date = new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'});
+    await addDoc(collection(db,'quotes'), { uid, title, projectName: projName, items, date, status:'awaiting', createdAt: serverTimestamp() });
+    toast('Quote sent to client');
+    loadQuotesTable();
+    document.getElementById('quoteTitle').value = '';
+    document.getElementById('quoteProjName').value = '';
+    document.getElementById('quoteLines').innerHTML = `<div class="quote-line"><input class="form-input" placeholder="Item name"><input class="form-input qty" placeholder="Qty" type="number" min="1" value="1"><input class="form-input price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()"><button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button></div>`;
+    document.getElementById('quoteTotal').textContent = 'KSh 0';
+  };
+
+  async function loadQuotesTable() {
+    const snap = await getDocs(query(collection(db,'quotes'), orderBy('createdAt','desc')));
+    const el = document.getElementById('quotesTable');
+    if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-file-invoice"></i><p>No quotes sent yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Title</th><th>Project</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      ${snap.docs.map(d => {
+        const q = d.data();
+        const total = (q.items||[]).reduce((s,i) => s+(i.price||0), 0);
+        const count = (q.items||[]).length;
+        return `<tr>
+          <td style="font-weight:600;color:#fff;">${q.title||'—'}</td>
+          <td>${q.projectName||'—'}</td>
+          <td style="color:rgba(203,213,224,0.6);">${count} item${count !== 1 ? 's' : ''}</td>
+          <td style="color:var(--accent-yellow);font-weight:600;">KSh ${total.toLocaleString()}</td>
+          <td>${q.date||'—'}</td>
+          <td><span class="badge ${q.status||'awaiting'}">${(q.status||'awaiting').toUpperCase()}</span></td>
+        </tr>`;
+      }).join('')}
+    </tbody></table></div>`;
+  }
+
+  // ── INVOICES ──
+  window.saveInvoice = async function() {
+    const uid = document.getElementById('invUID').value.trim();
+    if (!uid) { toast('Select a client first', true); return; }
+    const invoiceNo   = document.getElementById('invNo').value.trim();
+    const description = document.getElementById('invDesc').value.trim();
+    const amount      = parseFloat(document.getElementById('invAmount').value) || 0;
+    const dueDate     = document.getElementById('invDue').value;
+    const status      = document.getElementById('invStatus').value;
+    if (!invoiceNo || !description) { toast('Fill in invoice number and description', true); return; }
+    await addDoc(collection(db,'invoices'), { uid, invoiceNo, description, amount, dueDate, status, createdAt: serverTimestamp() });
+    toast('Invoice saved');
+    loadInvoicesTable();
+    document.getElementById('invNo').value = '';
+    document.getElementById('invDesc').value = '';
+    document.getElementById('invAmount').value = '';
+  };
+
+  async function loadInvoicesTable() {
+    const snap = await getDocs(query(collection(db,'invoices'), orderBy('createdAt','desc')));
+    const el = document.getElementById('invoicesTable');
+    if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-receipt"></i><p>No invoices yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Invoice #</th><th>Description</th><th>Amount</th><th>Due</th><th>Status</th><th>Action</th></tr></thead><tbody>
+      ${snap.docs.map(d => { const i=d.data(); return `<tr><td style="color:var(--accent-yellow);font-weight:600;">${i.invoiceNo||'—'}</td><td>${i.description||'—'}</td><td>KSh ${(i.amount||0).toLocaleString()}</td><td>${i.dueDate||'—'}</td><td><span class="badge ${i.status||'unpaid'}">${(i.status||'unpaid').toUpperCase()}</span></td><td>${i.status!=='paid'?`<button class="btn green sm" onclick="markPaid('${d.id}')"><i class="fas fa-check"></i> Paid</button>`:''}</td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  }
+
+  window.markPaid = async function(id) {
+    await updateDoc(doc(db,'invoices',id), { status:'paid' });
+    toast('Invoice marked as paid');
+    loadInvoicesTable();
+  };
+
+  // ── PHOTOS ──
+  window.savePhoto = async function() {
+    const uid     = document.getElementById('photoUID').value.trim();
+    const url     = document.getElementById('photoURL').value.trim();
+    const caption = document.getElementById('photoCaption').value.trim();
+    if (!uid) { toast('Select a client first', true); return; }
+    if (!url) { toast('Please paste a photo URL', true); return; }
+    const date = new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'});
+    await addDoc(collection(db,'photos'), { uid, url, caption, uploadDate: date, createdAt: serverTimestamp() });
+    toast('Photo uploaded to client dashboard');
+    loadPhotosTable();
+    document.getElementById('photoURL').value = '';
+    document.getElementById('photoCaption').value = '';
+  };
+
+  async function loadPhotosTable() {
+    const snap = await getDocs(query(collection(db,'photos'), orderBy('createdAt','desc')));
+    const el = document.getElementById('photosTable');
+    if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>No photos uploaded yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Preview</th><th>Caption</th><th>Date</th></tr></thead><tbody>
+      ${snap.docs.map(d => { const p=d.data(); return `<tr><td><img src="${p.url}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--border);" onerror="this.style.display='none'"></td><td>${p.caption||'—'}</td><td>${p.uploadDate||'—'}</td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  }
+
+  // ── DOCUMENTS ──
+  window.saveDocument = async function() {
+    const uid  = document.getElementById('docUID').value.trim();
+    const name = document.getElementById('docName').value.trim();
+    const type = document.getElementById('docType').value;
+    const url  = document.getElementById('docURL').value.trim();
+    if (!uid)  { toast('Select a client first', true); return; }
+    if (!name) { toast('Enter a document name', true); return; }
+    if (!url)  { toast('Paste a document URL', true); return; }
+    const uploadDate = new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'});
+    await addDoc(collection(db,'documents'), { uid, name, type, url, uploadDate, createdAt: serverTimestamp() });
+    toast('Document saved to client vault');
+    loadDocsTable();
+    document.getElementById('docName').value = '';
+    document.getElementById('docURL').value = '';
+  };
+
+  async function loadDocsTable() {
+    const snap = await getDocs(query(collection(db,'documents'), orderBy('createdAt','desc')));
+    const el = document.getElementById('docsTable');
+    if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-folder"></i><p>No documents yet.</p></div>'; return; }
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Name</th><th>Type</th><th>Date</th><th>Link</th></tr></thead><tbody>
+      ${snap.docs.map(d => { const f=d.data(); return `<tr><td style="font-weight:600;color:#fff;">${f.name||'—'}</td><td>${(f.type||'—').toUpperCase()}</td><td>${f.uploadDate||'—'}</td><td><a href="${f.url}" target="_blank" class="btn outline sm"><i class="fas fa-external-link-alt"></i> Open</a></td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  }
+
+  // ── MESSAGES ──
+  function loadMessages() {
+    const thread = document.getElementById('adminMsgThread');
+    thread.innerHTML = '<div class="spinner"></div>';
+    if (msgUnsubscribe) msgUnsubscribe();
+    if (!selectedUID) { thread.innerHTML = '<div class="empty"><i class="fas fa-user-slash"></i><p>Select a client from the Clients tab first.</p></div>'; return; }
+    const q = query(collection(db,'messages'), where('uid','==',selectedUID), orderBy('createdAt','asc'));
+    msgUnsubscribe = onSnapshot(q, snap => {
+      if (snap.empty) { thread.innerHTML = '<div class="empty"><i class="fas fa-comments"></i><p>No messages yet with this client.</p></div>'; return; }
+      thread.innerHTML = snap.docs.map(d => {
+        const m = d.data();
+        const isPlumber = m.sender === 'plumber';
+        return `<div class="msg-item ${isPlumber ? 'plumber' : ''}">
+          <div class="msg-av">${isPlumber ? '🔧' : '👤'}</div>
+          <div>
+            <div class="msg-bubble">${m.text||''}</div>
+            <div class="msg-time">${isPlumber ? 'You' : 'Client'} &bull; ${m.time||''}</div>
+          </div>
+        </div>`;
+      }).join('');
+      thread.scrollTop = thread.scrollHeight;
+    });
+  }
+
+  window.sendAdminMessage = async function() {
+    if (!selectedUID) { toast('Select a client first', true); return; }
+    const input = document.getElementById('adminMsgInput');
+    const text  = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    await addDoc(collection(db,'messages'), { uid: selectedUID, sender: 'plumber', text, time, createdAt: serverTimestamp() });
+  };
+
+  // ── NOTIFICATIONS ──
+  window.selectNotifType = function(el, type) {
+    document.querySelectorAll('.notif-type-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    notifType = type;
+  };
+
+  window.sendNotification = async function() {
+    const uid   = document.getElementById('notifUID').value.trim();
+    const title = document.getElementById('notifTitle').value.trim();
+    const body  = document.getElementById('notifBody').value.trim();
+    const time  = document.getElementById('notifTime').value.trim() || 'Just now';
+    if (!uid)   { toast('Select a client first', true); return; }
+    if (!title) { toast('Enter a notification title', true); return; }
+    await addDoc(collection(db,'notifications'), { uid, title, body, time, type: notifType, read: false, createdAt: serverTimestamp() });
+    toast('Notification sent to client');
+    document.getElementById('notifTitle').value = '';
+    document.getElementById('notifBody').value  = '';
+    document.getElementById('notifTime').value  = '';
+  };
+
+  // ── PLUMBER PROFILE ──
+  window.updateProfilePreview = function() {
+    const name  = document.getElementById('pName').value  || 'Plumber Name';
+    const role  = document.getElementById('pRole').value  || 'Specialisation';
+    const exp   = document.getElementById('pExp').value   || 'Experience';
+    const badge = document.getElementById('pBadge').value || 'Badge ID';
+    const photo = document.getElementById('pPhoto').value;
+    document.getElementById('previewName').textContent  = name;
+    document.getElementById('previewRole').textContent  = role + (exp ? ' \u2022 ' + exp : '');
+    document.getElementById('previewBadge').textContent = badge;
+    const avatarEl = document.getElementById('previewAvatar');
+    avatarEl.innerHTML = photo
+      ? `<img src="${photo}" alt="${name}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-user\\'></i>'">`
+      : '<i class="fas fa-user"></i>';
+  };
+
+  window.saveProfile = async function() {
+    const name  = document.getElementById('pName').value.trim();
+    const role  = document.getElementById('pRole').value.trim();
+    const phone = document.getElementById('pPhone').value.trim();
+    const exp   = document.getElementById('pExp').value.trim();
+    const badge = document.getElementById('pBadge').value.trim();
+    const photo = document.getElementById('pPhoto').value.trim();
+    if (!name) { toast('Enter the plumber name', true); return; }
+    await setDoc(doc(db,'plumberProfile','main'), { name, specialisation: role, phone, experience: exp, badgeId: badge, photoUrl: photo, updatedAt: serverTimestamp() });
+    // push profile to all existing assignments (or create one global record clients read)
+    toast('Profile published — clients will see it on their dashboard');
+  };
+
+  async function loadProfile() {
+    try {
+      const snap = await getDoc(doc(db,'plumberProfile','main'));
+      if (!snap.exists()) return;
+      const p = snap.data();
+      document.getElementById('pName').value  = p.name || '';
+      document.getElementById('pRole').value  = p.specialisation || '';
+      document.getElementById('pPhone').value = p.phone || '';
+      document.getElementById('pExp').value   = p.experience || '';
+      document.getElementById('pBadge').value = p.badgeId || '';
+      document.getElementById('pPhoto').value = p.photoUrl || '';
+      updateProfilePreview();
+    } catch(e) {}
+  }
+</script>
+
+</body>
+</html>

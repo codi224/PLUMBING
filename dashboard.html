@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — Primeline Plumbing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div id="authGate">
+  <div class="gate-logo">PRIMELINE</div>
+  <div class="gate-spinner"></div>
+  <div class="gate-msg">Checking your session...</div>
+</div>
+
+<div id="portalWrap" style="display:none;">
+  <div class="layout">
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon"><i class="fas fa-tint"></i></span>
+        <div class="logo-text">
+          <span class="logo-name">Primeline</span>
+          <span class="logo-sub">Client Portal</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <div class="nav-item active" onclick="showPanel('dashboard', this)">
+          <i class="fas fa-th-large"></i><span>Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="showPanel('projects', this)">
+          <i class="fas fa-hard-hat"></i><span>My Projects</span>
+        </div>
+        <div class="nav-section-label">Finance</div>
+        <div class="nav-item" onclick="showPanel('quotes', this)">
+          <i class="fas fa-file-invoice"></i><span>Quotations</span>
+          <span class="nav-badge" id="quoteBadge" style="display:none;"></span>
+        </div>
+        <div class="nav-item" onclick="showPanel('purchases', this)">
+          <i class="fas fa-shopping-bag"></i><span>Purchases</span>
+        </div>
+        <div class="nav-item" onclick="showPanel('invoices', this)">
+          <i class="fas fa-receipt"></i><span>Invoices</span>
+        </div>
+        <div class="nav-section-label">Communication</div>
+        <div class="nav-item" onclick="showPanel('messages', this)">
+          <i class="fas fa-comments"></i><span>Messages</span>
+          <span class="nav-badge" id="msgBadge" style="display:none;"></span>
+        </div>
+        <div class="nav-item" onclick="showPanel('notifications', this)">
+          <i class="fas fa-bell"></i><span>Notifications</span>
+          <span class="nav-badge" id="notifBadge" style="display:none;"></span>
+        </div>
+        <div class="nav-section-label">My Account</div>
+        <div class="nav-item" onclick="showPanel('photos', this)">
+          <i class="fas fa-images"></i><span>Progress Photos</span>
+        </div>
+        <div class="nav-item" onclick="showPanel('documents', this)">
+          <i class="fas fa-folder"></i><span>Documents</span>
+        </div>
+        <div class="nav-item" onclick="showPanel('plumber', this)">
+          <i class="fas fa-user-tie"></i><span>My Plumber</span>
+        </div>
+        <div class="nav-item" onclick="showPanel('request', this)">
+          <i class="fas fa-plus-circle"></i><span>Request Service</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="doLogout()">
+          <i class="fas fa-sign-out-alt"></i><span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="topbar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <span class="topbar-title" id="pageTitle">Dashboard</span>
+        <div class="topbar-user">
+          <div class="user-avatar" id="userInitial">?</div>
+          <span class="user-email" id="userEmail"></span>
+        </div>
+        <a href="index.html" class="topbar-back"><i class="fas fa-arrow-left"></i> Back to Site</a>
+      </div>
+
+      <div class="content">
+
+        <!-- DASHBOARD -->
+        <div class="panel active" id="panel-dashboard">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Welcome back 👋</div>
+              <div class="section-sub" id="welcomeSub">Loading your account...</div>
+            </div>
+            <button class="btn gold" onclick="showPanel('request', document.querySelector('.nav-item:last-of-type'))">
+              <i class="fas fa-plus"></i> New Request
+            </button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-icon">🔨</div><div class="stat-value" id="statProjects">—</div><div class="stat-label">Active Projects</div></div>
+            <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statPurchases">—</div><div class="stat-label">Purchases</div></div>
+            <div class="stat-card"><div class="stat-icon">📄</div><div class="stat-value" id="statQuotes">—</div><div class="stat-label">Pending Quotes</div></div>
+            <div class="stat-card"><div class="stat-icon">🔔</div><div class="stat-value" id="statNotifs">—</div><div class="stat-label">Unread Alerts</div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><i class="fas fa-hard-hat"></i> Active Projects</div>
+            <div id="dashProjects"><div class="spinner"></div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><i class="fas fa-bell"></i> Recent Notifications</div>
+            <div id="dashNotifs"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="panel" id="panel-projects">
+          <div class="section-header">
+            <div><div class="section-title">My Projects</div><div class="section-sub">All active and completed jobs</div></div>
+          </div>
+          <div id="projectsList"><div class="spinner"></div></div>
+        </div>
+
+        <!-- QUOTATIONS -->
+        <div class="panel" id="panel-quotes">
+          <div class="section-header">
+            <div><div class="section-title">Quotations</div><div class="section-sub">Review and approve material quotes from your plumber</div></div>
+          </div>
+          <div id="quotesList"><div class="spinner"></div></div>
+        </div>
+
+        <!-- PURCHASES -->
+        <div class="panel" id="panel-purchases">
+          <div class="section-header">
+            <div><div class="section-title">Purchase History</div><div class="section-sub">All items ordered through Primeline</div></div>
+          </div>
+          <div class="card">
+            <div id="purchasesList"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- INVOICES -->
+        <div class="panel" id="panel-invoices">
+          <div class="section-header">
+            <div><div class="section-title">Invoices</div><div class="section-sub">Billing history and payment status</div></div>
+          </div>
+          <div class="card">
+            <div id="invoicesList"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="panel" id="panel-messages">
+          <div class="section-header">
+            <div><div class="section-title">Messages</div><div class="section-sub">Direct line to your assigned plumber</div></div>
+          </div>
+          <div class="card">
+            <div class="message-thread" id="messageThread"></div>
+            <div class="msg-input-row">
+              <input class="msg-input" id="msgInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+              <button class="msg-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROGRESS PHOTOS -->
+        <div class="panel" id="panel-photos">
+          <div class="section-header">
+            <div><div class="section-title">Progress Photos</div><div class="section-sub">Site updates uploaded by your plumber</div></div>
+          </div>
+          <div class="card">
+            <div class="photo-grid" id="photoGrid"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- DOCUMENTS -->
+        <div class="panel" id="panel-documents">
+          <div class="section-header">
+            <div><div class="section-title">Document Vault</div><div class="section-sub">Certificates, warranties, and permits</div></div>
+          </div>
+          <div id="documentsList"><div class="spinner"></div></div>
+        </div>
+
+        <!-- PLUMBER -->
+        <div class="panel" id="panel-plumber">
+          <div class="section-header">
+            <div><div class="section-title">My Assigned Plumber</div><div class="section-sub">Your dedicated Primeline technician</div></div>
+          </div>
+          <div id="plumberCard"><div class="spinner"></div></div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="panel" id="panel-notifications">
+          <div class="section-header">
+            <div><div class="section-title">Notifications</div><div class="section-sub">All account and project updates</div></div>
+          </div>
+          <div class="card">
+            <div id="notificationsList"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <!-- REQUEST SERVICE -->
+        <div class="panel" id="panel-request">
+          <div class="section-header">
+            <div><div class="section-title">Request a Service</div><div class="section-sub">Submit a new plumbing job or enquiry</div></div>
+          </div>
+          <div class="card">
+            <div id="requestSuccess" style="display:none;">
+              <div class="success-box">
+                <div class="icon">✅</div>
+                <h3>Request Submitted!</h3>
+                <p>Your plumber will review and get back to you shortly.</p>
+                <button class="btn gold" onclick="document.getElementById('requestSuccess').style.display='none';document.getElementById('requestForm').style.display='block';">
+                  Submit Another
+                </button>
+              </div>
+            </div>
+            <div id="requestForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Service Type</label>
+                  <select class="form-select" id="reqService">
+                    <option value="">Select service...</option>
+                    <option>Plumbing Installation</option>
+                    <option>Leak Detection &amp; Repair</option>
+                    <option>Drain &amp; Sewer Cleaning</option>
+                    <option>Water Tank Services</option>
+                    <option>Bathroom Upgrade</option>
+                    <option>Hot Water System</option>
+                    <option>Emergency Repair</option>
+                    <option>Material Supply Only</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Priority</label>
+                  <select class="form-select" id="reqPriority">
+                    <option>Normal</option>
+                    <option>Urgent</option>
+                    <option>Emergency (24hr)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Property Address</label>
+                  <input class="form-input" id="reqAddress" placeholder="e.g. Westlands, Nairobi">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Preferred Date</label>
+                  <input class="form-input" id="reqDate" type="date">
+                </div>
+                <div class="form-group full">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-textarea" id="reqDesc" placeholder="Describe the problem or job in detail..."></textarea>
+                </div>
+              </div>
+              <button class="form-submit" onclick="submitRequest()">
+                <i class="fas fa-paper-plane" style="margin-right:8px;"></i>Submit Request
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore, collection, doc, addDoc, getDocs, getDoc,
+    query, where, orderBy, onSnapshot, serverTimestamp, updateDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
+    authDomain: "primeline-plumbing.firebaseapp.com",
+    projectId: "primeline-plumbing",
+    storageBucket: "primeline-plumbing.firebasestorage.app",
+    messagingSenderId: "115563321966",
+    appId: "1:115563321966:web:a71fca315dc4572e26a47f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let msgUnsubscribe = null;
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      currentUser = user;
+      document.getElementById('authGate').style.display = 'none';
+      document.getElementById('portalWrap').style.display = 'block';
+      document.getElementById('userInitial').textContent = user.email.charAt(0).toUpperCase();
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('welcomeSub').textContent = 'Logged in as ' + user.email;
+      loadPanel('dashboard');
+    } else {
+      window.location.href = 'index.html';
+    }
+  });
+
+  const panelTitles = {
+    dashboard: 'Dashboard', projects: 'My Projects', quotes: 'Quotations',
+    purchases: 'Purchase History', invoices: 'Invoices', messages: 'Messages',
+    photos: 'Progress Photos', documents: 'Document Vault', plumber: 'My Plumber',
+    notifications: 'Notifications', request: 'Request a Service'
+  };
+
+  window.showPanel = function(name, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    if (el) el.classList.add('active');
+    document.getElementById('pageTitle').textContent = panelTitles[name] || name;
+    loadPanel(name);
+    if (window.innerWidth <= 768) closeMobileSidebar();
+  };
+
+  function loadPanel(name) {
+    if (!currentUser) return;
+    const uid = currentUser.uid;
+    const loaders = {
+      dashboard: () => loadDashboard(uid),
+      projects: () => loadProjects(uid),
+      quotes: () => loadQuotes(uid),
+      purchases: () => loadPurchases(uid),
+      invoices: () => loadInvoices(uid),
+      messages: () => loadMessages(uid),
+      photos: () => loadPhotos(uid),
+      documents: () => loadDocuments(uid),
+      plumber: () => loadPlumber(uid),
+      notifications: () => loadNotifications(uid),
+    };
+    if (loaders[name]) loaders[name]();
+  }
+
+  async function loadDashboard(uid) {
+    const [projects, purchases, quotes, notifs] = await Promise.all([
+      getDocs(query(collection(db,'projects'), where('uid','==',uid), where('status','==','active'))),
+      getDocs(query(collection(db,'purchases'), where('uid','==',uid))),
+      getDocs(query(collection(db,'quotes'), where('uid','==',uid), where('status','==','awaiting'))),
+      getDocs(query(collection(db,'notifications'), where('uid','==',uid), where('read','==',false)))
+    ]);
+    document.getElementById('statProjects').textContent = projects.size;
+    document.getElementById('statPurchases').textContent = purchases.size;
+    document.getElementById('statQuotes').textContent = quotes.size;
+    document.getElementById('statNotifs').textContent = notifs.size;
+    if (quotes.size > 0) { document.getElementById('quoteBadge').style.display = 'inline'; document.getElementById('quoteBadge').textContent = quotes.size; }
+    if (notifs.size > 0) { document.getElementById('notifBadge').style.display = 'inline'; document.getElementById('notifBadge').textContent = notifs.size; }
+
+    const pSnap = await getDocs(query(collection(db,'projects'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const dashP = document.getElementById('dashProjects');
+    dashP.innerHTML = pSnap.empty
+      ? '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet. Submit a service request to get started.</p></div>'
+      : pSnap.docs.slice(0,3).map(d => projectCardHTML(d.data())).join('');
+
+    const nSnap = await getDocs(query(collection(db,'notifications'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const dashN = document.getElementById('dashNotifs');
+    dashN.innerHTML = nSnap.empty
+      ? '<div class="empty-state"><i class="fas fa-bell"></i><p>No notifications yet.</p></div>'
+      : nSnap.docs.slice(0,4).map(d => notifHTML(d.id, d.data())).join('');
+  }
+
+  async function loadProjects(uid) {
+    const snap = await getDocs(query(collection(db,'projects'), where('uid','==',uid), orderBy('createdAt','desc')));
+    document.getElementById('projectsList').innerHTML = snap.empty
+      ? '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects found.</p></div>'
+      : snap.docs.map(d => projectCardHTML(d.data())).join('');
+  }
+
+  function projectCardHTML(p) {
+    const prog = p.progress || 0;
+    return `<div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-title">${p.title || 'Untitled Project'}</div>
+          <div class="project-meta">${p.location || ''} &bull; Started ${p.startDate || '—'}</div>
+        </div>
+        <span class="badge ${p.status || 'pending'}">${(p.status||'pending').toUpperCase()}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
+      <div class="progress-labels"><span>${p.phase || 'In progress'}</span><span>${prog}% complete</span></div>
+    </div>`;
+  }
+
+  async function loadQuotes(uid) {
+    const snap = await getDocs(query(collection(db,'quotes'), where('uid','==',uid), orderBy('createdAt','desc')));
+    document.getElementById('quotesList').innerHTML = snap.empty
+      ? '<div class="empty-state"><i class="fas fa-file-invoice"></i><p>No quotations yet. Your plumber will send quotes here.</p></div>'
+      : snap.docs.map(d => quoteCardHTML(d.id, d.data())).join('');
+  }
+
+  function quoteCardHTML(id, q) {
+    const items = (q.items||[]);
+    const total = items.reduce((s,i) => s+(i.price||0), 0);
+    const canAct = q.status === 'awaiting';
+    const itemRows = items.length
+      ? items.map(i => `
+          <tr>
+            <td style="color:var(--pure-white);font-weight:500;">${i.name||'—'}</td>
+            <td style="text-align:center;">${i.qty||1}</td>
+            <td style="text-align:right;color:var(--accent-yellow);font-weight:600;">KSh ${(i.price||0).toLocaleString()}</td>
+          </tr>`).join('')
+      : `<tr><td colspan="3" style="text-align:center;color:rgba(203,213,224,0.3);padding:16px;">No items listed</td></tr>`;
+
+    return `<div class="quote-card">
+      <div class="quote-header">
+        <div>
+          <div class="quote-title">${q.title||'Quotation'}</div>
+          <div class="quote-subtitle">${q.projectName||''} &bull; ${q.date||''}</div>
+        </div>
+        <span class="badge ${q.status||'awaiting'}">${(q.status||'awaiting').toUpperCase()}</span>
+      </div>
+      <table class="quote-items" style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="text-align:left;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Item</th>
+            <th style="text-align:center;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Qty</th>
+            <th style="text-align:right;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Amount</th>
+          </tr>
+        </thead>
+        <tbody>${itemRows}</tbody>
+      </table>
+      <div class="quote-total"><span>Total</span><span>KSh ${total.toLocaleString()}</span></div>
+      ${canAct ? `<div class="quote-actions">
+        <button class="btn green sm" onclick="updateQuote('${id}','approved')"><i class="fas fa-check"></i> Approve</button>
+        <button class="btn red sm" onclick="updateQuote('${id}','declined')"><i class="fas fa-times"></i> Decline</button>
+      </div>` : ''}
+    </div>`;
+  }
+
+  window.updateQuote = async function(id, status) {
+    await updateDoc(doc(db,'quotes',id), { status });
+    loadQuotes(currentUser.uid);
+  };
+
+  async function loadPurchases(uid) {
+    const snap = await getDocs(query(collection(db,'purchases'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const el = document.getElementById('purchasesList');
+    el.innerHTML = snap.empty
+      ? '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>No purchases recorded yet.</p></div>'
+      : `<div class="table-wrap"><table class="data-table"><thead><tr><th>Item</th><th>Qty</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody>
+          ${snap.docs.map(d => { const p=d.data(); return `<tr><td>${p.item||'—'}</td><td>${p.qty||1}</td><td>KSh ${(p.amount||0).toLocaleString()}</td><td>${p.date||'—'}</td><td><span class="badge ${p.status||'completed'}">${(p.status||'completed').toUpperCase()}</span></td></tr>`; }).join('')}
+         </tbody></table></div>`;
+  }
+
+  async function loadInvoices(uid) {
+    const snap = await getDocs(query(collection(db,'invoices'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const el = document.getElementById('invoicesList');
+    el.innerHTML = snap.empty
+      ? '<div class="empty-state"><i class="fas fa-receipt"></i><p>No invoices yet.</p></div>'
+      : `<div class="table-wrap"><table class="data-table"><thead><tr><th>Invoice #</th><th>Description</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead><tbody>
+          ${snap.docs.map(d => { const i=d.data(); return `<tr><td style="color:var(--gold);font-family:var(--mono);font-weight:600;">${i.invoiceNo||'—'}</td><td>${i.description||'—'}</td><td>KSh ${(i.amount||0).toLocaleString()}</td><td>${i.dueDate||'—'}</td><td><span class="badge ${i.status==='paid'?'paid':'unpaid'}">${(i.status||'unpaid').toUpperCase()}</span></td></tr>`; }).join('')}
+         </tbody></table></div>`;
+  }
+
+  function loadMessages(uid) {
+    const thread = document.getElementById('messageThread');
+    thread.innerHTML = '<div class="spinner"></div>';
+    if (msgUnsubscribe) msgUnsubscribe();
+    const q = query(collection(db,'messages'), where('uid','==',uid), orderBy('createdAt','asc'));
+    msgUnsubscribe = onSnapshot(q, snap => {
+      if (snap.empty) { thread.innerHTML = '<div class="empty-state"><i class="fas fa-comments"></i><p>No messages yet. Start the conversation below.</p></div>'; return; }
+      thread.innerHTML = snap.docs.map(d => {
+        const m = d.data();
+        const isMe = m.sender === 'client';
+        return `<div class="message ${isMe?'mine':''}">
+          <div class="msg-avatar">${isMe?'👤':'🔧'}</div>
+          <div class="msg-body">
+            <div class="msg-bubble">${m.text||''}</div>
+            <div class="msg-time">${isMe?'You':'Plumber'} &bull; ${m.time||''}</div>
+          </div>
+        </div>`;
+      }).join('');
+      thread.scrollTop = thread.scrollHeight;
+      document.getElementById('msgBadge').style.display = 'none';
+    });
+  }
+
+  window.sendMessage = async function() {
+    if (!currentUser) return;
+    const input = document.getElementById('msgInput');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    await addDoc(collection(db,'messages'), {
+      uid: currentUser.uid, sender: 'client',
+      text, time, createdAt: serverTimestamp()
+    });
+  };
+
+  async function loadPhotos(uid) {
+    const snap = await getDocs(query(collection(db,'photos'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const el = document.getElementById('photoGrid');
+    if (snap.empty) {
+      el.innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>No photos yet. Your plumber will upload progress photos here.</p></div>';
+      return;
+    }
+    el.innerHTML = snap.docs.map(d => {
+      const p = d.data();
+      return `<div class="photo-item"><img src="${p.url}" alt="${p.caption||''}"><div class="photo-caption">${p.caption||''}</div></div>`;
+    }).join('');
+  }
+
+  async function loadDocuments(uid) {
+    const snap = await getDocs(query(collection(db,'documents'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const el = document.getElementById('documentsList');
+    if (snap.empty) { el.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>'; return; }
+    const colors = { pdf:'#e74c3c', doc:'#2980b9', image:'#27ae60', other:'#6a84a0' };
+    el.innerHTML = snap.docs.map(d => {
+      const f = d.data();
+      const c = colors[f.type||'other'];
+      return `<div class="doc-item">
+        <div class="doc-icon" style="background:${c}18;color:${c};"><i class="fas fa-file-${f.type==='pdf'?'pdf':f.type==='image'?'image':'alt'}"></i></div>
+        <div class="doc-info"><div class="doc-name">${f.name||'Document'}</div><div class="doc-meta">${(f.type||'file').toUpperCase()} &bull; ${f.uploadDate||'—'}</div></div>
+        <a href="${f.url||'#'}" target="_blank" class="btn outline sm"><i class="fas fa-download"></i> Download</a>
+      </div>`;
+    }).join('');
+  }
+
+  async function loadPlumber(uid) {
+    const el = document.getElementById('plumberCard');
+    try {
+      const snap = await getDoc(doc(db,'plumberProfile','main'));
+      if (!snap.exists()) { el.innerHTML = '<div class="empty-state"><i class="fas fa-user-tie"></i><p>Your plumber profile will appear here once set up by the team.</p></div>'; return; }
+      const p = snap.data();
+      const avatarHTML = p.photoUrl
+        ? `<img src="${p.photoUrl}" alt="${p.name}" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(230,190,12,0.4);" onerror="this.outerHTML='<i class=\'fas fa-user-hard-hat\'></i>'">`
+        : `<i class="fas fa-user-hard-hat"></i>`;
+      el.innerHTML = `<div class="plumber-card">
+        <div class="plumber-avatar" style="position:relative;overflow:visible;">
+          ${avatarHTML}
+          <div style="position:absolute;bottom:2px;right:2px;background:#28a745;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#fff;border:2px solid var(--deep-navy);"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="plumber-info">
+          <div class="plumber-name">${p.name||'Your Plumber'}</div>
+          <div class="plumber-role">${p.specialisation||'Senior Plumbing Technician'}${p.experience ? ' &bull; ' + p.experience : ''}</div>
+          ${p.badgeId ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(230,190,12,0.08);border:1px solid rgba(230,190,12,0.2);border-radius:50px;padding:4px 12px;font-size:0.75rem;font-weight:700;color:var(--accent-yellow);letter-spacing:0.5px;margin-bottom:14px;"><i class="fas fa-shield-alt"></i> ${p.badgeId}</div>` : ''}
+          <div class="plumber-actions">
+            <a href="tel:${p.phone||''}" class="btn green sm"><i class="fas fa-phone"></i> Call</a>
+            <a href="https://wa.me/${(p.phone||'').replace(/\D/g,'')}" class="btn yellow sm" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <button class="btn blue sm" onclick="showPanel('messages', null)"><i class="fas fa-comments"></i> Message</button>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-title"><i class="fas fa-star"></i> Rating</div><p style="color:var(--muted);font-size:0.85rem;">Rating system coming soon.</p></div>`;
+    } catch(e) {
+      el.innerHTML = '<div class="empty-state"><i class="fas fa-user-tie"></i><p>Could not load plumber info.</p></div>';
+    }
+  }
+
+  async function loadNotifications(uid) {
+    const snap = await getDocs(query(collection(db,'notifications'), where('uid','==',uid), orderBy('createdAt','desc')));
+    const el = document.getElementById('notificationsList');
+    el.innerHTML = snap.empty
+      ? '<div class="empty-state"><i class="fas fa-bell"></i><p>No notifications yet.</p></div>'
+      : snap.docs.map(d => notifHTML(d.id, d.data())).join('');
+    snap.docs.forEach(d => { if (!d.data().read) updateDoc(doc(db,'notifications',d.id), {read:true}); });
+    document.getElementById('notifBadge').style.display = 'none';
+  }
+
+  function notifHTML(id, n) {
+    const colors = { info:'#3d85c6', success:'#27ae60', warning:'#e67e22', quote:'#f1c40f' };
+    const icons  = { info:'fa-info-circle', success:'fa-check-circle', warning:'fa-exclamation-triangle', quote:'fa-file-invoice' };
+    const type = n.type || 'info';
+    return `<div class="notif-item ${n.read?'':'unread'}">
+      <div class="notif-icon" style="background:${colors[type]}18;color:${colors[type]};"><i class="fas ${icons[type]}"></i></div>
+      <div class="notif-body">
+        <div class="notif-title">${n.title||'Update'}</div>
+        <div class="notif-text">${n.body||''}</div>
+        <div class="notif-time">${n.time||''}</div>
+      </div>
+    </div>`;
+  }
+
+  window.submitRequest = async function() {
+    if (!currentUser) return;
+    const service = document.getElementById('reqService').value;
+    const desc    = document.getElementById('reqDesc').value;
+    if (!service || !desc) { alert('Please fill in the service type and description.'); return; }
+    await addDoc(collection(db,'requests'), {
+      uid: currentUser.uid,
+      email: currentUser.email,
+      service,
+      priority: document.getElementById('reqPriority').value,
+      address:  document.getElementById('reqAddress').value,
+      preferredDate: document.getElementById('reqDate').value,
+      description: desc,
+      status: 'pending',
+      createdAt: serverTimestamp()
+    });
+    document.getElementById('requestForm').style.display = 'none';
+    document.getElementById('requestSuccess').style.display = 'block';
+  };
+
+  window.doLogout = async function() {
+    if (msgUnsubscribe) msgUnsubscribe();
+    await signOut(auth);
+    window.location.href = 'index.html';
+  };
+
+  window.toggleSidebar = function() {
+    const sb = document.getElementById('sidebar');
+    if (window.innerWidth <= 768) {
+      sb.classList.toggle('mobile-open');
+      document.getElementById('sidebarOverlay').classList.toggle('visible');
+    } else {
+      sb.classList.toggle('collapsed');
+    }
+  };
+
+  window.closeMobileSidebar = function() {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebarOverlay').classList.remove('visible');
+  };
+</script>
+
+</body>
+</html>
