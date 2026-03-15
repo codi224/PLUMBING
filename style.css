@@ -59,7 +59,7 @@ header:hover {
 .header-icons {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     flex-shrink: 0;
 }
 .hamburger {
@@ -67,6 +67,7 @@ header:hover {
     font-size: 2rem;
     color: var(--accent-yellow);
     cursor: pointer;
+    padding: 6px 8px;
 }
 #menu-toggle {
     display: none;
@@ -98,7 +99,8 @@ header:hover {
     margin-top: 8px;
     padding-top: 6px;
     border-top: 2px solid var(--accent-yellow);
-    display: flex;
+    display: inline-flex;
+    align-self: flex-start;
 }
 .solutions-text {
     width: 100%;
@@ -1408,7 +1410,6 @@ header:hover {
     font-size: 0.85rem;
     text-align: left;
 }
-
 .login-options label {
     display: flex;
     align-items: center;
