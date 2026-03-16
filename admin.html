@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plumber Admin — Primeline</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-admin-512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-admin-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-admin-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-admin-180.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="admin.css">
 </head>
@@ -51,11 +55,11 @@
         <div class="nav-item" onclick="showPanel('clients',this)"><i class="fas fa-users"></i><span>All Clients</span></div>
         <div class="nav-section-label">Manage</div>
         <div class="nav-item" onclick="showPanel('projects',this)"><i class="fas fa-hard-hat"></i><span>Projects</span></div>
-        <div class="nav-item" onclick="showPanel('quotes',this)"><i class="fas fa-file-invoice"></i><span>Quotations</span></div>
-        <div class="nav-item" onclick="showPanel('invoices',this)"><i class="fas fa-receipt"></i><span>Invoices</span></div>
+        <div class="nav-item" onclick="showPanel('quotes',this)"><i class="fas fa-file-invoice"></i><span>Quotations</span><span class="nav-badge" id="adminQuoteBadge" style="display:none;"></span></div>
+        <div class="nav-item" onclick="showPanel('invoices',this)"><i class="fas fa-receipt"></i><span>Invoices</span><span class="nav-badge" id="adminInvoiceBadge" style="display:none;"></span></div>
         <div class="nav-item" onclick="showPanel('photos',this)"><i class="fas fa-images"></i><span>Progress Photos</span></div>
         <div class="nav-item" onclick="showPanel('documents',this)"><i class="fas fa-folder"></i><span>Documents</span></div>
-        <div class="nav-item" onclick="showPanel('messages',this)"><i class="fas fa-comments"></i><span>Messages</span></div>
+        <div class="nav-item" onclick="showPanel('messages',this)"><i class="fas fa-comments"></i><span>Messages</span><span class="nav-badge" id="adminMsgBadge" style="display:none;"></span></div>
         <div class="nav-item" onclick="showPanel('notifications',this)"><i class="fas fa-bell"></i><span>Notifications</span></div>
         <div class="nav-section-label">Settings</div>
         <div class="nav-item" onclick="showPanel('profile',this)"><i class="fas fa-id-badge"></i><span>Plumber Profile</span></div>
@@ -186,9 +190,9 @@
             </div>
             <div id="quoteLines">
               <div class="quote-line">
-                <input class="form-input" placeholder="Item name (e.g. PPR Pipe 20mm x 4m)">
-                <input class="form-input qty" placeholder="Qty" type="number" min="1" value="1">
-                <input class="form-input price" placeholder="KSh" type="number" min="0">
+                <input class="form-input ql-name" placeholder="Item name (e.g. PPR Pipe 20mm x 4m)">
+                <input class="form-input ql-qty" placeholder="Qty" type="number" min="1" value="1" oninput="updateQuoteTotal()">
+                <input class="form-input ql-price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()">
                 <button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>
               </div>
             </div>
@@ -252,10 +256,10 @@
         <!-- PROGRESS PHOTOS -->
         <div class="panel" id="panel-photos">
           <div class="section-header">
-            <div><div class="section-title">Progress Photos</div><div class="section-sub">Upload site photos that will appear in the client's dashboard</div></div>
+            <div><div class="section-title">Progress Photos</div><div class="section-sub">Add photo links that appear on the client's dashboard</div></div>
           </div>
           <div class="card">
-            <div class="card-title"><i class="fas fa-upload"></i> Upload Photos</div>
+            <div class="card-title"><i class="fas fa-images"></i> Add Photo</div>
             <div class="form-grid">
               <div class="form-group full">
                 <label class="form-label">Client UID</label>
@@ -267,11 +271,14 @@
               </div>
               <div class="form-group full">
                 <label class="form-label">Photo URL</label>
-                <input class="form-input" id="photoURL" placeholder="Paste image URL (Firebase Storage, Imgur, etc.)">
-                <small style="color:rgba(203,213,224,0.35);font-size:0.72rem;margin-top:4px;">Upload your photo to Firebase Storage first and paste the download URL here.</small>
+                <input class="form-input" id="photoURL" placeholder="Paste image link (Google Drive, Dropbox, Imgur, etc.)">
+                <small style="color:rgba(203,213,224,0.35);font-size:0.72rem;margin-top:6px;display:block;">
+                  <i class="fas fa-info-circle" style="color:rgba(61,133,198,0.6);margin-right:4px;"></i>
+                  Free options: Upload to <a href="https://imgbb.com" target="_blank" style="color:var(--accent-yellow);">ImgBB.com</a> or share from Google Drive then paste the link here.
+                </small>
               </div>
             </div>
-            <button class="form-submit" onclick="savePhoto()"><i class="fas fa-upload" style="margin-right:8px;"></i>Upload Photo</button>
+            <button class="form-submit" onclick="savePhoto()"><i class="fas fa-plus" style="margin-right:8px;"></i>Add Photo</button>
           </div>
           <div class="card">
             <div class="card-title"><i class="fas fa-images"></i> Uploaded Photos</div>
@@ -449,6 +456,7 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+
   let selectedUID = null;
   let selectedEmail = null;
   let msgUnsubscribe = null;
@@ -460,6 +468,7 @@
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminWrap').style.display = 'block';
       loadOverview();
+      startAdminBadgeWatchers();
       loadProfile();
     } else {
       document.getElementById('loginScreen').style.display = 'flex';
@@ -527,7 +536,7 @@
     document.getElementById('ovMessages').textContent = messages.size;
     document.getElementById('ovUnpaid').textContent   = invoices.size;
 
-    const reqSnap = await getDocs(query(collection(db,'requests'), orderBy('createdAt','desc')));
+    const reqSnap = await getDocs(query(collection(db,'requests')));
     const el = document.getElementById('recentRequests');
     if (reqSnap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i><p>No service requests yet.</p></div>'; return; }
     el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Email</th><th>Service</th><th>Priority</th><th>Date</th><th>Status</th></tr></thead><tbody>
@@ -544,30 +553,42 @@
     const snap = await getDocs(collection(db,'users'));
     const matches = snap.docs.filter(d => (d.data().email||'').toLowerCase().includes(q));
     if (matches.length === 0) { el.innerHTML = '<div class="empty"><i class="fas fa-user-slash"></i><p>No clients found. Note: clients appear here only after they have logged in at least once.</p></div>'; return; }
-    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Email</th><th>UID</th><th>Action</th></tr></thead><tbody>
-      ${matches.map(d => `<tr><td>${d.data().email||d.id}</td><td style="font-size:0.75rem;opacity:0.5;">${d.id}</td><td><button class="btn yellow sm" onclick="selectClient('${d.id}','${d.data().email||d.id}')"><i class="fas fa-user-check"></i> Select</button></td></tr>`).join('')}
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Client ID</th><th>Email</th><th>Action</th></tr></thead><tbody>
+      ${matches.map(d => {
+        const data = d.data();
+        const clientId = data.clientId || '—';
+        return `<tr>
+          <td style="color:var(--accent-yellow);font-weight:700;letter-spacing:0.5px;">${clientId}</td>
+          <td>${data.email||d.id}</td>
+          <td><button class="btn yellow sm" onclick="selectClient('${d.id}','${data.email||d.id}','${clientId}')"><i class="fas fa-user-check"></i> Select</button></td>
+        </tr>`;
+      }).join('')}
     </tbody></table></div>`;
   };
 
-  window.selectClient = function(uid, email) {
+  window.selectClient = function(uid, email, clientId) {
     selectedUID   = uid;
     selectedEmail = email;
     ['projUID','quoteUID','invUID','photoUID','docUID','notifUID'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = uid;
     });
-    document.getElementById('msgClientName').textContent = 'Messaging: ' + email;
+    document.getElementById('msgClientName').textContent = 'Messaging: ' + email + ' (' + clientId + ')';
     const card = document.getElementById('selectedClientCard');
     card.style.display = 'block';
     document.getElementById('selectedClientInfo').innerHTML = `
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
         <div style="flex:1;">
           <div style="font-weight:700;color:#fff;font-size:0.95rem;">${email}</div>
-          <div style="font-size:0.75rem;color:rgba(203,213,224,0.4);margin-top:3px;font-family:monospace;">${uid}</div>
+          <div style="margin-top:6px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(230,190,12,0.08);border:1px solid rgba(230,190,12,0.2);border-radius:50px;padding:3px 12px;font-size:0.75rem;font-weight:700;color:var(--accent-yellow);letter-spacing:1px;">
+              <i class="fas fa-id-card"></i> ${clientId}
+            </span>
+          </div>
         </div>
         <span class="badge active">SELECTED</span>
       </div>`;
-    toast('Client selected: ' + email);
+    toast('Client selected: ' + clientId);
     loadMessages();
   };
 
@@ -590,7 +611,7 @@
   };
 
   async function loadProjectsTable() {
-    const snap = await getDocs(query(collection(db,'projects'), orderBy('createdAt','desc')));
+    const snap = await getDocs(query(collection(db,'projects')));
     const el = document.getElementById('projectsTable');
     if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>'; return; }
     el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Title</th><th>Location</th><th>Status</th><th>Progress</th><th>Phase</th></tr></thead><tbody>
@@ -602,7 +623,11 @@
   window.addQuoteLine = function() {
     const div = document.createElement('div');
     div.className = 'quote-line';
-    div.innerHTML = `<input class="form-input" placeholder="Item name"><input class="form-input qty" placeholder="Qty" type="number" min="1" value="1"><input class="form-input price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()"><button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>`;
+    div.innerHTML = `
+      <input class="form-input ql-name" placeholder="Item name">
+      <input class="form-input ql-qty" placeholder="Qty" type="number" min="1" value="1" oninput="updateQuoteTotal()">
+      <input class="form-input ql-price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()">
+      <button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>`;
     document.getElementById('quoteLines').appendChild(div);
     updateQuoteTotal();
   };
@@ -613,44 +638,64 @@
   };
 
   function updateQuoteTotal() {
-    const prices = [...document.querySelectorAll('#quoteLines .price')].map(i => parseFloat(i.value)||0);
-    const qtys   = [...document.querySelectorAll('#quoteLines .qty')].map(i => parseInt(i.value)||1);
-    const total  = prices.reduce((s,p,i) => s + p*(qtys[i]||1), 0);
+    let total = 0;
+    document.querySelectorAll('#quoteLines .quote-line').forEach(line => {
+      const qty   = parseFloat(line.querySelector('.ql-qty')?.value)  || 1;
+      const price = parseFloat(line.querySelector('.ql-price')?.value) || 0;
+      total += qty * price;
+    });
     document.getElementById('quoteTotal').textContent = 'KSh ' + total.toLocaleString();
   }
 
   window.sendQuote = async function() {
     const uid = document.getElementById('quoteUID').value.trim();
-    if (!uid) { toast('Select a client first', true); return; }
+    if (!uid) { toast('Select a client first from the Clients tab', true); return; }
     const title    = document.getElementById('quoteTitle').value.trim();
     const projName = document.getElementById('quoteProjName').value.trim();
     if (!title) { toast('Please enter a quote title', true); return; }
-    const lines = document.querySelectorAll('#quoteLines .quote-line');
-    const items = [...lines].map(line => {
-      const inputs = line.querySelectorAll('input');
-      return { name: inputs[0].value, qty: parseInt(inputs[1].value)||1, price: (parseFloat(inputs[2].value)||0) * (parseInt(inputs[1].value)||1) };
-    }).filter(i => i.name);
-    if (!items.length) { toast('Add at least one line item', true); return; }
-    const date = new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'});
-    await addDoc(collection(db,'quotes'), { uid, title, projectName: projName, items, date, status:'awaiting', createdAt: serverTimestamp() });
+
+    const items = [];
+    document.querySelectorAll('#quoteLines .quote-line').forEach(line => {
+      const name  = line.querySelector('.ql-name')?.value.trim();
+      const qty   = parseInt(line.querySelector('.ql-qty')?.value)   || 1;
+      const price = parseFloat(line.querySelector('.ql-price')?.value) || 0;
+      if (name) items.push({ name, qty, price: qty * price });
+    });
+
+    if (!items.length) { toast('Add at least one line item with a name', true); return; }
+
+    const date = new Date().toLocaleDateString('en-KE', {day:'numeric', month:'short', year:'numeric'});
+    await addDoc(collection(db,'quotes'), {
+      uid, clientEmail: selectedEmail, title, projectName: projName, items, date,
+      status: 'awaiting', createdAt: serverTimestamp()
+    });
+
     toast('Quote sent to client');
     loadQuotesTable();
-    document.getElementById('quoteTitle').value = '';
+    document.getElementById('quoteTitle').value    = '';
     document.getElementById('quoteProjName').value = '';
-    document.getElementById('quoteLines').innerHTML = `<div class="quote-line"><input class="form-input" placeholder="Item name"><input class="form-input qty" placeholder="Qty" type="number" min="1" value="1"><input class="form-input price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()"><button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button></div>`;
+    document.getElementById('quoteLines').innerHTML = `
+      <div class="quote-line">
+        <input class="form-input ql-name" placeholder="Item name">
+        <input class="form-input ql-qty" placeholder="Qty" type="number" min="1" value="1" oninput="updateQuoteTotal()">
+        <input class="form-input ql-price" placeholder="KSh" type="number" min="0" oninput="updateQuoteTotal()">
+        <button class="remove-line" onclick="removeLine(this)"><i class="fas fa-times"></i></button>
+      </div>`;
     document.getElementById('quoteTotal').textContent = 'KSh 0';
   };
 
   async function loadQuotesTable() {
-    const snap = await getDocs(query(collection(db,'quotes'), orderBy('createdAt','desc')));
+    const snap = await getDocs(query(collection(db,'quotes')));
     const el = document.getElementById('quotesTable');
     if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-file-invoice"></i><p>No quotes sent yet.</p></div>'; return; }
-    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Title</th><th>Project</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th></tr></thead><tbody>
-      ${snap.docs.map(d => {
+    const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
+    el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Sent To</th><th>Title</th><th>Project</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      ${sorted.map(d => {
         const q = d.data();
         const total = (q.items||[]).reduce((s,i) => s+(i.price||0), 0);
         const count = (q.items||[]).length;
         return `<tr>
+          <td style="color:#7bbde8;font-weight:600;">${q.clientEmail||'—'}</td>
           <td style="font-weight:600;color:#fff;">${q.title||'—'}</td>
           <td>${q.projectName||'—'}</td>
           <td style="color:rgba(203,213,224,0.6);">${count} item${count !== 1 ? 's' : ''}</td>
@@ -681,7 +726,7 @@
   };
 
   async function loadInvoicesTable() {
-    const snap = await getDocs(query(collection(db,'invoices'), orderBy('createdAt','desc')));
+    const snap = await getDocs(query(collection(db,'invoices')));
     const el = document.getElementById('invoicesTable');
     if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-receipt"></i><p>No invoices yet.</p></div>'; return; }
     el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Invoice #</th><th>Description</th><th>Amount</th><th>Due</th><th>Status</th><th>Action</th></tr></thead><tbody>
@@ -702,16 +747,16 @@
     const caption = document.getElementById('photoCaption').value.trim();
     if (!uid) { toast('Select a client first', true); return; }
     if (!url) { toast('Please paste a photo URL', true); return; }
-    const date = new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'});
+    const date = new Date().toLocaleDateString('en-KE', {day:'numeric', month:'short', year:'numeric'});
     await addDoc(collection(db,'photos'), { uid, url, caption, uploadDate: date, createdAt: serverTimestamp() });
-    toast('Photo uploaded to client dashboard');
+    toast('Photo added to client dashboard');
     loadPhotosTable();
     document.getElementById('photoURL').value = '';
     document.getElementById('photoCaption').value = '';
   };
 
   async function loadPhotosTable() {
-    const snap = await getDocs(query(collection(db,'photos'), orderBy('createdAt','desc')));
+    const snap = await getDocs(query(collection(db,'photos')));
     const el = document.getElementById('photosTable');
     if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-images"></i><p>No photos uploaded yet.</p></div>'; return; }
     el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Preview</th><th>Caption</th><th>Date</th></tr></thead><tbody>
@@ -737,7 +782,7 @@
   };
 
   async function loadDocsTable() {
-    const snap = await getDocs(query(collection(db,'documents'), orderBy('createdAt','desc')));
+    const snap = await getDocs(query(collection(db,'documents')));
     const el = document.getElementById('docsTable');
     if (snap.empty) { el.innerHTML = '<div class="empty"><i class="fas fa-folder"></i><p>No documents yet.</p></div>'; return; }
     el.innerHTML = `<div class="table-wrap"><table class="dt"><thead><tr><th>Name</th><th>Type</th><th>Date</th><th>Link</th></tr></thead><tbody>
@@ -748,27 +793,45 @@
   // ── MESSAGES ──
   function loadMessages() {
     const thread = document.getElementById('adminMsgThread');
+    if (!selectedUID) { thread.innerHTML = '<div class="empty"><i class="fas fa-user-slash"></i><p>Select a client from the Clients tab first.</p></div>'; return; }
     thread.innerHTML = '<div class="spinner"></div>';
     if (msgUnsubscribe) msgUnsubscribe();
-    if (!selectedUID) { thread.innerHTML = '<div class="empty"><i class="fas fa-user-slash"></i><p>Select a client from the Clients tab first.</p></div>'; return; }
-    const q = query(collection(db,'messages'), where('uid','==',selectedUID), orderBy('createdAt','asc'));
+    const q = query(collection(db,'messages'), where('uid','==',selectedUID));
     msgUnsubscribe = onSnapshot(q, snap => {
       if (snap.empty) { thread.innerHTML = '<div class="empty"><i class="fas fa-comments"></i><p>No messages yet with this client.</p></div>'; return; }
-      thread.innerHTML = snap.docs.map(d => {
+      const sorted = snap.docs.sort((a,b) => (a.data().createdAt?.seconds||0) - (b.data().createdAt?.seconds||0));
+
+      // Mark client messages as seen when messages panel is open
+      const msgPanel = document.getElementById('panel-messages');
+      if (msgPanel?.classList.contains('active')) {
+        snap.docs.forEach(d => {
+          if (d.data().sender === 'client' && !d.data().seen) {
+            updateDoc(doc(db,'messages',d.id), { seen: true });
+          }
+        });
+        setAdminBadge('adminMsgBadge', 0);
+      }
+
+      thread.innerHTML = sorted.map(d => {
         const m = d.data();
         const isPlumber = m.sender === 'plumber';
+        const seenTick = isPlumber && m.seen
+          ? `<span style="color:#28a745;font-size:0.68rem;margin-left:4px;" title="Seen by client">✓✓ Seen</span>`
+          : isPlumber
+          ? `<span style="color:rgba(203,213,224,0.35);font-size:0.68rem;margin-left:4px;">✓ Sent</span>`
+          : '';
         return `<div class="msg-item ${isPlumber ? 'plumber' : ''}">
           <div class="msg-av">${isPlumber ? '🔧' : '👤'}</div>
           <div>
             <div class="msg-bubble">${m.text||''}</div>
-            <div class="msg-time">${isPlumber ? 'You' : 'Client'} &bull; ${m.time||''}</div>
+            <div class="msg-time">${isPlumber ? 'You' : 'Client'} &bull; ${m.time||''}${seenTick}</div>
           </div>
         </div>`;
       }).join('');
       thread.scrollTop = thread.scrollHeight;
     });
   }
-  
+
   window.sendAdminMessage = async function() {
     if (!selectedUID) { toast('Select a client first', true); return; }
     const input = document.getElementById('adminMsgInput');
@@ -776,7 +839,7 @@
     if (!text) return;
     input.value = '';
     const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    await addDoc(collection(db,'messages'), { uid: selectedUID, sender: 'plumber', text, time, createdAt: serverTimestamp() });
+    await addDoc(collection(db,'messages'), { uid: selectedUID, sender: 'plumber', text, time, seen: false, createdAt: serverTimestamp() });
   };
 
   // ── NOTIFICATIONS ──
@@ -843,6 +906,56 @@
       updateProfilePreview();
     } catch(e) {}
   }
+  // ── BADGE WATCHERS ──
+  function setAdminBadge(id, count) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (count > 0) { el.style.display = 'inline'; el.textContent = count; }
+    else { el.style.display = 'none'; }
+  }
+
+  function startAdminBadgeWatchers() {
+    // Watch for client messages (any new message from a client)
+    if (selectedUID) {
+      onSnapshot(query(collection(db,'messages'), where('uid','==',selectedUID), where('sender','==','client')), snap => {
+        const panel = document.getElementById('panel-messages');
+        if (!panel?.classList.contains('active')) {
+          setAdminBadge('adminMsgBadge', snap.size);
+        } else {
+          setAdminBadge('adminMsgBadge', 0);
+        }
+      });
+    }
+
+    // Watch for pending quotes (declined or awaiting)
+    onSnapshot(query(collection(db,'quotes')), snap => {
+      const count = snap.docs.filter(d => d.data().status === 'awaiting').length;
+      const panel = document.getElementById('panel-quotes');
+      if (!panel?.classList.contains('active')) setAdminBadge('adminQuoteBadge', count);
+      else setAdminBadge('adminQuoteBadge', 0);
+    });
+
+    // Watch for unpaid invoices
+    onSnapshot(query(collection(db,'invoices')), snap => {
+      const count = snap.docs.filter(d => d.data().status === 'unpaid').length;
+      const panel = document.getElementById('panel-invoices');
+      if (!panel?.classList.contains('active')) setAdminBadge('adminInvoiceBadge', count);
+      else setAdminBadge('adminInvoiceBadge', 0);
+    });
+  }
+
+  // Re-run message watcher when client is selected
+  const originalSelectClient = window.selectClient;
+  window.selectClient = function(uid, email, clientId) {
+    originalSelectClient(uid, email, clientId);
+    // Start message badge watcher for newly selected client
+    onSnapshot(query(collection(db,'messages'), where('uid','==',uid), where('sender','==','client')), snap => {
+      const panel = document.getElementById('panel-messages');
+      if (!panel?.classList.contains('active')) setAdminBadge('adminMsgBadge', snap.size);
+      else setAdminBadge('adminMsgBadge', 0);
+    });
+  };
+
 </script>
 
 </body>

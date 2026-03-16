@@ -616,6 +616,7 @@ header:hover {
     background-color: var(--primary-blue);
     padding: 60px 0 0;
     color: white;
+    margin-bottom: 0;
 }
 .section-contact h2 {
     font-family: 'Playfair Display', serif;
@@ -625,7 +626,8 @@ header:hover {
 }
 .contact-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 0;
+    padding-bottom: 40px;
 }
 .contact-header h2 { color: white; }
 .contact-header p  { color: rgba(255, 255, 255, 0.8); }
