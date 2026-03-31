@@ -1494,24 +1494,22 @@
         document.getElementById('cartDrawer').style.right = '-420px';
         document.getElementById('cartOverlay').style.display = 'none';
     }
-
-    function openLoginModal() {
-        if (window._plUserLoggedIn) {
-            window.location.href = 'dashboard.html';
-            return;
-        }
-        document.getElementById('loginModal').style.display = 'flex';
+function openLoginModal() {
+    if (window._plUserLoggedIn) {
+        window.location.href = 'dashboard.html';
+        return;
     }
-
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.display = 'none';
-    }
+    document.getElementById('loginModal').style.display = 'flex';
+}
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp,runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
@@ -1535,22 +1533,19 @@
 
         let userInitialised = false;
 
-        onAuthStateChanged(auth, (user) => {
-            const btn = document.getElementById('headerLoginBtn');
-            if (user) {
-                window._plUserLoggedIn = true;
-                btn.style.color = '#28a745';
-                btn.title = 'My Account (' + user.email + ')';
-                if (userInitialised) {
-                    window.location.href = 'dashboard.html';
-                }
-            } else {
-                window._plUserLoggedIn = false;
-                btn.style.color = '';
-                btn.title = 'My Account';
-            }
-            userInitialised = true;
-        });
+onAuthStateChanged(auth, (user) => {
+    const btn = document.getElementById('headerLoginBtn');
+    if (user) {
+        window._plUserLoggedIn = true;
+        btn.style.color = '#28a745';
+        btn.title = 'My Account (' + user.email + ')';
+    } else {
+        window._plUserLoggedIn = false;
+        btn.style.color = '';
+        btn.title = 'My Account';
+    }
+    userInitialised = true;
+});
 
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
@@ -1562,28 +1557,43 @@
             submitBtn.disabled = true;
             submitBtn.textContent = isRegisterMode ? 'Creating account...' : 'Logging in...';
             try {
-                if (isRegisterMode) {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const uid = userCredential.user.uid;
-                    const now = new Date();
-                    const year = now.getFullYear();
-                    const month = now.toLocaleString('en', { month: 'short' }).toUpperCase();
-                    const day = String(now.getDate()).padStart(2, '0');
-                    const counterRef = doc(db, 'meta', 'clientCounter');
-                    const counterSnap = await getDoc(counterRef);
-                    let nextNumber = 1;
-                    if (counterSnap.exists()) {
-                        nextNumber = (counterSnap.data().count || 0) + 1;
-                    }
-                    await setDoc(counterRef, { count: nextNumber });
-                    const clientId = `PL-${year}-${month}-${day}-${String(nextNumber).padStart(5, '0')}`;
-                    await setDoc(doc(db, 'users', uid), {
-                        email: email,
-                        uid: uid,
-                        clientId: clientId,
-                        createdAt: serverTimestamp()
-                    });
-                } else {
+ if (isRegisterMode) {
+     window._plRegistering = true
+    console.log('Starting registration...');
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = userCredential.user.uid;
+    console.log('Auth user created, uid:', uid);
+    
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.toLocaleString('en', { month: 'short' }).toUpperCase();
+    const day = String(now.getDate()).padStart(2, '0');
+    const counterRef = doc(db, 'meta', 'clientCounter');
+    console.log('Starting transaction...');
+    
+    const clientId = await runTransaction(db, async (transaction) => {
+        console.log('Inside transaction, reading counter...');
+        const counterSnap = await transaction.get(counterRef);
+        console.log('Counter snap exists:', counterSnap.exists());
+        console.log('Counter value:', counterSnap.data());
+        const nextNumber = (counterSnap.exists() ? counterSnap.data().count : 0) + 1;
+        console.log('Next number will be:', nextNumber);
+        transaction.set(counterRef, { count: nextNumber });
+        return `PL-${year}-${month}-${day}-${String(nextNumber).padStart(5, '0')}`;
+    });
+    
+    console.log('Transaction complete, clientId:', clientId);
+    
+    await setDoc(doc(db, 'users', uid), {
+        email: email,
+        uid: uid,
+        clientId: clientId,
+        createdAt: serverTimestamp()
+    });
+    
+    console.log('User document written successfully');
+     window._plRegistering = false;
+}else {
                     await signInWithEmailAndPassword(auth, email, password);
                     const remember = document.getElementById('rememberMe').checked;
                     if (remember) {
