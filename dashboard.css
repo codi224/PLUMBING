@@ -1200,3 +1200,123 @@ table.data-table tr:hover td { background: rgba(61,133,198,0.04); }
   .stats-grid { grid-template-columns: 1fr; }
   .content { padding: 16px; }
 }
+/* ══════════════════════════════════════
+   PHOTO PROJECT GROUPS
+══════════════════════════════════════ */
+.photo-project-group {
+  margin-bottom: 32px;
+}
+
+.photo-project-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-yellow);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.photo-project-label i {
+  color: var(--accent-yellow);
+  font-size: 0.82rem;
+}
+
+.photo-project-count {
+  margin-left: auto;
+  background: rgba(230,190,12,0.08);
+  border: 1px solid rgba(230,190,12,0.18);
+  border-radius: 50px;
+  padding: 2px 10px;
+  font-size: 0.68rem;
+  color: rgba(230,190,12,0.7);
+  font-weight: 600;
+}
+
+.photo-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+/* ══════════════════════════════════════
+   PHOTO DATE
+══════════════════════════════════════ */
+.photo-date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  padding: 0 10px 8px;
+  font-family: var(--font-mono);
+}
+.project-photos-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(61,133,198,0.1);
+}
+
+.project-photos-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(61,133,198,0.7);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-photos-count {
+  background: rgba(61,133,198,0.1);
+  border: 1px solid rgba(61,133,198,0.2);
+  border-radius: 50px;
+  padding: 1px 8px;
+  font-size: 0.68rem;
+  color: rgba(143,168,196,0.7);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.project-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 8px;
+}
+
+.project-photo-thumb {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #0d2137;
+  border: 1px solid rgba(61,133,198,0.12);
+  cursor: zoom-in;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.project-photo-thumb:hover {
+  transform: scale(1.03);
+  border-color: rgba(230,190,12,0.35);
+}
+
+.project-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-photo-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(4,14,26,0.85));
+  color: #fff;
+  font-size: 0.62rem;
+  padding: 12px 6px 5px;
+  line-height: 1.3;
+}

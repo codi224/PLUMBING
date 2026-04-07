@@ -666,14 +666,12 @@
         </div>
 
         <!-- PROGRESS PHOTOS -->
-        <div class="panel" id="panel-photos">
-          <div class="section-header">
-            <div><div class="section-title">Progress Photos</div><div class="section-sub">Site updates uploaded by your plumber</div></div>
-          </div>
-          <div class="card">
-            <div class="photo-grid" id="photoGrid"><div class="spinner"></div></div>
-          </div>
-        </div>
+<div class="panel" id="panel-photos">
+  <div class="section-header">
+    <div><div class="section-title">Progress Photos</div><div class="section-sub">Site updates uploaded by your plumber, grouped by project</div></div>
+  </div>
+  <div id="photoGrid"><div class="spinner"></div></div>
+</div>
         <!-- DOCUMENTS -->
 <div class="panel" id="panel-documents">
   <div class="section-header">
@@ -1360,7 +1358,7 @@ async function uploadToCloudinary(file, onProgress) {
     const uid = currentUser.uid;
     const loaders = {
       dashboard:     () => loadDashboard(uid),
-      projects:      () => loadProjects(uid),
+      projects:      () => renderProjectsPanel(uid),
       quotes:        () => loadQuotes(uid),
       purchases:     () => loadPurchases(uid),
       invoices:      () => loadInvoices(uid),
@@ -1492,33 +1490,67 @@ async function uploadToCloudinary(file, onProgress) {
     );
   }
 
-  // When navigating to projects panel, render from existing listener data
-  // by triggering a one-off snapshot read (cheap, already cached by Firestore)
-  function renderProjectsPanel(uid) {
-    const listEl = document.getElementById('projectsList');
-    listEl.innerHTML = '<div class="spinner"></div>';
-    getDocs(query(collection(db,'projects'), where('uid','==',uid))).then(snap => {
-      const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-      listEl.innerHTML = sorted.length === 0
-        ? '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>'
-        : sorted.map(d => projectCardHTML(d.data())).join('');
-    });
+async function renderProjectsPanel(uid) {
+  const listEl = document.getElementById('projectsList');
+  listEl.innerHTML = '<div class="spinner"></div>';
+
+  const [projectsSnap, photosSnap] = await Promise.all([
+    getDocs(query(collection(db,'projects'), where('uid','==',uid))),
+    getDocs(query(collection(db,'photos'),   where('uid','==',uid)))
+  ]);
+
+  const sorted = projectsSnap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
+
+  // Group photos by projectId
+  const photosByProject = {};
+  photosSnap.docs.forEach(d => {
+    const p = d.data();
+    if (p.projectId) {
+      if (!photosByProject[p.projectId]) photosByProject[p.projectId] = [];
+      photosByProject[p.projectId].push(p);
+    }
+  });
+
+  if (sorted.length === 0) {
+    listEl.innerHTML = '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>';
+    return;
   }
 
-  function projectCardHTML(p) {
-    const prog = p.progress || 0;
-    return `<div class="project-card">
-      <div class="project-header">
-        <div>
-          <div class="project-title">${p.title || 'Untitled Project'}</div>
-          <div class="project-meta">${p.location || ''} &bull; Started ${p.startDate || '—'}</div>
-        </div>
-        <span class="badge ${p.status || 'pending'}">${(p.status||'pending').toUpperCase()}</span>
+  listEl.innerHTML = sorted.map(d => projectCardHTML(d.id, d.data(), photosByProject[d.id] || [])).join('');
+}
+
+  function projectCardHTML(id, p, photos = []) {
+  const prog = p.progress || 0;
+  const photosSorted = photos.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+
+  const photosSection = photos.length > 0 ? `
+    <div class="project-photos-section">
+      <div class="project-photos-label">
+        <i class="fas fa-images"></i> Progress Photos
+        <span class="project-photos-count">${photos.length} photo${photos.length !== 1 ? 's' : ''}</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
-      <div class="progress-labels"><span>${p.phase || 'In progress'}</span><span>${prog}% complete</span></div>
-    </div>`;
-  }
+      <div class="project-photos-grid">
+        ${photosSorted.map(ph => `
+          <div class="project-photo-thumb" onclick="openPhotoLightbox('${ph.url}', '${(ph.caption||'').replace(/'/g,"\\'")}', '${ph.uploadDate||''}')">
+            <img src="${ph.url}" alt="${ph.caption||''}" loading="lazy" onerror="this.parentElement.style.display='none'">
+            ${ph.caption ? `<div class="project-photo-caption">${ph.caption}</div>` : ''}
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  return `<div class="project-card">
+    <div class="project-header">
+      <div>
+        <div class="project-title">${p.title || 'Untitled Project'}</div>
+        <div class="project-meta">${p.location || ''} ${p.location && p.startDate ? '&bull;' : ''} ${p.startDate ? 'Started ' + p.startDate : ''}</div>
+      </div>
+      <span class="badge ${p.status || 'pending'}">${(p.status||'pending').toUpperCase()}</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
+    <div class="progress-labels"><span>${p.phase || 'In progress'}</span><span>${prog}% complete</span></div>
+    ${photosSection}
+  </div>`;
+}
 
   // ══════════════════════════════════════
   //  QUOTES
@@ -1595,6 +1627,35 @@ async function uploadToCloudinary(file, onProgress) {
     await updateDoc(doc(db,'quotes',id), { status });
     loadQuotes(currentUser.uid);
   };
+  window.openPhotoLightbox = function(url, caption, date) {
+  // Create lightbox if it doesn't exist
+  let lb = document.getElementById('photoLightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'photoLightbox';
+    lb.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(4,14,26,0.95);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out;';
+    lb.innerHTML = `
+      <button onclick="closePhotoLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(61,133,198,0.15);border:1px solid rgba(61,133,198,0.25);border-radius:50%;width:40px;height:40px;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-times"></i>
+      </button>
+      <img id="lightboxImg" src="" style="max-width:90vw;max-height:78vh;border-radius:12px;object-fit:contain;box-shadow:0 24px 60px rgba(4,14,26,0.8);">
+      <div id="lightboxCaption" style="margin-top:14px;color:#fff;font-weight:600;font-size:0.9rem;text-align:center;"></div>
+      <div id="lightboxDate" style="margin-top:4px;color:rgba(143,168,196,0.5);font-size:0.78rem;text-align:center;"></div>`;
+    lb.onclick = e => { if (e.target === lb) closePhotoLightbox(); };
+    document.body.appendChild(lb);
+  }
+  document.getElementById('lightboxImg').src          = url;
+  document.getElementById('lightboxCaption').textContent = caption || '';
+  document.getElementById('lightboxDate').textContent    = date    || '';
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+
+window.closePhotoLightbox = function() {
+  const lb = document.getElementById('photoLightbox');
+  if (lb) lb.style.display = 'none';
+  document.body.style.overflow = '';
+};
 
   // ══════════════════════════════════════
   //  PURCHASES
@@ -1735,19 +1796,86 @@ async function uploadToCloudinary(file, onProgress) {
   // ══════════════════════════════════════
   //  PHOTOS
   // ══════════════════════════════════════
-  async function loadPhotos(uid) {
-    try {
-      const snap = await getDocs(query(collection(db,'photos'), where('uid','==',uid)));
-      const el   = document.getElementById('photoGrid');
-      if (snap.empty) { el.innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>No photos yet. Your plumber will upload progress photos here.</p></div>'; return; }
-      const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-      el.innerHTML = sorted.map(d => {
-        const p = d.data();
-        return `<div class="photo-item"><img src="${p.url}" alt="${p.caption||''}" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="photo-caption">${p.caption||''}</div></div>`;
-      }).join('');
-    } catch(e) { document.getElementById('photoGrid').innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>Could not load photos.</p></div>'; }
-  }
+async function loadPhotos(uid) {
+  try {
+    const [photosSnap, projectsSnap] = await Promise.all([
+      getDocs(query(collection(db,'photos'), where('uid','==',uid))),
+      getDocs(query(collection(db,'projects'), where('uid','==',uid)))
+    ]);
 
+    const el = document.getElementById('photoGrid');
+
+    if (photosSnap.empty) {
+      el.innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>No photos yet. Your plumber will upload progress photos here.</p></div>';
+      return;
+    }
+
+    // Build a project ID → title map
+    const projectMap = {};
+    projectsSnap.docs.forEach(d => {
+      projectMap[d.id] = d.data().title || 'Unnamed Project';
+    });
+
+    // Group photos by projectId
+    const grouped = {};
+    const ungrouped = [];
+
+    photosSnap.docs.forEach(d => {
+      const p = { id: d.id, ...d.data() };
+      if (p.projectId && projectMap[p.projectId]) {
+        if (!grouped[p.projectId]) grouped[p.projectId] = [];
+        grouped[p.projectId].push(p);
+      } else {
+        ungrouped.push(p);
+      }
+    });
+
+    let html = '';
+
+    // Render grouped photos
+    Object.entries(grouped).forEach(([projectId, photos]) => {
+      const sorted = photos.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+      html += `
+        <div class="photo-project-group">
+          <div class="photo-project-label">
+            <i class="fas fa-hard-hat"></i> ${projectMap[projectId]}
+            <span class="photo-project-count">${photos.length} photo${photos.length !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="photo-project-grid">
+            ${sorted.map(p => photoItemHTML(p)).join('')}
+          </div>
+        </div>`;
+    });
+
+    // Render ungrouped photos (uploaded from Photos panel, no projectId)
+    if (ungrouped.length > 0) {
+      const sorted = ungrouped.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+      html += `
+        <div class="photo-project-group">
+          <div class="photo-project-label">
+            <i class="fas fa-images"></i> General Photos
+            <span class="photo-project-count">${ungrouped.length} photo${ungrouped.length !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="photo-project-grid">
+            ${sorted.map(p => photoItemHTML(p)).join('')}
+          </div>
+        </div>`;
+    }
+
+    el.innerHTML = html;
+
+  } catch(e) {
+    document.getElementById('photoGrid').innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>Could not load photos.</p></div>';
+  }
+}
+
+function photoItemHTML(p) {
+  return `<div class="photo-item">
+    <img src="${p.url}" alt="${p.caption||''}" loading="lazy" onerror="this.parentElement.style.display='none'">
+    <div class="photo-caption">${p.caption||''}</div>
+    ${p.uploadDate ? `<div class="photo-date">${p.uploadDate}</div>` : ''}
+  </div>`;
+}
   // ══════════════════════════════════════
   //  DOCUMENTS
   // ══════════════════════════════════════
