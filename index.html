@@ -585,7 +585,7 @@
                     <a href="https://www.tiktok.com/@stanleykihanya?_r=1&_t=ZS-93erd8wtVEC" class="icon-link tk" target="_blank"><i class="fab fa-tiktok"></i></a>
                     <a href="#" class="icon-link fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="icon-link ig" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="mailto:info@primelineplumbing.co.ke" class="icon-link mail"><i class="fas fa-envelope"></i></a>
+                    <a href="mailto:primeline98@gmail.com" class="icon-link mail"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
             <div class="footer-column">
@@ -600,7 +600,7 @@
             </div>
             <div class="footer-column">
                 <h3>Support Center</h3>
-                <p class="footer-email-line"><i class="fas fa-envelope"></i> <a href="mailto:info@primelineplumbing.co.ke" class="footer-email-link">info@primelineplumbing.co.ke</a></p>
+                <p class="footer-email-line"><i class="fas fa-envelope"></i> <a href="mailto:primeline98@gmail.com" class="footer-email-link">info@primelineplumbing.co.ke</a></p>
                 <a href="tel:+254727935046" class="emergency-link-wrapper">
                     <div class="emergency-call-box">
                         <h4><i class="fas fa-phone-alt"></i> 24/7 EMERGENCY</h4>
@@ -641,6 +641,9 @@
             <a id="cartWhatsapp" href="#" target="_blank" class="cart-whatsapp-btn">
                 <i class="fab fa-whatsapp"></i> Send Order via WhatsApp
             </a>
+            <a id="cartEmail" href="#" class="cart-email-btn">
+    <i class="fas fa-envelope"></i> Send Order via Email
+</a>
             <button onclick="clearCart()" id="clearCartBtn" class="cart-clear-btn">
                 <i class="fas fa-trash"></i> Clear Cart
             </button>
@@ -712,7 +715,7 @@
                     </div>
                     <div class="login-options" id="loginOptions">
                         <label><input type="checkbox" id="rememberMe"> Remember me</label>
-                        <a href="#" onclick="handleForgotPassword(event)">Forgot password?</a>
+                        <a href="#" onclick="handleForgotPassword(event)" title="Enter your email above first">Forgot password?</a>
                     </div>
                     <button type="submit" class="login-submit-btn" id="authSubmitBtn">Login</button>
                 </form>
@@ -1422,48 +1425,88 @@
         updateCartUI();
         openCart();
     }
-
-    function updateCartUI() {
-        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-        const badge = document.getElementById('cartBadge');
-        const countEl = document.getElementById('cartCount');
-        badge.textContent = totalItems;
-        countEl.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'flex' : 'none';
-        document.getElementById('cartSubtotal').textContent = 'KSh ' + total.toLocaleString();
-        const emptyEl = document.getElementById('cartEmpty');
-        const waBtn = document.getElementById('cartWhatsapp');
-        const clearBtn = document.getElementById('clearCartBtn');
-        emptyEl.style.display = cart.length === 0 ? 'block' : 'none';
-        waBtn.style.display = cart.length > 0 ? 'block' : 'none';
-        clearBtn.style.display = cart.length > 0 ? 'block' : 'none';
-        const container = document.getElementById('cartItems');
-        container.innerHTML = '';
-        cart.forEach((item, idx) => {
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">${item.priceText} each</div>
-                    <div class="cart-item-controls">
-                        <button class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)">−</button>
-                        <input class="cart-qty-input" type="number" value="${item.qty}" min="1" onchange="setCartQty(${idx}, this.value)">
-                        <button class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
-                        <button class="cart-remove-btn" onclick="removeFromCart(${idx})"><i class="fas fa-trash"></i> Remove</button>
-                    </div>
+function updateCartUI() {
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+    const badge = document.getElementById('cartBadge');
+    const countEl = document.getElementById('cartCount');
+    badge.textContent = totalItems;
+    countEl.textContent = totalItems;
+    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+    document.getElementById('cartSubtotal').textContent = 'KSh ' + total.toLocaleString();
+    const emptyEl = document.getElementById('cartEmpty');
+    const waBtn = document.getElementById('cartWhatsapp');
+    const emailBtn = document.getElementById('cartEmail');
+    const clearBtn = document.getElementById('clearCartBtn');
+    emptyEl.style.display = cart.length === 0 ? 'block' : 'none';
+    waBtn.style.display = cart.length > 0 ? 'block' : 'none';
+    emailBtn.style.display = cart.length > 0 ? 'block' : 'none';
+    clearBtn.style.display = cart.length > 0 ? 'block' : 'none';
+    const container = document.getElementById('cartItems');
+    container.innerHTML = '';
+    cart.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${item.priceText} each</div>
+                <div class="cart-item-controls">
+                    <button class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)">−</button>
+                    <input class="cart-qty-input" type="number" value="${item.qty}" min="1" onchange="setCartQty(${idx}, this.value)">
+                    <button class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
+                    <button class="cart-remove-btn" onclick="removeFromCart(${idx})"><i class="fas fa-trash"></i> Remove</button>
                 </div>
-                <div class="cart-item-total">KSh ${(item.price * item.qty).toLocaleString()}</div>`;
-            container.appendChild(div);
+            </div>
+            <div class="cart-item-total">KSh ${(item.price * item.qty).toLocaleString()}</div>`;
+        container.appendChild(div);
+    });
+
+    if (cart.length > 0) {
+        const orderRef = 'ORD-' + Date.now().toString().slice(-6);
+        const date = new Date().toLocaleDateString('en-KE', {
+            day: '2-digit', month: 'short', year: 'numeric'
         });
-        if (cart.length > 0) {
-            let msg = 'Hello Primeline Plumbing Solutions, I would like to order:\n\n';
-            cart.forEach(i => { msg += `• ${i.name} x${i.qty} @ ${i.priceText} each\n`; });
-            msg += `\nTotal: KSh ${total.toLocaleString()}`;
-            waBtn.href = 'https://wa.me/254727935046?text=' + encodeURIComponent(msg);
-        }
+
+        // WhatsApp message
+        let msg = `*PRIMELINE PLUMBING — NEW ORDER*\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `📋 Order Ref: ${orderRef}\n`;
+        msg += `📅 Date: ${date}\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+        msg += `*ITEMS ORDERED:*\n\n`;
+        cart.forEach((i, idx) => {
+            const lineTotal = i.price * i.qty;
+            msg += `${idx + 1}. ${i.name}\n`;
+            msg += `   Qty: ${i.qty} × KSh ${i.price.toLocaleString()} = KSh ${lineTotal.toLocaleString()}\n\n`;
+        });
+        msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `*TOTAL: KSh ${total.toLocaleString()}*\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+        msg += `Please confirm availability and delivery details. Thank you! 🙏`;
+        waBtn.href = 'https://wa.me/254727935046?text=' + encodeURIComponent(msg);
+
+        // Email message
+        const subject = `New Order ${orderRef} — Primeline Plumbing`;
+        let body = `PRIMELINE PLUMBING — NEW ORDER\n`;
+        body += `================================\n`;
+        body += `Order Ref: ${orderRef}\n`;
+        body += `Date: ${date}\n`;
+        body += `================================\n\n`;
+        body += `ITEMS ORDERED:\n\n`;
+        cart.forEach((i, idx) => {
+            const lineTotal = i.price * i.qty;
+            body += `${idx + 1}. ${i.name}\n`;
+            body += `   Qty: ${i.qty} x KSh ${i.price.toLocaleString()} = KSh ${lineTotal.toLocaleString()}\n\n`;
+        });
+        body += `================================\n`;
+        body += `TOTAL: KSh ${total.toLocaleString()}\n`;
+        body += `================================\n\n`;
+        body += `Please confirm availability and delivery details.\n\nThank you!`;
+
+        emailBtn.href = `mailto:primeline98@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
+}
 
     function changeCartQty(idx, delta) {
         cart[idx].qty = Math.max(1, cart[idx].qty + delta);
@@ -1537,16 +1580,18 @@ onAuthStateChanged(auth, (user) => {
     const btn = document.getElementById('headerLoginBtn');
     if (user) {
         window._plUserLoggedIn = true;
-        btn.style.color = '#28a745';
-        btn.title = 'My Account (' + user.email + ')';
+        btn.title = 'Go to My Dashboard';
+        btn.innerHTML = `
+            <i class="fas fa-user-circle"></i>
+            <span class="dashboard-label">Dashboard</span>
+        `;
     } else {
         window._plUserLoggedIn = false;
-        btn.style.color = '';
         btn.title = 'My Account';
+        btn.innerHTML = '<i class="fas fa-user-circle"></i>';
     }
     userInitialised = true;
 });
-
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
             const email = document.getElementById('authEmail').value.trim();
@@ -1632,27 +1677,35 @@ onAuthStateChanged(auth, (user) => {
             document.getElementById('authForm').reset();
         };
 
-        window.handleForgotPassword = async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('authEmail').value.trim();
-            const errorBox = document.getElementById('authError');
-            errorBox.className = 'auth-error-box';
-            if (!email) {
-                errorBox.style.display = 'block';
-                errorBox.classList.add('auth-error-box--warning');
-                errorBox.textContent = 'Please enter your email address first.';
-                return;
-            }
-            try {
-                await sendPasswordResetEmail(auth, email);
-                errorBox.style.display = 'block';
-                errorBox.classList.add('auth-error-box--success');
-                errorBox.textContent = 'Password reset email sent! Check your inbox.';
-            } catch (err) {
-                errorBox.style.display = 'block';
-                errorBox.textContent = friendlyError(err.code);
-            }
-        };
+      window.handleForgotPassword = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value.trim();
+    const errorBox = document.getElementById('authError');
+    const emailInput = document.getElementById('authEmail');
+    errorBox.className = 'auth-error-box';
+  if (!email) {
+    emailInput.classList.add('input-error');
+    emailInput.placeholder = 'Enter your email first';
+    emailInput.focus();
+    setTimeout(() => {
+        emailInput.classList.remove('input-error');
+        emailInput.placeholder = 'Email Address';
+    }, 3000);
+    errorBox.style.display = 'block';
+    errorBox.classList.add('auth-error-box--warning');
+    errorBox.textContent = 'Please enter your email address above first.';
+    return;
+}
+    try {
+        await sendPasswordResetEmail(auth, email);
+        errorBox.style.display = 'block';
+        errorBox.classList.add('auth-error-box--success');
+        errorBox.textContent = 'Password reset email sent! Check your inbox.';
+    } catch (err) {
+        errorBox.style.display = 'block';
+        errorBox.textContent = friendlyError(err.code);
+    }
+};
 
         function friendlyError(code) {
             const map = {

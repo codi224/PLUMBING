@@ -575,9 +575,14 @@ input, select, textarea { font-family: var(--font); }
 .btn.red    { background: var(--danger-red); color: var(--pure-white); }
 .btn.red:hover { box-shadow: 0 6px 20px rgba(239,68,68,0.35); }
 
-.btn.gold   { background: linear-gradient(135deg, var(--accent-yellow), var(--accent-gold)); color: var(--dark-navy); }
-.btn.gold:hover { box-shadow: 0 6px 24px rgba(230,190,12,0.45); }
-
+.btn.gold {
+  background: linear-gradient(135deg, var(--accent-yellow), var(--accent-gold));
+  color: var(--dark-navy);
+}
+.btn.gold:hover {
+  box-shadow: 0 6px 24px rgba(230,190,12,0.45);
+  background: linear-gradient(135deg, var(--accent-yellow2), var(--accent-yellow));
+}
 .btn.outline {
   background: transparent;
   color: var(--text-muted);

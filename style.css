@@ -1534,6 +1534,25 @@ header:hover {
     text-align: center;
     text-decoration: none;
 }
+.cart-email-btn {
+    display: none;
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    background: #0a192f;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+.cart-email-btn:hover {
+    background: #1a3a5c;
+    color: #fff;
+}
 .cart-clear-btn {
     display: none;
     width: 100%;
@@ -1802,6 +1821,9 @@ header:hover {
     background: #eafaf1;
     color: #1e7e34;
 }
+.login-input-group input.input-error {
+    border-color: #e31e24;
+}
 
 /* ===== LOGIN BUTTON ===== */
 #headerLoginBtn {
@@ -1817,6 +1839,21 @@ header:hover {
     align-items: center;
     justify-content: center;
     position: relative;
+}
+#headerLoginBtn.logged-in {
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dashboard-label {
+    display: block;
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    margin-top: 2px;
 }
 #headerLoginBtn:hover {
     color: #ffffff;
@@ -1841,7 +1878,7 @@ header:hover {
 }
 .submit-btn:hover {
     background-color: var(--pure-white);
-    transform: scale(1.02);
+   transform: scale(1.02);
 }
 
 /* ===== RESPONSIVE ===== */
@@ -1965,6 +2002,30 @@ header:hover {
     .ba-images { height: 240px; }
     .work-gallery { grid-template-columns: 1fr; gap: 14px; }
     #primeline-map { height: 320px; }
+    /* Always show Learn More button on mobile */
+    .learn-more-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Tap hint on product category cards */
+    .service-box.kitchen-bg::after,
+    .service-box.bathroom-bg::after,
+    .service-box.construction-bg::after {
+        content: "Tap to explore";
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(230, 190, 12, 0.9);
+        color: #000;
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 6;
+    }
 }
 @media (hover: hover) {
     .main-nav ul li a:hover {
