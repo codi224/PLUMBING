@@ -1,229 +1,631 @@
-  <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. Counter Logic
-            let count = 0;
-            const counterElement = document.getElementById("counter");
-            if (counterElement) {
-                const interval = setInterval(() => {
-                    if (count >= 100) {
-                        clearInterval(interval);
-                    } else {
-                        count++;
-                        counterElement.textContent = count;
-                    }
-                }, 20);
-            }
+// ============================================================
+//  Primeline Plumbing Solutions — Auth Module (Firebase)
+//  Handles: Login, Register, Forgot Password, Auth State,
+//           Real-time Validation, Password Strength Meter
+// ============================================================
 
-            // 2. Form Submission
-            const contactForm = document.querySelector('.contact-form');
-            const modal = document.getElementById('success-modal');
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp,
+  runTransaction,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    if (modal) { modal.style.display = 'flex'; }
-                });
-            }
-        });
+// ─── Firebase Config ─────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
+  authDomain: "primeline-plumbing.firebaseapp.com",
+  projectId: "primeline-plumbing",
+  storageBucket: "primeline-plumbing.firebasestorage.app",
+  messagingSenderId: "115563321966",
+  appId: "1:115563321966:web:a71fca315dc4572e26a47f",
+};
 
-        // 3. Modal Close
-        function closeModal() {
-            const modal = document.getElementById('success-modal');
-            if (modal) { modal.style.display = 'none'; }
-            document.querySelector('.contact-form').reset();
-        }
-        function openReviewModal() {
-    document.getElementById('reviewModal').style.display = 'flex';
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ─── State ───────────────────────────────────────────────────
+let isRegisterMode = false;
+
+// ─── Restore saved email on page load ────────────────────────
+const savedEmail = localStorage.getItem("pl_saved_email");
+if (savedEmail) {
+  const emailInput = document.getElementById("authEmail");
+  if (emailInput) {
+    emailInput.value = savedEmail;
+    const rememberMe = document.getElementById("rememberMe");
+    if (rememberMe) rememberMe.checked = true;
+  }
+}
+// ─── Light / Dark Theme Toggle ────────────────────────────────
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.getElementById("themeIcon");
+
+// Remember preference
+if (localStorage.getItem("pl_theme") === "dark") {
+  document.body.classList.add("dark-theme");
+  themeIcon.classList.replace("fa-moon", "fa-sun");
 }
 
-function closeReviewModal() {
-    document.getElementById('reviewModal').style.display = 'none';
-}
-
-// Close if user clicks outside the box
-window.onclick = function(event) {
-    let modal = document.getElementById('reviewModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-function handleReviewSubmit(event) {
-    event.preventDefault(); // Prevents the page from refreshing
-    
-    // 1. Hide the form
-    document.getElementById('reviewFormContainer').style.display = 'none';
-    
-    // 2. Show the success message
-    document.getElementById('reviewSuccessMessage').style.display = 'block';
-    
-    // Optional: Log data or send to server here
-    console.log("Review submitted successfully");
-}
-
-// Update your existing close function to reset the form for the next time
-function closeReviewModal() {
-    document.getElementById('reviewModal').style.display = 'none';
-    
-    // Reset the modal state after it closes so the form comes back
-    setTimeout(() => {
-        document.getElementById('reviewFormContainer').style.display = 'block';
-        document.getElementById('reviewSuccessMessage').style.display = 'none';
-        document.getElementById('reviewForm').reset();
-    }, 500);
-}
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.querySelectorAll('.main-nav a, .cta-button, .footer-links a');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-
-            // Process only internal hash links
-            if (targetId && targetId.startsWith('#') && targetId !== '#') {
-                e.preventDefault(); // Prevent instant jump
-
-                // 1. Close the menu immediately
-                menuToggle.checked = false;
-
-                // 2. WAIT for the menu animation to finish (0.4s in your CSS)
-                // This ensures the page layout is back to normal height
-                setTimeout(() => {
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const headerOffset = 100; // Height of your sticky header
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 450); // 450ms matches your 0.4s CSS transition + small buffer
-            }
-        });
-    });
+themeToggle?.addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark-theme");
+  themeIcon.classList.toggle("fa-moon", !isDark);
+  themeIcon.classList.toggle("fa-sun", isDark);
+  localStorage.setItem("pl_theme", isDark ? "dark" : "light");
 });
-function toggleKitchenGrid() {
-    const grid = document.getElementById('kitchen-full-catalog');
-    const isOpening = !grid.classList.contains('show-grid');
-    
-    if (isOpening) {
-        // OPENING logic
-        grid.classList.add('show-grid');
-        setTimeout(() => {
-            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
+
+// ─── Auth State Listener ─────────────────────────────────────
+onAuthStateChanged(auth, (user) => {
+  const btn = document.getElementById("headerLoginBtn");
+  if (!btn) return;
+
+  if (user) {
+    window._plUserLoggedIn = true;
+    btn.title = "Go to My Dashboard";
+    btn.innerHTML = `
+      <i class="fas fa-user-circle"></i>
+      <span class="dashboard-label">Dashboard</span>
+    `;
+    btn.classList.add("logged-in");
+    btn.onclick = () => (window.location.href = "dashboard.html");
+  } else {
+    window._plUserLoggedIn = false;
+    btn.title = "My Account";
+    btn.innerHTML = `<i class="fas fa-user-circle"></i>`;
+    btn.classList.remove("logged-in");
+    btn.onclick = window.openLoginModal;
+  }
+});
+
+// ─── Modal Open / Close ──────────────────────────────────────
+window.openLoginModal = function () {
+  const modal = document.getElementById("loginModal");
+  if (!modal) return;
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  setTimeout(() => document.getElementById("authEmail")?.focus(), 320);
+};
+
+window.closeLoginModal = function () {
+  const modal = document.getElementById("loginModal");
+  if (!modal) return;
+  modal.style.display = "none";
+  document.body.style.overflow = "";
+  resetAuthForm();
+};
+
+// Close on backdrop click
+document.getElementById("loginModal")?.addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) window.closeLoginModal();
+});
+
+// Close on Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") window.closeLoginModal();
+});
+
+// ─── Toggle Register / Login Mode ────────────────────────────
+window.toggleAuthMode = function (e) {
+  e.preventDefault();
+  isRegisterMode = !isRegisterMode;
+
+  document.getElementById("authTitle").textContent = isRegisterMode
+    ? "Create Account"
+    : "Customer Login";
+  document.getElementById("authSubtitle").textContent = isRegisterMode
+    ? "Join Primeline Plumbing Solutions"
+    : "Welcome back to Primeline Plumbing Solutions";
+  document.getElementById("authSubmitBtn").textContent = isRegisterMode
+    ? "Create Account"
+    : "Login";
+  document.getElementById("nameGroup").style.display = isRegisterMode
+    ? "flex"
+    : "none";
+  document.getElementById("loginOptions").style.display = isRegisterMode
+    ? "none"
+    : "flex";
+  document.getElementById("authToggleText").innerHTML = isRegisterMode
+    ? 'Already have an account? <a href="#" onclick="toggleAuthMode(event)">Login here</a>'
+    : 'Don\'t have an account? <a href="#" onclick="toggleAuthMode(event)">Register here</a>';
+
+  // Show/hide strength meter and confirm password field
+  const strengthBlock = document.getElementById("passwordStrengthBlock");
+  const confirmGroup = document.getElementById("confirmPasswordGroup");
+  if (strengthBlock)
+    strengthBlock.style.display = isRegisterMode ? "block" : "none";
+  if (confirmGroup)
+    confirmGroup.style.display = isRegisterMode ? "flex" : "none";
+
+  clearAuthError();
+  clearAllFieldErrors();
+  document.getElementById("authForm").reset();
+
+  if (!isRegisterMode && savedEmail) {
+    document.getElementById("authEmail").value = savedEmail;
+    const rememberMe = document.getElementById("rememberMe");
+    if (rememberMe) rememberMe.checked = true;
+  }
+};
+
+// ─── Handle Login / Register Submit ──────────────────────────
+window.handleAuthSubmit = async function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById("authName")?.value.trim();
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const submitBtn = document.getElementById("authSubmitBtn");
+
+  // Run full validation before submitting
+  const confirm = document.getElementById("authConfirmPassword")?.value;
+  let valid = true;
+  if (isRegisterMode && !validateName(name)) valid = false;
+  if (!validateEmail(email)) valid = false;
+  if (!validatePassword(password)) valid = false;
+  if (isRegisterMode && !validateConfirmPassword(confirm, password))
+    valid = false;
+  if (!valid) return;
+
+  clearAuthError();
+  setSubmitLoading(submitBtn, true);
+
+  try {
+    if (isRegisterMode) {
+      await registerUser(email, password, name);
     } else {
-        // CLOSING logic
-        // 1. Find the section title to scroll back to
-        const scrollTarget = document.querySelector('.subtitle'); 
-        
-        // 2. Scroll up first
-        window.scrollTo({
-            top: scrollTarget.offsetTop - 100, 
-            behavior: 'smooth'
-        });
-
-        // 3. Hide the grid after a small delay so the scroll feels natural
-        setTimeout(() => {
-            grid.classList.remove('show-grid');
-        }, 300);
+      await loginUser(email, password);
     }
+    const intent = sessionStorage.getItem("pl_intent") || "";
+    sessionStorage.removeItem("pl_intent");
+    window.location.href = intent
+      ? `dashboard.html?intent=${intent}`
+      : "dashboard.html";
+  } catch (err) {
+    showAuthError(friendlyError(err.code));
+  } finally {
+    setSubmitLoading(submitBtn, false);
+  }
+};
+
+// ─── Register ────────────────────────────────────────────────
+async function registerUser(email, password, name) {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+  const uid = userCredential.user.uid;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.toLocaleString("en", { month: "short" }).toUpperCase();
+  const day = String(now.getDate()).padStart(2, "0");
+
+  const counterRef = doc(db, "meta", "clientCounter");
+
+  const clientId = await runTransaction(db, async (transaction) => {
+    const counterSnap = await transaction.get(counterRef);
+    const nextNumber =
+      (counterSnap.exists() ? counterSnap.data().count : 0) + 1;
+    transaction.set(counterRef, { count: nextNumber });
+    return `PL-${year}-${month}-${day}-${String(nextNumber).padStart(5, "0")}`;
+  });
+
+  await setDoc(doc(db, "users", uid), {
+    name: name,
+    email: email,
+    uid: uid,
+    clientId: clientId,
+    createdAt: serverTimestamp(),
+  });
 }
-function clearProductSearch() {
-    const input = document.getElementById('productSearch');
-    input.value = '';
-    filterProducts(); // This resets the grid visibility
+
+// ─── Login ───────────────────────────────────────────────────
+async function loginUser(email, password) {
+  await signInWithEmailAndPassword(auth, email, password);
+  const rememberMe = document.getElementById("rememberMe");
+  if (rememberMe?.checked) {
+    localStorage.setItem("pl_saved_email", email);
+  } else {
+    localStorage.removeItem("pl_saved_email");
+  }
 }
 
-// Update your existing filterProducts function slightly:
-function filterProducts() {
-    const input = document.getElementById('productSearch');
-    const clearBtn = document.getElementById('clearSearch');
-    const filter = input.value.toLowerCase();
-    
-    // Show/Hide clear button
-    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+// ─── Logout ──────────────────────────────────────────────────
+window.handleLogout = async function () {
+  await signOut(auth);
+  localStorage.removeItem("pl_saved_email");
+  window.location.href = "index.html";
+};
 
-    const cards = document.getElementsByClassName('product-item-card');
-    const noResults = document.getElementById('noResults');
-    let visibleCount = 0;
+// ─── Forgot Password ─────────────────────────────────────────
+window.handleForgotPassword = async function (e) {
+  e.preventDefault();
 
-    for (let i = 0; i < cards.length; i++) {
-        const title = cards[i].querySelector('h3').innerText.toLowerCase();
-        const category = cards[i].querySelector('.category-label').innerText.toLowerCase();
-        
-        if (title.includes(filter) || category.includes(filter)) {
-            cards[i].style.display = ""; 
-            visibleCount++;
-        } else {
-            cards[i].style.display = "none"; 
-        }
+  const email = document.getElementById("authEmail").value.trim();
+  const emailInput = document.getElementById("authEmail");
+
+  if (!email) {
+    emailInput.classList.add("input-error");
+    emailInput.placeholder = "Enter your email first";
+    emailInput.focus();
+    setTimeout(() => {
+      emailInput.classList.remove("input-error");
+      emailInput.placeholder = "Email Address";
+    }, 3000);
+    showAuthError("Please enter your email address above first.", "warning");
+    return;
+  }
+
+  const link = e.target;
+  link.style.pointerEvents = "none";
+  link.textContent = "Sending…";
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showAuthError(
+      "Reset email sent! Check your inbox (and spam folder).",
+      "success",
+    );
+  } catch (err) {
+    showAuthError(friendlyError(err.code));
+  } finally {
+    link.style.pointerEvents = "";
+    link.textContent = "Forgot password?";
+  }
+};
+
+// ─── Password Visibility Toggle ──────────────────────────────
+window.togglePasswordVisibility = function () {
+  const input = document.getElementById("authPassword");
+  const icon = document.getElementById("togglePasswordIcon");
+  if (!input || !icon) return;
+
+  const isHidden = input.type === "password";
+  input.type = isHidden ? "text" : "password";
+  icon.classList.toggle("fa-eye", !isHidden);
+  icon.classList.toggle("fa-eye-slash", isHidden);
+  input.focus();
+};
+
+window.toggleConfirmPasswordVisibility = function () {
+  const input = document.getElementById("authConfirmPassword");
+  const icon = document.getElementById("toggleConfirmPasswordIcon");
+  if (!input || !icon) return;
+
+  const isHidden = input.type === "password";
+  input.type = isHidden ? "text" : "password";
+  icon.classList.toggle("fa-eye", !isHidden);
+  icon.classList.toggle("fa-eye-slash", isHidden);
+  input.focus();
+};
+
+// ============================================================
+//  REAL-TIME VALIDATION
+// ============================================================
+
+// ─── Name Validation ─────────────────────────────────────────
+function validateName(value) {
+  const field = document.getElementById("authName");
+  if (!isRegisterMode) return true;
+  if (!value || value.length < 2) {
+    setFieldError(
+      field,
+      "Please enter your full name (at least 2 characters).",
+    );
+    return false;
+  }
+  if (!/^[a-zA-Z\s'-]+$/.test(value)) {
+    setFieldError(
+      field,
+      "Name can only contain letters, spaces, hyphens, or apostrophes.",
+    );
+    return false;
+  }
+  setFieldSuccess(field);
+  return true;
+}
+
+// ─── Email Validation ────────────────────────────────────────
+function validateEmail(value) {
+  const field = document.getElementById("authEmail");
+  if (!value) {
+    setFieldError(field, "Email address is required.");
+    return false;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    setFieldError(field, "Please enter a valid email address.");
+    return false;
+  }
+  setFieldSuccess(field);
+  return true;
+}
+
+// ─── Password Validation ─────────────────────────────────────
+function validatePassword(value) {
+  const field = document.getElementById("authPassword");
+  if (!value) {
+    setFieldError(field, "Password is required.");
+    return false;
+  }
+  if (value.length < 6) {
+    setFieldError(field, "Password must be at least 6 characters.");
+    return false;
+  }
+  setFieldSuccess(field);
+  return true;
+}
+
+// ─── Confirm Password Validation ─────────────────────────────
+function validateConfirmPassword(value, original) {
+  const field = document.getElementById("authConfirmPassword");
+  if (!isRegisterMode) return true;
+  if (!value) {
+    setFieldError(field, "Please confirm your password.");
+    return false;
+  }
+  if (value !== original) {
+    setFieldError(field, "Passwords do not match.");
+    return false;
+  }
+  setFieldSuccess(field);
+  return true;
+}
+
+// ─── Password Strength Meter ─────────────────────────────────
+function getPasswordStrength(password) {
+  let score = 0;
+  if (!password) return { score: 0, label: "", color: "" };
+
+  if (password.length >= 8) score++;
+  if (password.length >= 12) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^A-Za-z0-9]/.test(password)) score++;
+
+  if (score <= 1) return { score: 1, label: "Weak", color: "#e74c3c" };
+  if (score <= 2) return { score: 2, label: "Fair", color: "#e67e22" };
+  if (score <= 3) return { score: 3, label: "Good", color: "#f1c40f" };
+  if (score <= 4) return { score: 4, label: "Strong", color: "#2ecc71" };
+  return { score: 5, label: "Very Strong", color: "#27ae60" };
+}
+
+function updateStrengthMeter(password) {
+  const bar = document.getElementById("strengthBar");
+  const label = document.getElementById("strengthLabel");
+  if (!bar || !label) return;
+
+  if (!password) {
+    bar.style.width = "0%";
+    bar.style.background = "";
+    label.textContent = "";
+    return;
+  }
+
+  const { score, label: text, color } = getPasswordStrength(password);
+  const pct = (score / 5) * 100;
+
+  bar.style.width = `${pct}%`;
+  bar.style.background = color;
+  label.textContent = text;
+  label.style.color = color;
+}
+
+// ─── Attach Real-time Listeners ──────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  // Name — validate on blur, clear error on input
+  const nameInput = document.getElementById("authName");
+  nameInput?.addEventListener("blur", () => {
+    if (isRegisterMode) validateName(nameInput.value.trim());
+  });
+  nameInput?.addEventListener("input", () => clearFieldError(nameInput));
+
+  // Email — validate on blur, clear on input
+  const emailInput = document.getElementById("authEmail");
+  emailInput?.addEventListener("blur", () =>
+    validateEmail(emailInput.value.trim()),
+  );
+  emailInput?.addEventListener("input", () => clearFieldError(emailInput));
+
+  // Password — validate on blur + update strength meter on every keystroke
+  const passwordInput = document.getElementById("authPassword");
+  passwordInput?.addEventListener("input", () => {
+    clearFieldError(passwordInput);
+    if (isRegisterMode) updateStrengthMeter(passwordInput.value);
+    // Re-validate confirm if already filled
+    const confirmInput = document.getElementById("authConfirmPassword");
+    if (isRegisterMode && confirmInput?.value) {
+      validateConfirmPassword(confirmInput.value, passwordInput.value);
     }
-    noResults.style.display = visibleCount === 0 ? "block" : "none";
-}
-function toggleBathroomGrid() {
-    const grid = document.getElementById('bathroom-full-catalog');
-    if (!grid.classList.contains('show-grid')) {
-        grid.classList.add('show-grid');
-        setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth' }); }, 100);
-    } else {
-        const portal = document.querySelector('.bathroom-bg');
-        window.scrollTo({ top: portal.offsetTop - 150, behavior: 'smooth' });
-        setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
+  });
+  passwordInput?.addEventListener("blur", () =>
+    validatePassword(passwordInput.value),
+  );
+
+  // Confirm password — validate on blur and live on input
+  const confirmInput = document.getElementById("authConfirmPassword");
+  confirmInput?.addEventListener("input", () => {
+    clearFieldError(confirmInput);
+    if (isRegisterMode && confirmInput.value) {
+      validateConfirmPassword(confirmInput.value, passwordInput?.value);
     }
+  });
+  confirmInput?.addEventListener("blur", () => {
+    if (isRegisterMode)
+      validateConfirmPassword(confirmInput.value, passwordInput?.value);
+  });
+});
+// Password toggle listeners
+document
+  .getElementById("authPassword")
+  ?.parentElement?.querySelector(".password-toggle-btn")
+  ?.addEventListener("click", window.togglePasswordVisibility);
+
+document
+  .getElementById("authConfirmPassword")
+  ?.parentElement?.querySelector(".password-toggle-btn")
+  ?.addEventListener("click", window.toggleConfirmPasswordVisibility);
+
+// ============================================================
+//  FIELD STATE HELPERS
+// ============================================================
+
+function setFieldError(input, message) {
+  if (!input) return;
+  input.classList.remove("field-valid");
+  input.classList.add("field-invalid");
+
+  const group = input.closest(".login-input-group");
+  if (!group) return;
+
+  // Place hint AFTER the group, not inside it — prevents input from shrinking
+  let hint = group.nextElementSibling?.classList.contains("field-hint")
+    ? group.nextElementSibling
+    : null;
+  if (!hint) {
+    hint = document.createElement("span");
+    group.insertAdjacentElement("afterend", hint);
+  }
+  hint.className = "field-hint field-hint--error";
+  hint.textContent = message;
 }
 
-function filterBathroom() {
-    const input = document.getElementById('bathroomSearch');
-    const clearBtn = document.getElementById('clearBathSearch');
-    const filter = input.value.toLowerCase();
-    clearBtn.style.display = input.value.length > 0 ? "block" : "none";
+function setFieldSuccess(input) {
+  if (!input) return;
+  input.classList.remove("field-invalid");
+  input.classList.add("field-valid");
 
-    const cards = document.querySelectorAll('#bathroomGrid .product-item-card');
-    let count = 0;
-    cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(filter)) {
-            card.style.display = "";
-            count++;
-        } else {
-            card.style.display = "none";
-        }
-    });
-    document.getElementById('noBathResults').style.display = count === 0 ? "block" : "none";
+  const group = input.closest(".login-input-group");
+  if (group?.nextElementSibling?.classList.contains("field-hint")) {
+    group.nextElementSibling.remove();
+  }
 }
 
-function clearBathSearch() {
-    document.getElementById('bathroomSearch').value = '';
-    filterBathroom();
+function clearFieldError(input) {
+  if (!input) return;
+  input.classList.remove("field-invalid", "field-valid");
+  const group = input.closest(".login-input-group");
+  if (group?.nextElementSibling?.classList.contains("field-hint")) {
+    group.nextElementSibling.remove();
+  }
 }
 
-function toggleConstructionGrid() {
-    // 1. Find the hidden catalog by its ID
-    const grid = document.getElementById('construction-full-catalog');
-    
-    // 2. Check if it's already open
-    const isOpening = !grid.classList.contains('show-grid');
-    
-    if (isOpening) {
-        // 3. Add the class to drop it down/show it
-        grid.classList.add('show-grid');
-        
-        // 4. Smooth scroll so the user sees the products immediately
-        setTimeout(() => {
-            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-    } else {
-        // 5. Close it and scroll back up to the portal card
-        const portal = document.querySelector('.construction-bg');
-        window.scrollTo({ top: portal.offsetTop - 100, behavior: 'smooth' });
-        
-        setTimeout(() => {
-            grid.classList.remove('show-grid');
-        }, 400);
-    }
+function clearAllFieldErrors() {
+  ["authName", "authEmail", "authPassword", "authConfirmPassword"].forEach(
+    (id) => {
+      const el = document.getElementById(id);
+      if (el) clearFieldError(el);
+    },
+  );
+  updateStrengthMeter("");
 }
-    </script>
+
+// ============================================================
+//  GENERAL HELPERS
+// ============================================================
+
+function showAuthError(message, type = "error") {
+  const box = document.getElementById("authError");
+  if (!box) return;
+  box.className = "auth-error-box";
+  if (type === "warning") box.classList.add("auth-error-box--warning");
+  if (type === "success") box.classList.add("auth-error-box--success");
+  box.textContent = message;
+  box.style.display = "block";
+}
+
+function clearAuthError() {
+  const box = document.getElementById("authError");
+  if (!box) return;
+  box.style.display = "none";
+  box.textContent = "";
+}
+
+function setSubmitLoading(btn, isLoading) {
+  btn.disabled = isLoading;
+  if (isLoading) {
+    btn.dataset.originalText = btn.textContent;
+    btn.textContent = isRegisterMode ? "Creating account…" : "Logging in…";
+  } else {
+    btn.textContent =
+      btn.dataset.originalText || (isRegisterMode ? "Create Account" : "Login");
+  }
+}
+
+function resetAuthForm() {
+  isRegisterMode = false;
+  document.getElementById("authTitle").textContent = "Customer Login";
+  document.getElementById("authSubtitle").textContent =
+    "Welcome back to Primeline Plumbing Solutions";
+  document.getElementById("authSubmitBtn").textContent = "Login";
+  document.getElementById("nameGroup").style.display = "none";
+  document.getElementById("loginOptions").style.display = "flex";
+  document.getElementById("authToggleText").innerHTML =
+    'Don\'t have an account? <a href="#" onclick="toggleAuthMode(event)">Register here</a>';
+
+  const strengthBlock = document.getElementById("passwordStrengthBlock");
+  const confirmGroup = document.getElementById("confirmPasswordGroup");
+  if (strengthBlock) strengthBlock.style.display = "none";
+  if (confirmGroup) confirmGroup.style.display = "none";
+
+  document.getElementById("authForm").reset();
+  clearAuthError();
+  clearAllFieldErrors();
+
+  if (savedEmail) {
+    document.getElementById("authEmail").value = savedEmail;
+    const rememberMe = document.getElementById("rememberMe");
+    if (rememberMe) rememberMe.checked = true;
+  }
+}
+// ─── Auth Guard — requires login before proceeding ────────────
+window.requireAuth = function (intent) {
+  if (window._plUserLoggedIn) {
+    // Already logged in — go straight to dashboard with intent
+    window.location.href = `dashboard.html?intent=${intent}`;
+    return;
+  }
+
+  // Not logged in — store intent and open login modal
+  sessionStorage.setItem("pl_intent", intent);
+
+  // Switch modal to register mode since they're new
+  isRegisterMode = false;
+  window.openLoginModal();
+
+  // Show a helpful message inside the modal
+  const subtitle = document.getElementById("authSubtitle");
+  if (subtitle) {
+    subtitle.textContent = "Create an account or log in to continue.";
+  }
+};
+
+// ─── Friendly Firebase Error Messages ────────────────────────
+function friendlyError(code) {
+  const errors = {
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/user-not-found": "No account found with that email.",
+    "auth/wrong-password": "Incorrect password. Please try again.",
+    "auth/invalid-credential": "Invalid email or password. Please try again.",
+    "auth/email-already-in-use": "An account with this email already exists.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/too-many-requests":
+      "Too many attempts. Please wait a moment and try again.",
+    "auth/network-request-failed":
+      "Network error. Please check your connection.",
+    "auth/user-disabled": "This account has been disabled. Contact support.",
+    "auth/popup-closed-by-user": "Sign-in was cancelled.",
+  };
+  return errors[code] ?? "Something went wrong. Please try again.";
+}

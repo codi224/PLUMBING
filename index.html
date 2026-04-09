@@ -12,6 +12,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-client-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-client-180.png">
     <link rel="manifest" href="images/site.webmanifest">
+
+    <script defer src="./product.js"></script>
+    <script defer type="module" src="./main.js"></script>
 </head>
 <body id="top">
   <header>
@@ -44,15 +47,21 @@
                 <li><a href="#our-work">Our Work</a></li>
             </ul>
         </nav>
-      <div class="header-icons">
-        <button onclick="openLoginModal()" id="headerLoginBtn" title="My Account">
-          <i class="fas fa-user-circle"></i>
-        </button>
-        <button onclick="openCart()" id="headerCartBtn">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cartBadge">0</span>
-        </button>
-      </div>
+ <div class="header-icons">
+
+  <!-- Dark mode toggle -->
+  <button id="themeToggle" title="Toggle Dark Mode">
+    <i class="fas fa-moon" id="themeIcon"></i>
+  </button>
+  <button onclick="openLoginModal()" id="headerLoginBtn" title="My Account">
+    <i class="fas fa-user-circle"></i>
+  </button>
+  <button onclick="openCart()" id="headerCartBtn">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartBadge">0</span>
+  </button>
+
+</div>
     </div>
   </header>
 
@@ -156,13 +165,13 @@
             <div class="ba-card">
               <div class="ba-images">
                 <div class="ba-half">
-                  <img src="images/before1.jpg" alt="Before — plumbing problem">
-                  <span class="ba-label before-lbl">Before</span>
+                  <img src="images/swimmingpool.jpeg" alt="Done Job s">
+                  <span class="ba-label before-lbl">swimming pools</span>
                 </div>
                 <div class="ba-divider-line"><i class="fas fa-arrows-alt-h"></i></div>
                 <div class="ba-half">
-                  <img src="images/after1.jpg" alt="After — completed job">
-                  <span class="ba-label after-lbl">After</span>
+                  <img src="images/slab1.jpeg" alt="After — completed job">
+                  <span class="ba-label after-lbl">Slab continuation</span>
                 </div>
               </div>
               <p class="ba-caption">Professional repair and finish — delivered on time.</p>
@@ -171,7 +180,7 @@
 
           <div class="work-gallery">
             <div class="work-item">
-              <img src="images/job1.jpg" alt="Primeline plumbing job">
+              <img src="images/watersystem1.jfif" alt="Primeline plumbing job">
               <div class="work-overlay"><span>Completed Installation</span></div>
             </div>
             <div class="work-item">
@@ -179,13 +188,13 @@
               <div class="work-overlay"><span>On-Site Excellence</span></div>
             </div>
             <div class="work-item">
-              <img src="images/team.jpg" alt="Primeline team">
+              <img src="images/team.jfif" alt="Primeline team">
               <div class="work-overlay"><span>Our Expert Team</span></div>
             </div>
           </div>
 
           <div class="section-cta">
-            <a href="#contact" class="cta-button">Book Our Team</a>
+           <a href="#" onclick="requireAuth('book')" class="cta-button">Book Our Team</a>
           </div>
         </div>
       </section>
@@ -436,9 +445,9 @@
                             <div class="contact-input-group">
                                 <textarea name="message" placeholder="Tell us about your project..." rows="4" class="contact-textarea"></textarea>
                             </div>
-                            <button type="submit" class="contact-submit-btn">
-                                Send Request
-                            </button>
+                            <button type="button" class="contact-submit-btn" onclick="requireAuth('request')">
+                              Send Request
+                          </button>
                         </form>
                     </div>
                 </div>
@@ -498,15 +507,7 @@
             <p>Providing 24/7 plumbing support across major hubs in Kenya.</p>
             <div class="blue-divider"></div>
           </div>
-
-          <div class="locations-grid">
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nairobi</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Mombasa</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Kisumu</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Nakuru</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Eldoret</span></div>
-            <div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>Thika</span></div>
-          </div>
+       <div class="locations-grid" id="locationsGrid"></div>
 
           <div class="map-container">
             <div id="primeline-map"></div>
@@ -543,15 +544,31 @@
               popupAnchor: [0, -44]
             });
 
-            const cities = [
-              { name: 'Nairobi',  lat: -1.2921,  lng: 36.8219, desc: 'Main operations hub — fastest response times' },
-              { name: 'Mombasa',  lat: -4.0435,  lng: 39.6682, desc: 'Coastal region coverage' },
-              { name: 'Kisumu',   lat: -0.1022,  lng: 34.7617, desc: 'Western Kenya coverage' },
-              { name: 'Nakuru',   lat: -0.3031,  lng: 36.0800, desc: 'Rift Valley coverage' },
-              { name: 'Eldoret',  lat:  0.5143,  lng: 35.2698, desc: 'North Rift coverage' },
-              { name: 'Thika',    lat: -1.0332,  lng: 37.0693, desc: 'Central Kenya coverage' },
-            ];
+         const cities = [
+  ["Nairobi",   -1.2921,  36.8219, "Main operations hub — fastest response times"],
+  ["Mombasa",   -4.0435,  39.6682, "Coastal region coverage"],
+  ["Kisumu",    -0.1022,  34.7617, "Western Kenya coverage"],
+  ["Nakuru",    -0.3031,  36.0800, "Rift Valley coverage"],
+  ["Eldoret",    0.5143,  35.2698, "North Rift coverage"],
+  ["Thika",     -1.0332,  37.0693, "Central Kenya coverage"],
+  ["Nyeri",     -0.4167,  36.9500, "Mount Kenya region coverage"],
+  ["Meru",       0.0467,  37.6490, "Eastern Kenya coverage"],
+  ["Kitale",     1.0154,  35.0062, "Trans Nzoia coverage"],
+  ["Malindi",   -3.2175,  40.1169, "North Coast coverage"],
+  ["Kericho",   -0.3686,  35.2863, "Tea region coverage"],
+  ["Machakos",  -1.5177,  37.2634, "Ukambani region coverage"],
+  ["Kisii",     -0.6817,  34.7669, "Nyanza region coverage"],
+  ["Garissa",   -0.4532,  39.6461, "North Eastern coverage"],
+  ["Kakamega",   0.2827,  34.7519, "Western Kenya coverage"],
+];
 
+const grid = document.getElementById("locationsGrid");
+cities.forEach(([name, lat, lng, desc]) => {
+  grid.innerHTML += `<div class="location-card"><i class="fas fa-map-marker-alt"></i> <span>${name}</span></div>`;
+  L.marker([lat, lng], { icon: plumberIcon })
+    .addTo(map)
+    .bindPopup(`<div class="map-popup"><strong><i class="fas fa-tint"></i> ${name}</strong><p>${desc}</p><a href="tel:+254727935046"><i class="fas fa-phone-alt"></i> Call Now</a></div>`, { maxWidth: 200 });
+});
             cities.forEach(city => {
               L.marker([city.lat, city.lng], { icon: plumberIcon })
                 .addTo(map)
@@ -696,27 +713,52 @@
             <span class="close-modal" onclick="closeLoginModal()">&times;</span>
 
             <div id="authPanel">
-                <div class="login-logo-mark"><i class="fas fa-user-circle"></i></div>
+              <div class="login-logo-mark">
+    <img src="images/favicon-client-512.png" alt="Primeline Logo" style="width: 48px; height: 48px; object-fit: contain; border-radius: 50%;">
+</div>
                 <h3 id="authTitle">Customer Login</h3>
                 <p id="authSubtitle">Welcome back to Primeline Plumbing Solutions</p>
                 <div id="authError" class="auth-error-box"></div>
                 <form id="authForm" onsubmit="handleAuthSubmit(event)">
-                    <div class="login-input-group" id="nameGroup" style="display:none;">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="authName" placeholder="Full Name">
-                    </div>
-                    <div class="login-input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="authEmail" placeholder="Email Address" required>
-                    </div>
-                    <div class="login-input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="authPassword" placeholder="Password" required>
-                    </div>
-                    <div class="login-options" id="loginOptions">
-                        <label><input type="checkbox" id="rememberMe"> Remember me</label>
-                        <a href="#" onclick="handleForgotPassword(event)" title="Enter your email above first">Forgot password?</a>
-                    </div>
+    <div class="login-input-group" id="nameGroup" style="display:none;">
+    <i class="fas fa-user"></i>
+    <input type="text" id="authName" placeholder="Full Name" autocomplete="name">
+</div>
+
+<div class="login-input-group">
+    <i class="fas fa-envelope"></i>
+    <input type="email" id="authEmail" placeholder="Email Address" required autocomplete="email">
+</div>
+
+<div class="login-input-group login-input-group--password">
+    <i class="fas fa-lock"></i>
+    <input type="password" id="authPassword" placeholder="Password" required autocomplete="current-password">
+    <button type="button" class="password-toggle-btn" aria-label="togglePasswordVisibility()" aria-label="Toggle password visibility" tabindex="-1">
+        <i class="fas fa-eye" id="togglePasswordIcon"></i>
+    </button>
+</div>
+
+<!-- Strength meter: shown in register mode only -->
+<div id="passwordStrengthBlock" style="display:none; margin: -8px 0 14px; padding: 0 2px;">
+    <div class="strength-track">
+        <div class="strength-bar" id="strengthBar"></div>
+    </div>
+    <span class="strength-label" id="strengthLabel"></span>
+</div>
+
+<!-- Confirm password: shown in register mode only -->
+<div class="login-input-group login-input-group--password" id="confirmPasswordGroup" style="display:none;">
+    <i class="fas fa-lock"></i>
+    <input type="password" id="authConfirmPassword" placeholder="Confirm Password" autocomplete="new-password">
+    <button type="button" class="password-toggle-btn" aria-label="toggleConfirmPasswordVisibility()" aria-label="Toggle confirm password visibility" tabindex="-1">
+        <i class="fas fa-eye" id="toggleConfirmPasswordIcon"></i>
+    </button>
+</div>
+
+<div class="login-options" id="loginOptions">
+    <label><input type="checkbox" id="rememberMe"> Remember me</label>
+    <a href="#" onclick="handleForgotPassword(event)" title="Enter your email above first">Forgot password?</a>
+</div>
                     <button type="submit" class="login-submit-btn" id="authSubmitBtn">Login</button>
                 </form>
                 <p class="login-register" id="authToggleText">
@@ -726,1001 +768,6 @@
 
         </div>
     </div>
-
-    <script>
-    /* ================================================
-       PRODUCT DATA
-    ================================================ */
-    const kitchenProducts = [
-      {
-        image: 'images/taps.png',
-        badge: { text: 'Hot', type: 'hot' },
-        category: 'Taps',
-        name: 'Faucet Tap',
-        price: 3500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/farmhouse.png',
-        badge: { text: 'Offer', type: 'offer' },
-        category: 'Sinks',
-        name: 'Farmhouse Workstation Sink',
-        price: 42000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/faucet.png',
-        badge: null,
-        category: 'Shower',
-        name: 'Best Sink Tap',
-        price: 12500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/filter-system.jfif',
-        badge: { text: 'New', type: 'default' },
-        category: 'Filtration',
-        name: 'Under-Sink RO Purifier',
-        price: 35000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/double-sink.jfif',
-        badge: null,
-        category: 'Sinks',
-        name: 'Double Bowl Steel Sink',
-        price: 28000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/boiling%20tap.png',
-        badge: { text: 'Premium', type: 'default' },
-        category: 'Mixers',
-        name: 'Instant Boiling Tap',
-        price: 55000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/industrial%20spray-tap.jfif',
-        badge: null,
-        category: 'Faucets',
-        name: 'Industrial Pull-Out Spray',
-        price: 16500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/island-sink.jfif',
-        badge: { text: 'New', type: 'default' },
-        category: 'Sinks',
-        name: 'Kitchen Island Prep Sink',
-        price: 14500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/pot-filler.jfif',
-        badge: { text: 'Pro Choice', type: 'hot' },
-        category: 'Specialty',
-        name: 'Folding Pot Filler',
-        price: 19500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/granite-sink.jfif',
-        badge: null,
-        category: 'Sinks',
-        name: 'Granite Composite Double',
-        price: 48000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/sensor-tap.jfif',
-        badge: { text: 'Premium', type: 'default' },
-        category: 'Faucets',
-        name: 'Touchless Motion Sensor Tap',
-        price: 29000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/bin-system.jfif',
-        badge: null,
-        category: 'Waste Mgmt',
-        name: 'Under-Sink Dual Waste Bin',
-        price: 9500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/glass-rinser.jfif',
-        badge: { text: '25% Off', type: 'offer' },
-        category: 'Accessories',
-        name: 'High-Pressure Glass Rinser',
-        price: 4500,
-        oldPrice: 6000,
-        whatsapp: '254727935046'
-      }
-    ];
-
-    const bathroomProducts = [
-      {
-        image: 'images/wallhung.png',
-        badge: { text: 'Modern', type: 'default' },
-        category: 'Toilets',
-        name: 'Rimless Wall-Hung Toilet',
-        price: 32000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/thermostaticshower.png',
-        badge: { text: 'Popular', type: 'hot' },
-        category: 'Showers',
-        name: 'Thermostatic Rain Shower',
-        price: 24500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/watefallbasinmixer.png',
-        badge: null,
-        category: 'Faucets',
-        name: 'Waterfall Basin Mixer',
-        price: 8500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/tub.png',
-        badge: { text: 'Luxury', type: 'default' },
-        category: 'Tubs',
-        name: 'Free-Standing Acrylic Tub',
-        price: 85000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/Ledmirror.png',
-        badge: null,
-        category: 'Accessories',
-        name: 'Smart LED Backlit Mirror',
-        price: 15000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/cistern.png',
-        badge: null,
-        category: 'Toilets',
-        name: 'Dual-Flush Concealed Cistern',
-        price: 12000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/vanity.png',
-        badge: { text: 'Offer', type: 'offer' },
-        category: 'Vanities',
-        name: 'Floating Oak Vanity Unit',
-        price: 45000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/tallmixer.png',
-        badge: null,
-        category: 'Faucets',
-        name: 'Tall Countertop Basin Tap',
-        price: 10500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/toilet.jpg',
-        badge: null,
-        category: 'Toilets',
-        name: 'Close Coupled Toilet',
-        price: 22000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/hand-shower.png',
-        badge: null,
-        category: 'Showers',
-        name: 'Multi-Function Hand Shower',
-        price: 4500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/lorenzeti.jfif',
-        badge: null,
-        category: 'Accessories',
-        name: 'Lorenzetti Shower Heater - Bello Banho',
-        price: 3500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/towel-rack.png',
-        badge: null,
-        category: 'Accessories',
-        name: 'Heated Electric Towel Rail',
-        price: 18000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/bidet.png',
-        badge: null,
-        category: 'Toilets',
-        name: 'Bidet Smart Toilet Seat',
-        price: 22000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/bath-mixer.png',
-        badge: null,
-        category: 'Mixers',
-        name: 'Concealed Bath/Shower Valve',
-        price: 14000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/bowl-basin.png',
-        badge: { text: 'New', type: 'default' },
-        category: 'Basins',
-        name: 'Ceramic Countertop Bowl',
-        price: 9500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/glass-screen.png',
-        badge: null,
-        category: 'Showers',
-        name: 'Tempered Glass Shower Screen',
-        price: 28000,
-        whatsapp: '254727935046'
-      }
-    ];
-
-    const constructionProducts = [
-      {
-        image: 'images/ppr-pipe.png',
-        badge: { text: 'PN20', type: 'default' },
-        category: 'Piping',
-        name: 'PPR Pipe (20mm x 4m)',
-        price: 1200,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/gate-valve.png',
-        badge: null,
-        category: 'Controls',
-        name: 'Brass Gate Valve (1 Inch)',
-        price: 2800,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/hdpe-roll.png',
-        badge: { text: 'Heavy Duty', type: 'default' },
-        category: 'Piping',
-        name: 'HDPE Pipe Roll (32mm)',
-        price: 14500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/pvc-pipe.png',
-        badge: null,
-        category: 'Drainage',
-        name: 'uPVC Waste Pipe (4 Inch)',
-        price: 3200,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/manhole.png',
-        badge: null,
-        category: 'Infrastructure',
-        name: 'Cast Iron Manhole Cover',
-        price: 8500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/mastergulley.png',
-        badge: null,
-        category: 'Drainage',
-        name: 'Master Gulley Trap',
-        price: 1800,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/ppr-fittings.png',
-        badge: null,
-        category: 'Fittings',
-        name: 'PPR Elbow &amp; Tee Pack (Mixed)',
-        price: 5000,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/ball-valve.png',
-        badge: null,
-        category: 'Controls',
-        name: 'PVC Ball Valve (Stopcock)',
-        price: 950,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/braided-connectors.png',
-        badge: null,
-        category: 'Fittings',
-        name: 'Braided Flexible Connectors',
-        price: 1400,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/water-meter.png',
-        badge: null,
-        category: 'Measurement',
-        name: 'Residential Water Meter',
-        price: 4200,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/pressure-pump.png',
-        badge: null,
-        category: 'Pumps',
-        name: 'Automatic Pressure Pump',
-        price: 18500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/tank-connector.png',
-        badge: null,
-        category: 'Fittings',
-        name: 'Tank Connector (Large)',
-        price: 1200,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/solvent.png',
-        badge: null,
-        category: 'Consumables',
-        name: 'PVC Solvent Cement (500ml)',
-        price: 850,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/thread-tape.jpg',
-        badge: null,
-        category: 'Consumables',
-        name: 'PTFE Thread Seal Tape (Box)',
-        price: 1500,
-        whatsapp: '254727935046'
-      },
-      {
-        image: 'images/ppr-machine.jpg',
-        badge: null,
-        category: 'Tools',
-        name: 'PPR Pipe Welding Machine',
-        price: 6500,
-        whatsapp: '254727935046'
-      }
-    ];
-
-    /* ================================================
-       PRODUCT CARD RENDERER
-    ================================================ */
-    function renderProductCard(product) {
-      const badgeHTML = product.badge
-        ? `<span class="product-badge ${product.badge.type}">${product.badge.text}</span>`
-        : '';
-
-      const oldPriceHTML = product.oldPrice
-        ? `<span class="price-old">KSh ${product.oldPrice.toLocaleString()}</span>`
-        : '';
-
-      return `
-        <div class="product-item-card">
-          <div class="product-image-box" style="background-image: url('${product.image}');">
-            ${badgeHTML}
-          </div>
-          <div class="product-details">
-            <span class="category-label">${product.category}</span>
-            <h3>${product.name}</h3>
-            <div class="price-row">
-              <span class="price-current">KSh ${product.price.toLocaleString()}</span>
-              ${oldPriceHTML}
-            </div>
-            <a href="https://wa.me/${product.whatsapp}" class="whatsapp-order-btn">
-              <i class="fab fa-whatsapp"></i> Order via WhatsApp
-            </a>
-            <div class="qty-selector">
-              <button onclick="this.nextElementSibling.stepDown();this.nextElementSibling.dispatchEvent(new Event('change'))">−</button>
-              <input type="number" class="item-quantity" value="1" min="1">
-              <button onclick="this.previousElementSibling.stepUp();this.previousElementSibling.dispatchEvent(new Event('change'))">+</button>
-            </div>
-            <button class="add-to-cart-btn" onclick="addToCart(this)">
-              <i class="fas fa-shopping-cart"></i> Add to Cart
-            </button>
-          </div>
-        </div>`;
-    }
-
-    function renderGrid(gridId, products) {
-      document.getElementById(gridId).innerHTML = products.map(renderProductCard).join('');
-    }
-
-    /* ================================================
-       INITIALISE GRIDS ON LOAD
-    ================================================ */
-    document.addEventListener('DOMContentLoaded', function () {
-      renderGrid('kitchenGrid', kitchenProducts);
-      renderGrid('bathroomGrid', bathroomProducts);
-      renderGrid('constGrid', constructionProducts);
-    });
-
-    /* ================================================
-       MAIN PAGE SCRIPTS
-    ================================================ */
-    document.addEventListener("DOMContentLoaded", () => {
-
-        // --- Typewriter ---
-        const text = "Welcome to ";
-        const speed = 70;
-        let i = 0;
-        function typeWriter() {
-            const element = document.getElementById("hero-title");
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            } else {
-                setTimeout(() => { element.classList.add("fade-out"); }, 2000);
-            }
-        }
-        typeWriter();
-
-        // --- Counter on scroll ---
-        const counterElement = document.getElementById("counter");
-        let counterStarted = false;
-        if (counterElement) {
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !counterStarted) {
-                    counterStarted = true;
-                    let count = 0;
-                    const interval = setInterval(() => {
-                        if (count >= 100) {
-                            clearInterval(interval);
-                        } else {
-                            count++;
-                            counterElement.textContent = count;
-                        }
-                    }, 20);
-                }
-            });
-            observer.observe(counterElement);
-        }
-
-        // --- Contact form ---
-        const contactForm = document.querySelector('.contact-form');
-        const modal = document.getElementById('success-modal');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(contactForm);
-                fetch('https://formspree.io/f/xojpwqgp', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                }).then(response => {
-                    if (response.ok) {
-                        if (modal) { modal.style.display = 'flex'; }
-                        contactForm.reset();
-                    } else {
-                        alert('Something went wrong. Please try again or call us directly.');
-                    }
-                }).catch(() => {
-                    alert('Network error. Please check your connection and try again.');
-                });
-            });
-        }
-
-        // --- Smooth scroll nav links ---
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.querySelectorAll('.main-nav a, .cta-button, .footer-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId.startsWith('#') && targetId !== '#') {
-                    e.preventDefault();
-                    menuToggle.checked = false;
-                    setTimeout(() => {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            const headerOffset = 100;
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                        }
-                    }, 450);
-                }
-            });
-        });
-    });
-
-    // Back-to-top scroll listener
-    window.addEventListener('scroll', function () {
-        const btn = document.getElementById('backToTop');
-        if (!btn) return;
-        if (window.scrollY > 400) {
-            btn.classList.add('visible');
-        } else {
-            btn.classList.remove('visible');
-        }
-    });
-
-    // --- Modal Close ---
-    function closeModal() {
-        const modal = document.getElementById('success-modal');
-        if (modal) { modal.style.display = 'none'; }
-        const form = document.querySelector('.contact-form');
-        if (form) { form.reset(); }
-    }
-
-    // --- Review Modal ---
-    function openReviewModal() {
-        document.getElementById('reviewModal').style.display = 'flex';
-    }
-
-    function closeReviewModal() {
-        document.getElementById('reviewModal').style.display = 'none';
-        setTimeout(() => {
-            document.getElementById('reviewFormContainer').style.display = 'block';
-            document.getElementById('reviewSuccessMessage').style.display = 'none';
-            document.getElementById('reviewForm').reset();
-        }, 500);
-    }
-
-    window.onclick = function(event) {
-        const modal = document.getElementById('reviewModal');
-        if (event.target == modal) { modal.style.display = "none"; }
-    };
-
-    function handleReviewSubmit(event) {
-        event.preventDefault();
-        document.getElementById('reviewFormContainer').style.display = 'none';
-        document.getElementById('reviewSuccessMessage').style.display = 'block';
-    }
-
-    // --- Kitchen Grid Toggle ---
-    function toggleKitchenGrid() {
-        const grid = document.getElementById('kitchen-full-catalog');
-        const isOpening = !grid.classList.contains('show-grid');
-        if (isOpening) {
-            grid.classList.add('show-grid');
-            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-        } else {
-            const kitchenSection = grid.previousElementSibling;
-            window.scrollTo({ top: kitchenSection.offsetTop - 100, behavior: 'smooth' });
-            setTimeout(() => { grid.classList.remove('show-grid'); }, 300);
-        }
-    }
-
-    function filterProducts() {
-        const input = document.getElementById('productSearch');
-        const clearBtn = document.getElementById('clearSearch');
-        const filter = input.value.toLowerCase();
-        clearBtn.style.display = input.value.length > 0 ? "block" : "none";
-        const cards = document.querySelectorAll('#kitchenGrid .product-item-card');
-        const noResults = document.getElementById('noResults');
-        let visibleCount = 0;
-        cards.forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
-            const category = card.querySelector('.category-label').innerText.toLowerCase();
-            if (title.includes(filter) || category.includes(filter)) {
-                card.style.display = "";
-                visibleCount++;
-            } else {
-                card.style.display = "none";
-            }
-        });
-        noResults.style.display = visibleCount === 0 ? "block" : "none";
-    }
-
-    function clearProductSearch() {
-        const input = document.getElementById('productSearch');
-        input.value = '';
-        filterProducts();
-    }
-
-    // --- Bathroom Grid Toggle ---
-    function toggleBathroomGrid() {
-        const grid = document.getElementById('bathroom-full-catalog');
-        if (!grid.classList.contains('show-grid')) {
-            grid.classList.add('show-grid');
-            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth' }); }, 100);
-        } else {
-            const portal = document.querySelector('.bathroom-bg');
-            window.scrollTo({ top: portal.offsetTop - 150, behavior: 'smooth' });
-            setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
-        }
-    }
-
-    function filterBathroom() {
-        const input = document.getElementById('bathroomSearch');
-        const clearBtn = document.getElementById('clearBathSearch');
-        const filter = input.value.toLowerCase();
-        clearBtn.style.display = input.value.length > 0 ? "block" : "none";
-        const cards = document.querySelectorAll('#bathroomGrid .product-item-card');
-        let count = 0;
-        cards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            if (text.includes(filter)) {
-                card.style.display = "";
-                count++;
-            } else {
-                card.style.display = "none";
-            }
-        });
-        document.getElementById('noBathResults').style.display = count === 0 ? "block" : "none";
-    }
-
-    function clearBathSearch() {
-        document.getElementById('bathroomSearch').value = '';
-        filterBathroom();
-    }
-
-    // --- Construction Grid Toggle ---
-    function toggleConstructionGrid() {
-        const grid = document.getElementById('construction-full-catalog');
-        const isOpening = !grid.classList.contains('show-grid');
-        if (isOpening) {
-            grid.classList.add('show-grid');
-            setTimeout(() => { grid.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-        } else {
-            const portal = document.querySelector('.construction-bg');
-            window.scrollTo({ top: portal.offsetTop - 100, behavior: 'smooth' });
-            setTimeout(() => { grid.classList.remove('show-grid'); }, 400);
-        }
-    }
-
-    function filterConst() {
-        const input = document.getElementById('constSearch');
-        const filter = input.value.toLowerCase();
-        const grid = document.getElementById('constGrid');
-        const cards = grid.getElementsByClassName('product-item-card');
-        const clearBtn = document.getElementById('clearConstSearch');
-        const noResults = document.getElementById('noConstResults');
-        let visibleCount = 0;
-        clearBtn.style.display = filter.length > 0 ? 'block' : 'none';
-        for (let i = 0; i < cards.length; i++) {
-            const title = cards[i].querySelector('h3').innerText;
-            const category = cards[i].querySelector('.category-label').innerText;
-            if (title.toLowerCase().indexOf(filter) > -1 || category.toLowerCase().indexOf(filter) > -1) {
-                cards[i].style.display = "";
-                visibleCount++;
-            } else {
-                cards[i].style.display = "none";
-            }
-        }
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-
-    function clearConstSearch() {
-        const input = document.getElementById('constSearch');
-        input.value = "";
-        filterConst();
-        input.focus();
-    }
-
-    // ===== CART SYSTEM =====
-    let cart = [];
-
-    function addToCart(btn) {
-        const card = btn.closest('.product-item-card');
-        const name = card.querySelector('h3').innerText.trim();
-        const priceEl = card.querySelector('.price-current');
-        const priceText = priceEl ? priceEl.innerText.trim() : 'KSh 0';
-        const priceNum = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
-        const qtyInput = card.querySelector('.item-quantity');
-        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-        const existing = cart.find(i => i.name === name);
-        if (existing) {
-            existing.qty += qty;
-        } else {
-            cart.push({ name, price: priceNum, priceText, qty });
-        }
-        btn.classList.add('added');
-        btn.innerHTML = '<i class="fas fa-check"></i> Added!';
-        setTimeout(() => {
-            btn.classList.remove('added');
-            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
-        }, 1500);
-        updateCartUI();
-        openCart();
-    }
-function updateCartUI() {
-    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    const totalItems = cart.reduce((s, i) => s + i.qty, 0);
-    const badge = document.getElementById('cartBadge');
-    const countEl = document.getElementById('cartCount');
-    badge.textContent = totalItems;
-    countEl.textContent = totalItems;
-    badge.style.display = totalItems > 0 ? 'flex' : 'none';
-    document.getElementById('cartSubtotal').textContent = 'KSh ' + total.toLocaleString();
-    const emptyEl = document.getElementById('cartEmpty');
-    const waBtn = document.getElementById('cartWhatsapp');
-    const emailBtn = document.getElementById('cartEmail');
-    const clearBtn = document.getElementById('clearCartBtn');
-    emptyEl.style.display = cart.length === 0 ? 'block' : 'none';
-    waBtn.style.display = cart.length > 0 ? 'block' : 'none';
-    emailBtn.style.display = cart.length > 0 ? 'block' : 'none';
-    clearBtn.style.display = cart.length > 0 ? 'block' : 'none';
-    const container = document.getElementById('cartItems');
-    container.innerHTML = '';
-    cart.forEach((item, idx) => {
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-            <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">${item.priceText} each</div>
-                <div class="cart-item-controls">
-                    <button class="cart-qty-btn" onclick="changeCartQty(${idx}, -1)">−</button>
-                    <input class="cart-qty-input" type="number" value="${item.qty}" min="1" onchange="setCartQty(${idx}, this.value)">
-                    <button class="cart-qty-btn" onclick="changeCartQty(${idx}, 1)">+</button>
-                    <button class="cart-remove-btn" onclick="removeFromCart(${idx})"><i class="fas fa-trash"></i> Remove</button>
-                </div>
-            </div>
-            <div class="cart-item-total">KSh ${(item.price * item.qty).toLocaleString()}</div>`;
-        container.appendChild(div);
-    });
-
-    if (cart.length > 0) {
-        const orderRef = 'ORD-' + Date.now().toString().slice(-6);
-        const date = new Date().toLocaleDateString('en-KE', {
-            day: '2-digit', month: 'short', year: 'numeric'
-        });
-
-        // WhatsApp message
-        let msg = `*PRIMELINE PLUMBING — NEW ORDER*\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━\n`;
-        msg += `📋 Order Ref: ${orderRef}\n`;
-        msg += `📅 Date: ${date}\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        msg += `*ITEMS ORDERED:*\n\n`;
-        cart.forEach((i, idx) => {
-            const lineTotal = i.price * i.qty;
-            msg += `${idx + 1}. ${i.name}\n`;
-            msg += `   Qty: ${i.qty} × KSh ${i.price.toLocaleString()} = KSh ${lineTotal.toLocaleString()}\n\n`;
-        });
-        msg += `━━━━━━━━━━━━━━━━━━━━\n`;
-        msg += `*TOTAL: KSh ${total.toLocaleString()}*\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-        msg += `Please confirm availability and delivery details. Thank you! 🙏`;
-        waBtn.href = 'https://wa.me/254727935046?text=' + encodeURIComponent(msg);
-
-        // Email message
-        const subject = `New Order ${orderRef} — Primeline Plumbing`;
-        let body = `PRIMELINE PLUMBING — NEW ORDER\n`;
-        body += `================================\n`;
-        body += `Order Ref: ${orderRef}\n`;
-        body += `Date: ${date}\n`;
-        body += `================================\n\n`;
-        body += `ITEMS ORDERED:\n\n`;
-        cart.forEach((i, idx) => {
-            const lineTotal = i.price * i.qty;
-            body += `${idx + 1}. ${i.name}\n`;
-            body += `   Qty: ${i.qty} x KSh ${i.price.toLocaleString()} = KSh ${lineTotal.toLocaleString()}\n\n`;
-        });
-        body += `================================\n`;
-        body += `TOTAL: KSh ${total.toLocaleString()}\n`;
-        body += `================================\n\n`;
-        body += `Please confirm availability and delivery details.\n\nThank you!`;
-
-        emailBtn.href = `mailto:primeline98@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    }
-}
-
-    function changeCartQty(idx, delta) {
-        cart[idx].qty = Math.max(1, cart[idx].qty + delta);
-        updateCartUI();
-    }
-
-    function setCartQty(idx, val) {
-        cart[idx].qty = Math.max(1, parseInt(val) || 1);
-        updateCartUI();
-    }
-
-    function removeFromCart(idx) {
-        cart.splice(idx, 1);
-        updateCartUI();
-    }
-
-    function clearCart() {
-        cart = [];
-        updateCartUI();
-    }
-
-    function openCart() {
-        document.getElementById('cartDrawer').style.right = '0';
-        document.getElementById('cartOverlay').style.display = 'block';
-    }
-
-    function closeCart() {
-        document.getElementById('cartDrawer').style.right = '-420px';
-        document.getElementById('cartOverlay').style.display = 'none';
-    }
-function openLoginModal() {
-    if (window._plUserLoggedIn) {
-        window.location.href = 'dashboard.html';
-        return;
-    }
-    document.getElementById('loginModal').style.display = 'flex';
-}
-function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-}
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp,runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
-            authDomain: "primeline-plumbing.firebaseapp.com",
-            projectId: "primeline-plumbing",
-            storageBucket: "primeline-plumbing.firebasestorage.app",
-            messagingSenderId: "115563321966",
-            appId: "1:115563321966:web:a71fca315dc4572e26a47f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        let isRegisterMode = false;
-
-        const savedEmail = localStorage.getItem('pl_saved_email');
-        if (savedEmail) {
-            document.getElementById('authEmail').value = savedEmail;
-            document.getElementById('rememberMe').checked = true;
-        }
-
-        let userInitialised = false;
-
-onAuthStateChanged(auth, (user) => {
-    const btn = document.getElementById('headerLoginBtn');
-    if (user) {
-        window._plUserLoggedIn = true;
-        btn.title = 'Go to My Dashboard';
-        btn.innerHTML = `
-            <i class="fas fa-user-circle"></i>
-            <span class="dashboard-label">Dashboard</span>
-        `;
-    } else {
-        window._plUserLoggedIn = false;
-        btn.title = 'My Account';
-        btn.innerHTML = '<i class="fas fa-user-circle"></i>';
-    }
-    userInitialised = true;
-});
-        window.handleAuthSubmit = async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('authEmail').value.trim();
-            const password = document.getElementById('authPassword').value;
-            const errorBox = document.getElementById('authError');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            errorBox.style.display = 'none';
-            submitBtn.disabled = true;
-            submitBtn.textContent = isRegisterMode ? 'Creating account...' : 'Logging in...';
-            try {
- if (isRegisterMode) {
-     window._plRegistering = true
-    console.log('Starting registration...');
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const uid = userCredential.user.uid;
-    console.log('Auth user created, uid:', uid);
-    
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.toLocaleString('en', { month: 'short' }).toUpperCase();
-    const day = String(now.getDate()).padStart(2, '0');
-    const counterRef = doc(db, 'meta', 'clientCounter');
-    console.log('Starting transaction...');
-    
-    const clientId = await runTransaction(db, async (transaction) => {
-        console.log('Inside transaction, reading counter...');
-        const counterSnap = await transaction.get(counterRef);
-        console.log('Counter snap exists:', counterSnap.exists());
-        console.log('Counter value:', counterSnap.data());
-        const nextNumber = (counterSnap.exists() ? counterSnap.data().count : 0) + 1;
-        console.log('Next number will be:', nextNumber);
-        transaction.set(counterRef, { count: nextNumber });
-        return `PL-${year}-${month}-${day}-${String(nextNumber).padStart(5, '0')}`;
-    });
-    
-    console.log('Transaction complete, clientId:', clientId);
-    
-    await setDoc(doc(db, 'users', uid), {
-        email: email,
-        uid: uid,
-        clientId: clientId,
-        createdAt: serverTimestamp()
-    });
-    
-    console.log('User document written successfully');
-     window._plRegistering = false;
-}else {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    const remember = document.getElementById('rememberMe').checked;
-                    if (remember) {
-                        localStorage.setItem('pl_saved_email', email);
-                    } else {
-                        localStorage.removeItem('pl_saved_email');
-                    }
-                }
-                window.location.href = 'dashboard.html';
-            } catch (err) {
-                errorBox.style.display = 'block';
-                errorBox.textContent = friendlyError(err.code);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = isRegisterMode ? 'Create Account' : 'Login';
-            }
-        };
-
-        window.handleLogout = async function() {
-            await signOut(auth);
-            document.getElementById('loginModal').style.display = 'none';
-        };
-
-        window.toggleAuthMode = function(e) {
-            e.preventDefault();
-            isRegisterMode = !isRegisterMode;
-            document.getElementById('authTitle').textContent = isRegisterMode ? 'Create Account' : 'Customer Login';
-            document.getElementById('authSubtitle').textContent = isRegisterMode ? 'Join Primeline Plumbing Solutions' : 'Welcome back to Primeline Plumbing Solutions';
-            document.getElementById('authSubmitBtn').textContent = isRegisterMode ? 'Create Account' : 'Login';
-            document.getElementById('nameGroup').style.display = isRegisterMode ? 'flex' : 'none';
-            document.getElementById('loginOptions').style.display = isRegisterMode ? 'none' : 'flex';
-            document.getElementById('authToggleText').innerHTML = isRegisterMode
-                ? 'Already have an account? <a href="#" onclick="toggleAuthMode(event)">Login here</a>'
-                : "Don't have an account? <a href=\"#\" onclick=\"toggleAuthMode(event)\">Register here</a>";
-            document.getElementById('authError').style.display = 'none';
-            document.getElementById('authForm').reset();
-        };
-
-      window.handleForgotPassword = async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('authEmail').value.trim();
-    const errorBox = document.getElementById('authError');
-    const emailInput = document.getElementById('authEmail');
-    errorBox.className = 'auth-error-box';
-  if (!email) {
-    emailInput.classList.add('input-error');
-    emailInput.placeholder = 'Enter your email first';
-    emailInput.focus();
-    setTimeout(() => {
-        emailInput.classList.remove('input-error');
-        emailInput.placeholder = 'Email Address';
-    }, 3000);
-    errorBox.style.display = 'block';
-    errorBox.classList.add('auth-error-box--warning');
-    errorBox.textContent = 'Please enter your email address above first.';
-    return;
-}
-    try {
-        await sendPasswordResetEmail(auth, email);
-        errorBox.style.display = 'block';
-        errorBox.classList.add('auth-error-box--success');
-        errorBox.textContent = 'Password reset email sent! Check your inbox.';
-    } catch (err) {
-        errorBox.style.display = 'block';
-        errorBox.textContent = friendlyError(err.code);
-    }
-};
-
-        function friendlyError(code) {
-            const map = {
-                'auth/invalid-email': 'Please enter a valid email address.',
-                'auth/user-not-found': 'No account found with that email.',
-                'auth/wrong-password': 'Incorrect password. Please try again.',
-                'auth/email-already-in-use': 'An account with this email already exists.',
-                'auth/weak-password': 'Password must be at least 6 characters.',
-                'auth/too-many-requests': 'Too many attempts. Please try again later.',
-                'auth/network-request-failed': 'Network error. Check your connection.',
-                'auth/invalid-credential': 'Invalid email or password. Please try again.',
-            };
-            return map[code] || 'Something went wrong. Please try again.';
-        }
-    </script>
 
 </body>
 </html>

@@ -1,2127 +1,1496 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Account — Primeline Plumbing</title>
-  <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-client-512.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-client-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-client-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-client-180.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" href="dashboard.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-  <style>
-  /* ══════════════════════════════════════
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account — Primeline Plumbing</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="images/favicon-client-512.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-client-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-client-16.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/favicon-client-180.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script defer type="module" src="./dashboard.js"></script>
+    <style>
+      /* ══════════════════════════════════════
      ONBOARDING FLOATING CARD
   ══════════════════════════════════════ */
-  #onboardingOverlay {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 99999;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    animation: obFadeIn 0.45s ease;
-  }
+      #onboardingOverlay {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 99999;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        animation: obFadeIn 0.45s ease;
+      }
 
-  @keyframes obFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+      @keyframes obFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
 
-  .ob-card {
-    background: #071626;
-    border: 1px solid rgba(61,133,198,0.22);
-    border-radius: 20px;
-    width: 420px;
-    max-width: calc(100vw - 40px);
-    max-height: calc(100vh - 60px);
-    overflow-y: auto;
-    padding: 32px 30px;
-    position: relative;
-    box-shadow: 0 24px 60px rgba(4,14,26,0.9), 0 0 0 1px rgba(230,190,12,0.07);
-    animation: obSlideUp 0.42s cubic-bezier(0.34,1.56,0.64,1);
-  }
+      .ob-card {
+        background: #071626;
+        border: 1px solid rgba(61, 133, 198, 0.22);
+        border-radius: 20px;
+        width: 420px;
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+        padding: 32px 30px;
+        position: relative;
+        box-shadow:
+          0 24px 60px rgba(4, 14, 26, 0.9),
+          0 0 0 1px rgba(230, 190, 12, 0.07);
+        animation: obSlideUp 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
 
-  .ob-card::-webkit-scrollbar { width: 3px; }
-  .ob-card::-webkit-scrollbar-thumb { background: rgba(61,133,198,0.2); border-radius: 2px; }
+      .ob-card::-webkit-scrollbar {
+        width: 3px;
+      }
+      .ob-card::-webkit-scrollbar-thumb {
+        background: rgba(61, 133, 198, 0.2);
+        border-radius: 2px;
+      }
 
-  @keyframes obSlideUp {
-    from { opacity: 0; transform: translateY(30px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
+      @keyframes obSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
 
-  .ob-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 10%; right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #e6be0c, transparent);
-    border-radius: 0 0 4px 4px;
-  }
+      .ob-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e6be0c, transparent);
+        border-radius: 0 0 4px 4px;
+      }
 
-  .ob-progress {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
-  }
+      .ob-progress {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
 
-  .ob-step-dot {
-    height: 3px;
-    flex: 1;
-    border-radius: 3px;
-    background: rgba(61,133,198,0.15);
-    transition: background 0.4s ease, transform 0.3s ease;
-  }
+      .ob-step-dot {
+        height: 3px;
+        flex: 1;
+        border-radius: 3px;
+        background: rgba(61, 133, 198, 0.15);
+        transition:
+          background 0.4s ease,
+          transform 0.3s ease;
+      }
 
-  .ob-step-dot.active {
-    background: linear-gradient(90deg, #3d85c6, #e6be0c);
-    transform: scaleY(1.5);
-  }
+      .ob-step-dot.active {
+        background: linear-gradient(90deg, #3d85c6, #e6be0c);
+        transform: scaleY(1.5);
+      }
 
-  .ob-step-dot.done { background: rgba(34,197,94,0.45); }
+      .ob-step-dot.done {
+        background: rgba(34, 197, 94, 0.45);
+      }
 
-  .ob-step-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.64rem;
-    color: rgba(61,133,198,0.5);
-    letter-spacing: 1.5px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
+      .ob-step-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.64rem;
+        color: rgba(61, 133, 198, 0.5);
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
 
-  .ob-icon {
-    width: 52px; height: 52px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 16px;
-    position: relative;
-  }
+      .ob-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+        position: relative;
+      }
 
-  .ob-icon.blue  { background: rgba(61,133,198,0.12);  border: 1px solid rgba(61,133,198,0.2); }
-  .ob-icon.gold  { background: rgba(230,190,12,0.1);   border: 1px solid rgba(230,190,12,0.2); }
-  .ob-icon.green { background: rgba(34,197,94,0.1);    border: 1px solid rgba(34,197,94,0.2); }
+      .ob-icon.blue {
+        background: rgba(61, 133, 198, 0.12);
+        border: 1px solid rgba(61, 133, 198, 0.2);
+      }
+      .ob-icon.gold {
+        background: rgba(230, 190, 12, 0.1);
+        border: 1px solid rgba(230, 190, 12, 0.2);
+      }
+      .ob-icon.green {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+      }
 
-  .ob-icon::after {
-    content: '';
-    position: absolute;
-    inset: -5px;
-    border-radius: 21px;
-    border: 1px solid rgba(230,190,12,0.1);
-    animation: obPulse 2.5s ease infinite;
-  }
+      .ob-icon::after {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border-radius: 21px;
+        border: 1px solid rgba(230, 190, 12, 0.1);
+        animation: obPulse 2.5s ease infinite;
+      }
 
-  @keyframes obPulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50%       { opacity: 0;   transform: scale(1.1); }
-  }
+      @keyframes obPulse {
+        0%,
+        100% {
+          opacity: 0.5;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0;
+          transform: scale(1.1);
+        }
+      }
 
-  .ob-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.3;
-    margin-bottom: 6px;
-    letter-spacing: -0.2px;
-  }
+      .ob-title {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.3;
+        margin-bottom: 6px;
+        letter-spacing: -0.2px;
+      }
 
-  .ob-subtitle {
-    font-size: 0.82rem;
-    color: rgba(143,168,196,0.65);
-    line-height: 1.6;
-    margin-bottom: 22px;
-  }
+      .ob-subtitle {
+        font-size: 0.82rem;
+        color: rgba(143, 168, 196, 0.65);
+        line-height: 1.6;
+        margin-bottom: 22px;
+      }
 
-  .ob-field { margin-bottom: 14px; }
+      .ob-field {
+        margin-bottom: 14px;
+      }
 
-  .ob-field label {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: rgba(61,133,198,0.65);
-    letter-spacing: 1.3px;
-    text-transform: uppercase;
-    margin-bottom: 7px;
-  }
+      .ob-field label {
+        display: block;
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: rgba(61, 133, 198, 0.65);
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+      }
 
-  .ob-field input,
-  .ob-field select {
-    width: 100%;
-    background: #0d2137;
-    border: 1px solid rgba(61,133,198,0.14);
-    border-radius: 11px;
-    padding: 11px 14px;
-    color: #ffffff;
-    font-size: 0.87rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
+      .ob-field input,
+      .ob-field select {
+        width: 100%;
+        background: #0d2137;
+        border: 1px solid rgba(61, 133, 198, 0.14);
+        border-radius: 11px;
+        padding: 11px 14px;
+        color: #ffffff;
+        font-size: 0.87rem;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
 
-  .ob-field input:focus,
-  .ob-field select:focus {
-    border-color: rgba(230,190,12,0.45);
-    box-shadow: 0 0 0 3px rgba(230,190,12,0.07);
-  }
+      .ob-field input:focus,
+      .ob-field select:focus {
+        border-color: rgba(230, 190, 12, 0.45);
+        box-shadow: 0 0 0 3px rgba(230, 190, 12, 0.07);
+      }
 
-  .ob-field input::placeholder { color: rgba(74,96,128,0.8); }
-  .ob-field select option { background: #071626; color: #ffffff; }
+      .ob-field input::placeholder {
+        color: rgba(74, 96, 128, 0.8);
+      }
+      .ob-field select option {
+        background: #071626;
+        color: #ffffff;
+      }
 
-  .ob-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+      .ob-pills {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+      }
 
-  .ob-pill {
-    padding: 8px 16px;
-    border-radius: 50px;
-    border: 1px solid rgba(61,133,198,0.18);
-    background: #0d2137;
-    color: rgba(143,168,196,0.65);
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    user-select: none;
-  }
+      .ob-pill {
+        padding: 8px 16px;
+        border-radius: 50px;
+        border: 1px solid rgba(61, 133, 198, 0.18);
+        background: #0d2137;
+        color: rgba(143, 168, 196, 0.65);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        user-select: none;
+      }
 
-  .ob-pill:hover { border-color: rgba(61,133,198,0.4); color: #ffffff; }
-  .ob-pill.selected { background: rgba(230,190,12,0.1); border-color: rgba(230,190,12,0.4); color: #e6be0c; }
+      .ob-pill:hover {
+        border-color: rgba(61, 133, 198, 0.4);
+        color: #ffffff;
+      }
+      .ob-pill.selected {
+        background: rgba(230, 190, 12, 0.1);
+        border-color: rgba(230, 190, 12, 0.4);
+        color: #e6be0c;
+      }
 
-  .ob-type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+      .ob-type-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 4px;
+      }
 
-  .ob-type-card {
-    padding: 16px 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(61,133,198,0.14);
-    background: #0d2137;
-    cursor: pointer;
-    transition: all 0.22s ease;
-    text-align: center;
-    user-select: none;
-  }
+      .ob-type-card {
+        padding: 16px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(61, 133, 198, 0.14);
+        background: #0d2137;
+        cursor: pointer;
+        transition: all 0.22s ease;
+        text-align: center;
+        user-select: none;
+      }
 
-  .ob-type-card:hover { border-color: rgba(61,133,198,0.35); transform: translateY(-2px); }
-  .ob-type-card.selected { border-color: rgba(230,190,12,0.4); background: rgba(230,190,12,0.07); }
-  .ob-type-card .type-icon  { font-size: 1.5rem; margin-bottom: 8px; display: block; }
-  .ob-type-card .type-label { font-weight: 700; color: #ffffff; font-size: 0.84rem; }
-  .ob-type-card .type-desc  { font-size: 0.71rem; color: rgba(143,168,196,0.5); margin-top: 3px; }
-  .ob-type-card.selected .type-label { color: #e6be0c; }
+      .ob-type-card:hover {
+        border-color: rgba(61, 133, 198, 0.35);
+        transform: translateY(-2px);
+      }
+      .ob-type-card.selected {
+        border-color: rgba(230, 190, 12, 0.4);
+        background: rgba(230, 190, 12, 0.07);
+      }
+      .ob-type-card .type-icon {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .ob-type-card .type-label {
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 0.84rem;
+      }
+      .ob-type-card .type-desc {
+        font-size: 0.71rem;
+        color: rgba(143, 168, 196, 0.5);
+        margin-top: 3px;
+      }
+      .ob-type-card.selected .type-label {
+        color: #e6be0c;
+      }
 
-  .ob-plumber-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: linear-gradient(135deg, #0a192f, #163352);
-    border: 1px solid rgba(230,190,12,0.18);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 18px;
-    position: relative;
-    overflow: hidden;
-  }
+      .ob-plumber-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: linear-gradient(135deg, #0a192f, #163352);
+        border: 1px solid rgba(230, 190, 12, 0.18);
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 18px;
+        position: relative;
+        overflow: hidden;
+      }
 
-  .ob-plumber-card::before {
-    content: '';
-    position: absolute;
-    top: -16px; right: -16px;
-    width: 80px; height: 80px;
-    background: radial-gradient(circle, rgba(230,190,12,0.07) 0%, transparent 70%);
-    border-radius: 50%;
-  }
+      .ob-plumber-card::before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        right: -16px;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(
+          circle,
+          rgba(230, 190, 12, 0.07) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
 
-  .ob-plumber-avatar {
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #3d85c6, #e6be0c);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: #040e1a;
-    flex-shrink: 0;
-    border: 2px solid rgba(230,190,12,0.35);
-    overflow: hidden;
-  }
+      .ob-plumber-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3d85c6, #e6be0c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #040e1a;
+        flex-shrink: 0;
+        border: 2px solid rgba(230, 190, 12, 0.35);
+        overflow: hidden;
+      }
 
-  .ob-plumber-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .ob-plumber-info .plumber-name { font-weight: 800; color: #ffffff; font-size: 0.88rem; }
-  .ob-plumber-info .plumber-role { font-size: 0.74rem; color: rgba(143,168,196,0.55); margin-top: 2px; }
-  .ob-plumber-info .plumber-badge {
-    display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
-    background: rgba(230,190,12,0.08); border: 1px solid rgba(230,190,12,0.2);
-    border-radius: 50px; padding: 2px 9px;
-    font-family: 'DM Mono', monospace; font-size: 0.67rem; color: #e6be0c; font-weight: 600;
-  }
+      .ob-plumber-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .ob-plumber-info .plumber-name {
+        font-weight: 800;
+        color: #ffffff;
+        font-size: 0.88rem;
+      }
+      .ob-plumber-info .plumber-role {
+        font-size: 0.74rem;
+        color: rgba(143, 168, 196, 0.55);
+        margin-top: 2px;
+      }
+      .ob-plumber-info .plumber-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 6px;
+        background: rgba(230, 190, 12, 0.08);
+        border: 1px solid rgba(230, 190, 12, 0.2);
+        border-radius: 50px;
+        padding: 2px 9px;
+        font-family: "DM Mono", monospace;
+        font-size: 0.67rem;
+        color: #e6be0c;
+        font-weight: 600;
+      }
 
-  .ob-id-reveal {
-    background: rgba(230,190,12,0.06);
-    border: 1px solid rgba(230,190,12,0.2);
-    border-radius: 14px;
-    padding: 16px 18px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
+      .ob-id-reveal {
+        background: rgba(230, 190, 12, 0.06);
+        border: 1px solid rgba(230, 190, 12, 0.2);
+        border-radius: 14px;
+        padding: 16px 18px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-  .ob-id-reveal .id-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.63rem; color: rgba(230,190,12,0.6);
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;
-  }
+      .ob-id-reveal .id-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.63rem;
+        color: rgba(230, 190, 12, 0.6);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
 
-  .ob-id-reveal .id-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.35rem; font-weight: 700; color: #e6be0c; letter-spacing: 3px;
-  }
+      .ob-id-reveal .id-value {
+        font-family: "DM Mono", monospace;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #e6be0c;
+        letter-spacing: 3px;
+      }
 
-  .ob-actions { display: flex; gap: 10px; margin-top: 22px; }
+      .ob-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 22px;
+      }
 
-  .ob-btn-next {
-    flex: 1; padding: 13px;
-    background: linear-gradient(135deg, #e6be0c, #c9a20a);
-    color: #040e1a; border: none; border-radius: 50px;
-    font-weight: 800; font-size: 0.88rem; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 4px 16px rgba(230,190,12,0.25);
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+      .ob-btn-next {
+        flex: 1;
+        padding: 13px;
+        background: linear-gradient(135deg, #e6be0c, #c9a20a);
+        color: #040e1a;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 4px 16px rgba(230, 190, 12, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
 
-  .ob-btn-next:hover {
-    background: linear-gradient(135deg, #f5ce1e, #e6be0c);
-    transform: translateY(-2px); box-shadow: 0 8px 24px rgba(230,190,12,0.42);
-  }
+      .ob-btn-next:hover {
+        background: linear-gradient(135deg, #f5ce1e, #e6be0c);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(230, 190, 12, 0.42);
+      }
 
-  .ob-btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+      .ob-btn-next:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
 
-  .ob-btn-back {
-    padding: 13px 20px; background: transparent;
-    color: rgba(143,168,196,0.6); border: 1px solid rgba(61,133,198,0.18);
-    border-radius: 50px; font-weight: 600; font-size: 0.86rem; cursor: pointer; transition: all 0.2s;
-  }
+      .ob-btn-back {
+        padding: 13px 20px;
+        background: transparent;
+        color: rgba(143, 168, 196, 0.6);
+        border: 1px solid rgba(61, 133, 198, 0.18);
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.86rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
 
-  .ob-btn-back:hover { border-color: rgba(61,133,198,0.35); color: #ffffff; }
+      .ob-btn-back:hover {
+        border-color: rgba(61, 133, 198, 0.35);
+        color: #ffffff;
+      }
 
-  .ob-step { display: none; }
-  .ob-step.active { display: block; animation: obSlideIn 0.3s cubic-bezier(0.4,0,0.2,1); }
-  .ob-step.going-back.active { animation: obSlideBack 0.3s cubic-bezier(0.4,0,0.2,1); }
+      .ob-step {
+        display: none;
+      }
+      .ob-step.active {
+        display: block;
+        animation: obSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .ob-step.going-back.active {
+        animation: obSlideBack 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-  @keyframes obSlideIn {
-    from { opacity: 0; transform: translateX(16px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
+      @keyframes obSlideIn {
+        from {
+          opacity: 0;
+          transform: translateX(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
 
-  @keyframes obSlideBack {
-    from { opacity: 0; transform: translateX(-16px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
+      @keyframes obSlideBack {
+        from {
+          opacity: 0;
+          transform: translateX(-16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
 
-  .ob-checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+      .ob-checklist {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
 
-  .ob-check-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px;
-    background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.12);
-    border-radius: 10px; font-size: 0.82rem; color: rgba(143,168,196,0.75);
-    animation: obCheckIn 0.4s ease both;
-  }
+      .ob-check-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: rgba(34, 197, 94, 0.05);
+        border: 1px solid rgba(34, 197, 94, 0.12);
+        border-radius: 10px;
+        font-size: 0.82rem;
+        color: rgba(143, 168, 196, 0.75);
+        animation: obCheckIn 0.4s ease both;
+      }
 
-  .ob-check-item:nth-child(1) { animation-delay: 0.08s; }
-  .ob-check-item:nth-child(2) { animation-delay: 0.18s; }
-  .ob-check-item:nth-child(3) { animation-delay: 0.28s; }
-  .ob-check-item:nth-child(4) { animation-delay: 0.38s; }
+      .ob-check-item:nth-child(1) {
+        animation-delay: 0.08s;
+      }
+      .ob-check-item:nth-child(2) {
+        animation-delay: 0.18s;
+      }
+      .ob-check-item:nth-child(3) {
+        animation-delay: 0.28s;
+      }
+      .ob-check-item:nth-child(4) {
+        animation-delay: 0.38s;
+      }
 
-  @keyframes obCheckIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
+      @keyframes obCheckIn {
+        from {
+          opacity: 0;
+          transform: translateX(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
 
-  .ob-check-item i { color: #22c55e; font-size: 0.82rem; flex-shrink: 0; }
+      .ob-check-item i {
+        color: #22c55e;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+      }
 
-  .ob-error {
-    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
-    border-radius: 10px; padding: 9px 13px; font-size: 0.8rem;
-    color: #f87171; margin-bottom: 14px; display: none;
-  }
+      .ob-error {
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 10px;
+        padding: 9px 13px;
+        font-size: 0.8rem;
+        color: #f87171;
+        margin-bottom: 14px;
+        display: none;
+      }
 
-  @media (max-width: 480px) {
-    #onboardingOverlay { bottom: 0; right: 0; left: 0; justify-content: center; }
-    .ob-card { border-radius: 20px 20px 0 0; width: 100%; max-width: 100%; padding: 28px 22px; }
-  }
-  </style>
-</head>
-<body>
-
-<!-- ══════════════════════════════════════
+      @media (max-width: 480px) {
+        #onboardingOverlay {
+          bottom: 0;
+          right: 0;
+          left: 0;
+          justify-content: center;
+        }
+        .ob-card {
+          border-radius: 20px 20px 0 0;
+          width: 100%;
+          max-width: 100%;
+          padding: 28px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════
      ONBOARDING FLOATING CARD
 ══════════════════════════════════════ -->
-<div id="onboardingOverlay" style="display:none;">
-  <div class="ob-card">
-    <div class="ob-progress">
-      <div class="ob-step-dot active" id="obDot0"></div>
-      <div class="ob-step-dot" id="obDot1"></div>
-      <div class="ob-step-dot" id="obDot2"></div>
-      <div class="ob-step-dot" id="obDot3"></div>
-      <div class="ob-step-dot" id="obDot4"></div>
-    </div>
-    <div class="ob-step-label" id="obStepLabel">Step 1 of 5</div>
-    <div class="ob-error" id="obError"></div>
+    <div id="onboardingOverlay" style="display: none">
+      <div class="ob-card">
+        <div class="ob-progress">
+          <div class="ob-step-dot active" id="obDot0"></div>
+          <div class="ob-step-dot" id="obDot1"></div>
+          <div class="ob-step-dot" id="obDot2"></div>
+          <div class="ob-step-dot" id="obDot3"></div>
+          <div class="ob-step-dot" id="obDot4"></div>
+        </div>
+        <div class="ob-step-label" id="obStepLabel">Step 1 of 5</div>
+        <div class="ob-error" id="obError"></div>
 
-    <!-- STEP 1: WELCOME -->
-    <div class="ob-step active" id="obStep0">
-      <div class="ob-icon gold">👋</div>
-      <div class="ob-title">Welcome to your<br>Primeline Portal</div>
-      <div class="ob-subtitle">Your personal dashboard for projects, quotes, invoices and direct communication with your plumber. Let's take 60 seconds to set up your account.</div>
-      <div class="ob-id-reveal">
-        <div class="id-label">Your Client ID</div>
-        <div class="id-value" id="obClientIdDisplay">—</div>
-      </div>
-      <div class="ob-actions">
-        <button class="ob-btn-next" onclick="obNext()">Get Started <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- STEP 2: PERSONAL INFO -->
-    <div class="ob-step" id="obStep1">
-      <div class="ob-icon blue"><i class="fas fa-user" style="color:#3d85c6;font-size:1.2rem;"></i></div>
-      <div class="ob-title">Tell us about yourself</div>
-      <div class="ob-subtitle">Helps your plumber address you properly and reach you quickly.</div>
-      <div class="ob-field">
-        <label>Full Name</label>
-        <input type="text" id="obName" placeholder="e.g. Jane Wanjiku" autocomplete="name">
-      </div>
-      <div class="ob-field">
-        <label>Phone Number</label>
-        <input type="tel" id="obPhone" placeholder="e.g. +254 712 345 678" autocomplete="tel">
-      </div>
-      <div class="ob-actions">
-        <button class="ob-btn-back" onclick="obBack()"><i class="fas fa-arrow-left"></i></button>
-        <button class="ob-btn-next" onclick="obNext()">Continue <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- STEP 3: PROPERTY & TYPE -->
-    <div class="ob-step" id="obStep2">
-      <div class="ob-icon blue"><i class="fas fa-home" style="color:#3d85c6;font-size:1.2rem;"></i></div>
-      <div class="ob-title">Your property details</div>
-      <div class="ob-subtitle">Where will Primeline be working, and what type of client are you?</div>
-      <div class="ob-field">
-        <label>Primary Property Address</label>
-        <input type="text" id="obAddress" placeholder="e.g. Westlands, Nairobi">
-      </div>
-      <div class="ob-field">
-        <label>Client Type</label>
-        <div class="ob-type-grid">
-          <div class="ob-type-card selected" id="obTypeResidential" onclick="selectClientType('Residential')">
-            <span class="type-icon">🏠</span>
-            <div class="type-label">Residential</div>
-            <div class="type-desc">Home or apartment</div>
+        <!-- STEP 1: WELCOME -->
+        <div class="ob-step active" id="obStep0">
+          <div class="ob-icon gold">👋</div>
+          <div class="ob-title">Welcome to your<br />Primeline Portal</div>
+          <div class="ob-subtitle">
+            Your personal dashboard for projects, quotes, invoices and direct
+            communication with your plumber. Let's take 60 seconds to set up
+            your account.
           </div>
-          <div class="ob-type-card" id="obTypeCommercial" onclick="selectClientType('Commercial')">
-            <span class="type-icon">🏢</span>
-            <div class="type-label">Commercial</div>
-            <div class="type-desc">Office or business</div>
+          <div class="ob-id-reveal">
+            <div class="id-label">Your Client ID</div>
+            <div class="id-value" id="obClientIdDisplay">—</div>
           </div>
-        </div>
-      </div>
-      <div class="ob-actions">
-        <button class="ob-btn-back" onclick="obBack()"><i class="fas fa-arrow-left"></i></button>
-        <button class="ob-btn-next" onclick="obNext()">Continue <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- STEP 4: PLUMBER + CONTACT -->
-    <div class="ob-step" id="obStep3">
-      <div class="ob-icon gold"><i class="fas fa-user-tie" style="color:#e6be0c;font-size:1.2rem;"></i></div>
-      <div class="ob-title">Meet your plumber</div>
-      <div class="ob-subtitle">Your dedicated Primeline technician — and how you'd like to be reached.</div>
-      <div class="ob-plumber-card">
-        <div class="ob-plumber-avatar" id="obPlumberAvatar">🔧</div>
-        <div class="ob-plumber-info">
-          <div class="plumber-name" id="obPlumberName">Loading...</div>
-          <div class="plumber-role" id="obPlumberRole">Senior Plumbing Technician</div>
-          <div class="plumber-badge"><i class="fas fa-shield-alt"></i> <span id="obPlumberBadgeId">—</span></div>
-        </div>
-      </div>
-      <div class="ob-field">
-        <label>Preferred Contact Method</label>
-        <div class="ob-pills">
-          <div class="ob-pill selected" id="obPillCall" onclick="toggleContactPill('Call')"><i class="fas fa-phone"></i> Call</div>
-          <div class="ob-pill" id="obPillWhatsApp" onclick="toggleContactPill('WhatsApp')"><i class="fab fa-whatsapp"></i> WhatsApp</div>
-          <div class="ob-pill" id="obPillEmail" onclick="toggleContactPill('Email')"><i class="fas fa-envelope"></i> Email</div>
-        </div>
-      </div>
-      <div class="ob-actions">
-        <button class="ob-btn-back" onclick="obBack()"><i class="fas fa-arrow-left"></i></button>
-        <button class="ob-btn-next" onclick="obNext()">Almost done <i class="fas fa-arrow-right"></i></button>
-      </div>
-    </div>
-
-    <!-- STEP 5: DONE -->
-    <div class="ob-step" id="obStep4">
-      <div class="ob-icon green"><i class="fas fa-check" style="color:#22c55e;font-size:1.3rem;"></i></div>
-      <div class="ob-title">You're all set! 🎉</div>
-      <div class="ob-subtitle">Your Primeline account is ready. Here's what you can do:</div>
-      <div class="ob-checklist">
-        <div class="ob-check-item"><i class="fas fa-check-circle"></i> Track your projects in real time</div>
-        <div class="ob-check-item"><i class="fas fa-check-circle"></i> Review and approve material quotes</div>
-        <div class="ob-check-item"><i class="fas fa-check-circle"></i> Message your plumber directly</div>
-        <div class="ob-check-item"><i class="fas fa-check-circle"></i> Download invoices and documents</div>
-      </div>
-      <div class="ob-actions">
-        <button class="ob-btn-next" onclick="obFinish()" id="obFinishBtn">
-          <i class="fas fa-th-large"></i> Go to Dashboard
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     AUTH GATE
-══════════════════════════════════════ -->
-<div id="authGate">
-  <div class="gate-logo">PRIMELINE</div>
-  <div class="gate-spinner"></div>
-  <div class="gate-msg">Checking your session...</div>
-</div>
-
-<!-- ══════════════════════════════════════
-     PORTAL
-══════════════════════════════════════ -->
-<div id="portalWrap" style="display:none;">
-  <div class="layout">
-
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
-
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-logo">
-        <span class="logo-icon"><i class="fas fa-tint"></i></span>
-        <div class="logo-text">
-          <span class="logo-name">Primeline</span>
-          <span class="logo-sub">Client Portal</span>
-        </div>
-      </div>
-
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <div class="nav-item active" onclick="showPanel('dashboard', this)">
-          <i class="fas fa-th-large"></i><span>Dashboard</span>
-        </div>
-        <div class="nav-item" onclick="showPanel('projects', this)">
-          <i class="fas fa-hard-hat"></i><span>My Projects</span>
-          <span class="nav-badge" id="projectsBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-section-label">Finance</div>
-        <div class="nav-item" onclick="showPanel('quotes', this)">
-          <i class="fas fa-file-invoice"></i><span>Quotations</span>
-          <span class="nav-badge" id="quoteBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-item" onclick="showPanel('purchases', this)">
-          <i class="fas fa-shopping-bag"></i><span>Purchases</span>
-          <span class="nav-badge" id="purchasesBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-item" onclick="showPanel('invoices', this)">
-          <i class="fas fa-receipt"></i><span>Invoices</span>
-          <span class="nav-badge" id="invoicesBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-section-label">Communication</div>
-        <div class="nav-item" onclick="showPanel('messages', this)">
-          <i class="fas fa-comments"></i><span>Messages</span>
-          <span class="nav-badge" id="msgBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-item" onclick="showPanel('notifications', this)">
-          <i class="fas fa-bell"></i><span>Notifications</span>
-          <span class="nav-badge" id="notifBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-section-label">My Account</div>
-        <div class="nav-item" onclick="showPanel('photos', this)">
-          <i class="fas fa-images"></i><span>Progress Photos</span>
-          <span class="nav-badge" id="photosBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-item" onclick="showPanel('documents', this)">
-          <i class="fas fa-folder"></i><span>Documents</span>
-          <span class="nav-badge" id="documentsBadge" style="display:none;"></span>
-        </div>
-        <div class="nav-item" onclick="showPanel('plumber', this)">
-          <i class="fas fa-user-tie"></i><span>My Plumber</span>
-        </div>
-        <div class="nav-item" id="navRequest" onclick="showPanel('request', this)">
-          <i class="fas fa-plus-circle"></i><span>Request Service</span>
-        </div>
-      </nav>
-
-      <div class="sidebar-footer">
-        <button class="logout-btn" onclick="doLogout()">
-          <i class="fas fa-sign-out-alt"></i><span>Sign Out</span>
-        </button>
-      </div>
-    </aside>
-
-    <div class="main">
-      <div class="topbar">
-        <button class="topbar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-        <span class="topbar-title" id="pageTitle">Dashboard</span>
-        <div class="topbar-user">
-          <div class="user-avatar" id="userInitial">?</div>
-          <div>
-            <span class="user-email" id="userEmail"></span>
-            <span id="userClientId" style="display:block;font-size:0.68rem;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:0.5px;"></span>
-          </div>
-        </div>
-        <a href="index.html" class="topbar-back"><i class="fas fa-arrow-left"></i> <span>Back to Site</span></a>
-      </div>
-
-      <div class="content">
-
-        <!-- DASHBOARD -->
-        <div class="panel active" id="panel-dashboard">
-          <div class="section-header">
-            <div>
-              <div class="section-title">Welcome back 👋</div>
-              <div class="section-sub" id="welcomeSub">Loading your account...</div>
-              <div id="clientIdBadge" style="display:none;margin-top:8px;">
-                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(230,190,12,0.08);border:1px solid rgba(230,190,12,0.2);border-radius:50px;padding:4px 14px;font-size:0.75rem;font-weight:700;color:var(--accent-yellow);letter-spacing:1px;">
-                  <i class="fas fa-id-card"></i> <span id="clientIdDisplay"></span>
-                </span>
-              </div>
-            </div>
-            <!-- FIX: Use id-based nav click instead of fragile querySelector -->
-            <button class="btn yellow" onclick="showPanel('request', document.getElementById('navRequest'))">
-              <i class="fas fa-plus"></i> New Request
+          <div class="ob-actions">
+            <button class="ob-btn-next" onclick="obNext()">
+              Get Started <i class="fas fa-arrow-right"></i>
             </button>
           </div>
+        </div>
 
-          <div class="stats-grid">
-            <div class="stat-card"><div class="stat-icon">🔨</div><div class="stat-value" id="statProjects">—</div><div class="stat-label">Active Projects</div></div>
-            <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statPurchases">—</div><div class="stat-label">Purchases</div></div>
-            <div class="stat-card"><div class="stat-icon">📄</div><div class="stat-value" id="statQuotes">—</div><div class="stat-label">Pending Quotes</div></div>
-            <div class="stat-card"><div class="stat-icon">🔔</div><div class="stat-value" id="statNotifs">—</div><div class="stat-label">Unread Alerts</div></div>
+        <!-- STEP 2: PERSONAL INFO -->
+        <div class="ob-step" id="obStep1">
+          <div class="ob-icon blue">
+            <i
+              class="fas fa-user"
+              style="color: #3d85c6; font-size: 1.2rem"
+            ></i>
           </div>
-
-          <div class="card">
-            <div class="card-title"><i class="fas fa-hard-hat"></i> Active Projects</div>
-            <div id="dashProjects"><div class="spinner"></div></div>
+          <div class="ob-title">Tell us about yourself</div>
+          <div class="ob-subtitle">
+            Helps your plumber address you properly and reach you quickly.
           </div>
-
-          <div class="card">
-            <div class="card-title"><i class="fas fa-bell"></i> Recent Notifications</div>
-            <div id="dashNotifs"><div class="spinner"></div></div>
+          <div class="ob-field">
+            <label>Full Name</label>
+            <input
+              type="text"
+              id="obName"
+              placeholder="e.g. Jane Wanjiku"
+              autocomplete="name"
+            />
+          </div>
+          <div class="ob-field">
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              id="obPhone"
+              placeholder="e.g. +254 712 345 678"
+              autocomplete="tel"
+            />
+          </div>
+          <div class="ob-actions">
+            <button class="ob-btn-back" onclick="obBack()">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="ob-btn-next" onclick="obNext()">
+              Continue <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
         </div>
 
-        <!-- PROJECTS -->
-        <div class="panel" id="panel-projects">
-          <div class="section-header">
-            <div><div class="section-title">My Projects</div><div class="section-sub">All active and completed jobs</div></div>
+        <!-- STEP 3: PROPERTY & TYPE -->
+        <div class="ob-step" id="obStep2">
+          <div class="ob-icon blue">
+            <i
+              class="fas fa-home"
+              style="color: #3d85c6; font-size: 1.2rem"
+            ></i>
           </div>
-          <div id="projectsList"><div class="spinner"></div></div>
-        </div>
-
-        <!-- QUOTATIONS -->
-        <div class="panel" id="panel-quotes">
-          <div class="section-header">
-            <div><div class="section-title">Quotations</div><div class="section-sub">Review and approve material quotes from your plumber</div></div>
+          <div class="ob-title">Your property details</div>
+          <div class="ob-subtitle">
+            Where will Primeline be working, and what type of client are you?
           </div>
-          <div id="quotesList"><div class="spinner"></div></div>
-        </div>
-
-        <!-- PURCHASES -->
-        <div class="panel" id="panel-purchases">
-          <div class="section-header">
-            <div><div class="section-title">Purchase History</div><div class="section-sub">All items ordered through Primeline</div></div>
+          <div class="ob-field">
+            <label>Primary Property Address</label>
+            <input
+              type="text"
+              id="obAddress"
+              placeholder="e.g. Westlands, Nairobi"
+            />
           </div>
-          <div class="card">
-            <div id="purchasesList"><div class="spinner"></div></div>
-          </div>
-        </div>
-
-        <!-- INVOICES -->
-        <div class="panel" id="panel-invoices">
-          <div class="section-header">
-            <div><div class="section-title">Invoices</div><div class="section-sub">Billing history and payment status</div></div>
-          </div>
-          <div class="card">
-            <div id="invoicesList"><div class="spinner"></div></div>
-          </div>
-        </div>
-
-        <!-- MESSAGES -->
-        <div class="panel" id="panel-messages">
-          <div class="section-header">
-            <div><div class="section-title">Messages</div><div class="section-sub">Direct line to your assigned plumber</div></div>
-          </div>
-          <div class="card">
-            <div class="message-thread" id="messageThread"></div>
-            <div class="msg-input-row">
-              <input class="msg-input" id="msgInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()">
-              <button class="msg-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+          <div class="ob-field">
+            <label>Client Type</label>
+            <div class="ob-type-grid">
+              <div
+                class="ob-type-card selected"
+                id="obTypeResidential"
+                onclick="selectClientType('Residential')"
+              >
+                <span class="type-icon">🏠</span>
+                <div class="type-label">Residential</div>
+                <div class="type-desc">Home or apartment</div>
+              </div>
+              <div
+                class="ob-type-card"
+                id="obTypeCommercial"
+                onclick="selectClientType('Commercial')"
+              >
+                <span class="type-icon">🏢</span>
+                <div class="type-label">Commercial</div>
+                <div class="type-desc">Office or business</div>
+              </div>
             </div>
           </div>
+          <div class="ob-actions">
+            <button class="ob-btn-back" onclick="obBack()">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="ob-btn-next" onclick="obNext()">
+              Continue <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
         </div>
 
-        <!-- PROGRESS PHOTOS -->
-<div class="panel" id="panel-photos">
-  <div class="section-header">
-    <div><div class="section-title">Progress Photos</div><div class="section-sub">Site updates uploaded by your plumber, grouped by project</div></div>
-  </div>
-  <div id="photoGrid"><div class="spinner"></div></div>
-</div>
-        <!-- DOCUMENTS -->
-<div class="panel" id="panel-documents">
-  <div class="section-header">
-    <div><div class="section-title">Document Vault</div><div class="section-sub">Certificates, warranties, permits and your uploaded files</div></div>
-  </div>
-<!--Plumber-->
-<div class="panel" id="panel-plumber">
-  <div id="plumberCard"><div class="spinner"></div></div>
-</div>
-<!--notifications-->
-<div class="panel" id="panel-notifications">
-  <div class="section-header">
-    <div><div class="section-title">Notifications</div></div>
-  </div>
-  <div class="card">
-    <div id="notificationsList"><div class="spinner"></div></div>
-  </div>
-</div>
-  <!-- Client upload card -->
-  <div class="card">
-    <div class="card-title"><i class="fas fa-upload"></i> Upload a Document</div>
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="form-label">Document Name</label>
-        <input class="form-input" id="clientDocName" placeholder="e.g. Proof of Payment">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Category</label>
-        <select class="form-select" id="clientDocCategory">
-          <option value="Proof of Payment">Proof of Payment</option>
-          <option value="Site Photo">Site Photo</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="form-group full">
-        <label class="form-label">Choose File</label>
-        <input type="file" id="clientDocFile" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.webp"
-          style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:11px 15px;color:var(--pure-white);font-size:0.87rem;width:100%;cursor:pointer;">
-      </div>
-    </div>
-    <div id="clientDocProgress" style="display:none;margin-top:14px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:0.75rem;color:rgba(203,213,224,0.5);">Uploading...</span>
-        <span style="font-size:0.75rem;color:var(--accent-yellow);font-family:var(--font-mono);" id="clientDocPct">0%</span>
-      </div>
-      <div style="height:4px;background:rgba(61,133,198,0.1);border-radius:4px;overflow:hidden;">
-        <div id="clientDocBar" style="height:100%;width:0%;background:linear-gradient(90deg,#3d85c6,#e6be0c);border-radius:4px;transition:width 0.2s;"></div>
-      </div>
-    </div>
-    <button class="form-submit" id="clientDocBtn" onclick="uploadClientDoc()" style="margin-top:14px;">
-      <i class="fas fa-upload" style="margin-right:8px;"></i>Upload
-    </button>
-  </div>
-
-  <!-- Filter bar -->
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
-    <select id="clientDocFilterCat" class="form-select" style="max-width:180px;" onchange="loadDocuments(currentUser.uid)">
-      <option value="">All Categories</option>
-      <option>Certificate</option><option>Invoice</option><option>Permit</option>
-      <option>Warranty</option><option>Quote</option><option>Proof of Payment</option>
-      <option>Site Photo</option><option>Photo</option><option>Other</option>
-    </select>
-    <select id="clientDocFilterProj" class="form-select" style="max-width:220px;" onchange="loadDocuments(currentUser.uid)">
-      <option value="">All Projects</option>
-    </select>
-  </div>
-
-  <div id="documentsList"></div>
-</div>
-
-<!-- DOCUMENT PREVIEW MODAL (client) -->
-<div id="clientDocPreviewModal" style="display:none;position:fixed;inset:0;background:rgba(4,14,26,0.92);z-index:99999;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#0b1c2e;border:1px solid rgba(61,133,198,0.22);border-radius:20px;width:100%;max-width:860px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(4,14,26,0.9);">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(61,133,198,0.12);">
-      <div>
-        <div style="font-weight:800;color:#fff;font-size:0.95rem;" id="clientPreviewName">Document</div>
-        <div style="font-size:0.75rem;color:rgba(143,168,196,0.5);margin-top:2px;" id="clientPreviewMeta"></div>
-      </div>
-      <div style="display:flex;gap:10px;">
-        <a id="clientPreviewDownload" href="#" target="_blank" class="btn yellow sm"><i class="fas fa-download"></i> Download</a>
-        <button class="btn outline sm" onclick="closeClientDocPreview()"><i class="fas fa-times"></i> Close</button>
-      </div>
-    </div>
-    <div style="flex:1;overflow:auto;padding:20px;" id="clientPreviewBody"></div>
-  </div>
-</div>
-
-        <!-- REQUEST SERVICE -->
-        <div class="panel" id="panel-request">
-          <div class="section-header">
-            <div><div class="section-title">Request a Service</div><div class="section-sub">Submit a new plumbing job or enquiry</div></div>
+        <!-- STEP 4: PLUMBER + CONTACT -->
+        <div class="ob-step" id="obStep3">
+          <div class="ob-icon gold">
+            <i
+              class="fas fa-user-tie"
+              style="color: #e6be0c; font-size: 1.2rem"
+            ></i>
           </div>
-          <div class="card">
-            <div id="requestSuccess" style="display:none;">
-              <div class="success-box">
-                <div class="icon">✅</div>
-                <h3>Request Submitted!</h3>
-                <p>Your plumber will review and get back to you shortly.</p>
-                <!-- FIX: was btn.gold which wasn't defined — now uses btn.yellow which is defined -->
-                <button class="btn yellow" style="margin-top:8px;" onclick="document.getElementById('requestSuccess').style.display='none';document.getElementById('requestForm').style.display='block';">
-                  Submit Another
+          <div class="ob-title">Meet your plumber</div>
+          <div class="ob-subtitle">
+            Your dedicated Primeline technician — and how you'd like to be
+            reached.
+          </div>
+          <div class="ob-plumber-card">
+            <div class="ob-plumber-avatar" id="obPlumberAvatar">🔧</div>
+            <div class="ob-plumber-info">
+              <div class="plumber-name" id="obPlumberName">Loading...</div>
+              <div class="plumber-role" id="obPlumberRole">
+                Senior Plumbing Technician
+              </div>
+              <div class="plumber-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span id="obPlumberBadgeId">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="ob-field">
+            <label>Preferred Contact Method</label>
+            <div class="ob-pills">
+              <div
+                class="ob-pill selected"
+                id="obPillCall"
+                onclick="toggleContactPill('Call')"
+              >
+                <i class="fas fa-phone"></i> Call
+              </div>
+              <div
+                class="ob-pill"
+                id="obPillWhatsApp"
+                onclick="toggleContactPill('WhatsApp')"
+              >
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </div>
+              <div
+                class="ob-pill"
+                id="obPillEmail"
+                onclick="toggleContactPill('Email')"
+              >
+                <i class="fas fa-envelope"></i> Email
+              </div>
+            </div>
+          </div>
+          <div class="ob-actions">
+            <button class="ob-btn-back" onclick="obBack()">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="ob-btn-next" onclick="obNext()">
+              Almost done <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 5: DONE -->
+        <div class="ob-step" id="obStep4">
+          <div class="ob-icon green">
+            <i
+              class="fas fa-check"
+              style="color: #22c55e; font-size: 1.3rem"
+            ></i>
+          </div>
+          <div class="ob-title">You're all set! 🎉</div>
+          <div class="ob-subtitle">
+            Your Primeline account is ready. Here's what you can do:
+          </div>
+          <div class="ob-checklist">
+            <div class="ob-check-item">
+              <i class="fas fa-check-circle"></i> Track your projects in real
+              time
+            </div>
+            <div class="ob-check-item">
+              <i class="fas fa-check-circle"></i> Review and approve material
+              quotes
+            </div>
+            <div class="ob-check-item">
+              <i class="fas fa-check-circle"></i> Message your plumber directly
+            </div>
+            <div class="ob-check-item">
+              <i class="fas fa-check-circle"></i> Download invoices and
+              documents
+            </div>
+          </div>
+          <div class="ob-actions">
+            <button class="ob-btn-next" onclick="obFinish()" id="obFinishBtn">
+              <i class="fas fa-th-large"></i> Go to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     AUTH GATE
+══════════════════════════════════════ -->
+    <div id="authGate">
+      <div class="gate-logo">PRIMELINE</div>
+      <div class="gate-spinner"></div>
+      <div class="gate-msg">Checking your session...</div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     PORTAL
+══════════════════════════════════════ -->
+    <div id="portalWrap" style="display: none">
+      <div class="layout">
+        <div
+          class="sidebar-overlay"
+          id="sidebarOverlay"
+          onclick="closeMobileSidebar()"
+        ></div>
+
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar-logo">
+            <div
+              class="logo-icon"
+              style="
+                width: 38px;
+                height: 38px;
+                background: linear-gradient(135deg, #3d85c6, #0a192f);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid rgba(230, 190, 12, 0.35);
+                box-shadow: 0 0 12px rgba(230, 190, 12, 0.15);
+                flex-shrink: 0;
+              "
+            >
+              <i
+                class="fas fa-tint"
+                style="
+                  color: #e6be0c;
+                  font-size: 1.2rem;
+                  filter: drop-shadow(0 0 6px rgba(230, 190, 12, 0.5));
+                "
+              ></i>
+            </div>
+            <div class="logo-text">
+              <span class="logo-name">Primeline</span>
+              <span class="logo-sub">Client Portal</span>
+            </div>
+          </div>
+          <nav class="sidebar-nav">
+            <div class="nav-section-label">Overview</div>
+            <div class="nav-item active" onclick="showPanel('dashboard', this)">
+              <i class="fas fa-th-large"></i><span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="showPanel('projects', this)">
+              <i class="fas fa-hard-hat"></i><span>My Projects</span>
+              <span
+                class="nav-badge"
+                id="projectsBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-section-label">Finance</div>
+            <div class="nav-item" onclick="showPanel('quotes', this)">
+              <i class="fas fa-file-invoice"></i><span>Quotations</span>
+              <span
+                class="nav-badge"
+                id="quoteBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-item" onclick="showPanel('purchases', this)">
+              <i class="fas fa-shopping-bag"></i><span>Purchases</span>
+              <span
+                class="nav-badge"
+                id="purchasesBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-item" onclick="showPanel('invoices', this)">
+              <i class="fas fa-receipt"></i><span>Invoices</span>
+              <span
+                class="nav-badge"
+                id="invoicesBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-section-label">Communication</div>
+            <div class="nav-item" onclick="showPanel('messages', this)">
+              <i class="fas fa-comments"></i><span>Messages</span>
+              <span
+                class="nav-badge"
+                id="msgBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-item" onclick="showPanel('notifications', this)">
+              <i class="fas fa-bell"></i><span>Notifications</span>
+              <span
+                class="nav-badge"
+                id="notifBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-section-label">My Account</div>
+            <div class="nav-item" onclick="showPanel('photos', this)">
+              <i class="fas fa-images"></i><span>Progress Photos</span>
+              <span
+                class="nav-badge"
+                id="photosBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-item" onclick="showPanel('documents', this)">
+              <i class="fas fa-folder"></i><span>Documents</span>
+              <span
+                class="nav-badge"
+                id="documentsBadge"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="nav-item" onclick="showPanel('plumber', this)">
+              <i class="fas fa-user-tie"></i><span>My Plumber</span>
+            </div>
+            <div
+              class="nav-item"
+              id="navRequest"
+              onclick="showPanel('request', this)"
+            >
+              <i class="fas fa-plus-circle"></i><span>Request Service</span>
+            </div>
+          </nav>
+
+          <div class="sidebar-footer">
+            <button id="dashThemeToggle">
+              <i class="fas fa-sun" id="dashThemeIcon"></i>
+              <span>Light Mode</span>
+            </button>
+            <button class="logout-btn" onclick="doLogout()">
+              <i class="fas fa-sign-out-alt"></i><span>Sign Out</span>
+            </button>
+          </div>
+        </aside>
+
+        <div class="main">
+          <div class="topbar">
+            <button class="topbar-toggle" onclick="toggleSidebar()">
+              <i class="fas fa-bars"></i>
+            </button>
+            <span class="topbar-title" id="pageTitle">Dashboard</span>
+            <div class="topbar-user">
+              <div class="user-avatar" id="userInitial">?</div>
+              <div>
+                <span class="user-email" id="userEmail"></span>
+                <span
+                  id="userClientId"
+                  style="
+                    display: block;
+                    font-size: 0.68rem;
+                    color: rgba(255, 255, 255, 0.5);
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
+                  "
+                ></span>
+              </div>
+            </div>
+            <a href="index.html" class="topbar-back"
+              ><i class="fas fa-arrow-left"></i> <span>Back to Site</span></a
+            >
+          </div>
+
+          <div class="content">
+            <!-- DASHBOARD -->
+            <div class="panel active" id="panel-dashboard">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Welcome back 👋</div>
+                  <div class="section-sub" id="welcomeSub">
+                    Loading your account...
+                  </div>
+                  <div
+                    id="clientIdBadge"
+                    style="display: none; margin-top: 8px"
+                  >
+                    <span
+                      style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        background: rgba(230, 190, 12, 0.08);
+                        border: 1px solid rgba(230, 190, 12, 0.2);
+                        border-radius: 50px;
+                        padding: 4px 14px;
+                        font-size: 0.75rem;
+                        font-weight: 700;
+                        color: var(--accent-yellow);
+                        letter-spacing: 1px;
+                      "
+                    >
+                      <i class="fas fa-id-card"></i>
+                      <span id="clientIdDisplay"></span>
+                    </span>
+                  </div>
+                </div>
+                <!-- FIX: Use id-based nav click instead of fragile querySelector -->
+                <button
+                  class="btn yellow"
+                  onclick="
+                    showPanel('request', document.getElementById('navRequest'))
+                  "
+                >
+                  <i class="fas fa-plus"></i> New Request
                 </button>
               </div>
-            </div>
-            <div id="requestForm">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Service Type</label>
-                  <select class="form-select" id="reqService">
-                    <option value="">Select service...</option>
-                    <option>Plumbing Installation</option>
-                    <option>Leak Detection &amp; Repair</option>
-                    <option>Drain &amp; Sewer Cleaning</option>
-                    <option>Water Tank Services</option>
-                    <option>Bathroom Upgrade</option>
-                    <option>Hot Water System</option>
-                    <option>Emergency Repair</option>
-                    <option>Material Supply Only</option>
-                    <option>Other</option>
-                  </select>
+
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-icon">🔨</div>
+                  <div class="stat-value" id="statProjects">—</div>
+                  <div class="stat-label">Active Projects</div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Priority</label>
-                  <select class="form-select" id="reqPriority">
-                    <option>Normal</option>
-                    <option>Urgent</option>
-                    <option>Emergency (24hr)</option>
-                  </select>
+                <div class="stat-card">
+                  <div class="stat-icon">📦</div>
+                  <div class="stat-value" id="statPurchases">—</div>
+                  <div class="stat-label">Purchases</div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Property Address</label>
-                  <input class="form-input" id="reqAddress" placeholder="e.g. Westlands, Nairobi">
+                <div class="stat-card">
+                  <div class="stat-icon">📄</div>
+                  <div class="stat-value" id="statQuotes">—</div>
+                  <div class="stat-label">Pending Quotes</div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Preferred Date</label>
-                  <input class="form-input" id="reqDate" type="date">
-                </div>
-                <div class="form-group full">
-                  <label class="form-label">Description</label>
-                  <textarea class="form-textarea" id="reqDesc" placeholder="Describe the problem or job in detail..."></textarea>
+                <div class="stat-card">
+                  <div class="stat-icon">🔔</div>
+                  <div class="stat-value" id="statNotifs">—</div>
+                  <div class="stat-label">Unread Alerts</div>
                 </div>
               </div>
-              <button class="form-submit" onclick="submitRequest()">
-                <i class="fas fa-paper-plane" style="margin-right:8px;"></i>Submit Request
-              </button>
+
+              <div class="card">
+                <div class="card-title">
+                  <i class="fas fa-hard-hat"></i> Active Projects
+                </div>
+                <div id="dashProjects"><div class="spinner"></div></div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">
+                  <i class="fas fa-bell"></i> Recent Notifications
+                </div>
+                <div id="dashNotifs"><div class="spinner"></div></div>
+              </div>
+            </div>
+
+            <!-- PROJECTS -->
+            <div class="panel" id="panel-projects">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">My Projects</div>
+                  <div class="section-sub">All active and completed jobs</div>
+                </div>
+              </div>
+              <div id="projectsList"><div class="spinner"></div></div>
+            </div>
+
+            <!-- QUOTATIONS -->
+            <div class="panel" id="panel-quotes">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Quotations</div>
+                  <div class="section-sub">
+                    Review and approve material quotes from your plumber
+                  </div>
+                </div>
+              </div>
+              <div id="quotesList"><div class="spinner"></div></div>
+            </div>
+
+            <!-- PURCHASES -->
+            <div class="panel" id="panel-purchases">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Purchase History</div>
+                  <div class="section-sub">
+                    All items ordered through Primeline
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div id="purchasesList"><div class="spinner"></div></div>
+              </div>
+            </div>
+
+            <!-- INVOICES -->
+            <div class="panel" id="panel-invoices">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Invoices</div>
+                  <div class="section-sub">
+                    Billing history and payment status
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div id="invoicesList"><div class="spinner"></div></div>
+              </div>
+            </div>
+
+            <!-- MESSAGES -->
+            <div class="panel" id="panel-messages">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Messages</div>
+                  <div class="section-sub">
+                    Direct line to your assigned plumber
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="message-thread" id="messageThread"></div>
+                <div class="msg-input-row">
+                  <input
+                    class="msg-input"
+                    id="msgInput"
+                    placeholder="Type a message..."
+                    onkeydown="if (event.key === 'Enter') sendMessage();"
+                  />
+                  <button class="msg-send" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PROGRESS PHOTOS -->
+            <div class="panel" id="panel-photos">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Progress Photos</div>
+                  <div class="section-sub">
+                    Site updates uploaded by your plumber, grouped by project
+                  </div>
+                </div>
+              </div>
+              <div id="photoGrid"><div class="spinner"></div></div>
+            </div>
+            <!-- DOCUMENTS -->
+            <div class="panel" id="panel-documents">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Document Vault</div>
+                  <div class="section-sub">
+                    Certificates, warranties, permits and your uploaded files
+                  </div>
+                </div>
+              </div>
+
+              <!--Plumber-->
+              <div class="panel" id="panel-plumber">
+                <div id="plumberCard"><div class="spinner"></div></div>
+              </div>
+              <!--notifications-->
+              <div class="panel" id="panel-notifications">
+                <div class="section-header">
+                  <div><div class="section-title">Notifications</div></div>
+                </div>
+                <div class="card">
+                  <div id="notificationsList"><div class="spinner"></div></div>
+                </div>
+              </div>
+              <!-- Client upload card -->
+              <div class="card">
+                <div class="card-title">
+                  <i class="fas fa-upload"></i> Upload a Document
+                </div>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label">Document Name</label>
+                    <input
+                      class="form-input"
+                      id="clientDocName"
+                      placeholder="e.g. Proof of Payment"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" id="clientDocCategory">
+                      <option value="Proof of Payment">Proof of Payment</option>
+                      <option value="Site Photo">Site Photo</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group full">
+                    <label class="form-label">Choose File</label>
+                    <input
+                      type="file"
+                      id="clientDocFile"
+                      accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.webp"
+                      style="
+                        background: var(--surface2);
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius);
+                        padding: 11px 15px;
+                        color: var(--pure-white);
+                        font-size: 0.87rem;
+                        width: 100%;
+                        cursor: pointer;
+                      "
+                    />
+                  </div>
+                </div>
+                <div
+                  id="clientDocProgress"
+                  style="display: none; margin-top: 14px"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    <span
+                      style="
+                        font-size: 0.75rem;
+                        color: rgba(203, 213, 224, 0.5);
+                      "
+                      >Uploading...</span
+                    >
+                    <span
+                      style="
+                        font-size: 0.75rem;
+                        color: var(--accent-yellow);
+                        font-family: var(--font-mono);
+                      "
+                      id="clientDocPct"
+                      >0%</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      height: 4px;
+                      background: rgba(61, 133, 198, 0.1);
+                      border-radius: 4px;
+                      overflow: hidden;
+                    "
+                  >
+                    <div
+                      id="clientDocBar"
+                      style="
+                        height: 100%;
+                        width: 0%;
+                        background: linear-gradient(90deg, #3d85c6, #e6be0c);
+                        border-radius: 4px;
+                        transition: width 0.2s;
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <button
+                  class="form-submit"
+                  id="clientDocBtn"
+                  onclick="uploadClientDoc()"
+                  style="margin-top: 14px"
+                >
+                  <i class="fas fa-upload" style="margin-right: 8px"></i>Upload
+                </button>
+              </div>
+
+              <!-- Filter bar -->
+              <div
+                style="
+                  display: flex;
+                  gap: 10px;
+                  flex-wrap: wrap;
+                  margin-bottom: 16px;
+                  align-items: center;
+                "
+              >
+                <select
+                  id="clientDocFilterCat"
+                  class="form-select"
+                  style="max-width: 180px"
+                  onchange="loadDocuments(currentUser.uid)"
+                >
+                  <option value="">All Categories</option>
+                  <option>Certificate</option>
+                  <option>Invoice</option>
+                  <option>Permit</option>
+                  <option>Warranty</option>
+                  <option>Quote</option>
+                  <option>Proof of Payment</option>
+                  <option>Site Photo</option>
+                  <option>Photo</option>
+                  <option>Other</option>
+                </select>
+                <select
+                  id="clientDocFilterProj"
+                  class="form-select"
+                  style="max-width: 220px"
+                  onchange="loadDocuments(currentUser.uid)"
+                >
+                  <option value="">All Projects</option>
+                </select>
+              </div>
+
+              <div id="documentsList"></div>
+            </div>
+
+            <!-- DOCUMENT PREVIEW MODAL (client) -->
+            <div
+              id="clientDocPreviewModal"
+              style="
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(4, 14, 26, 0.92);
+                z-index: 99999;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+              "
+            >
+              <div
+                style="
+                  background: #0b1c2e;
+                  border: 1px solid rgba(61, 133, 198, 0.22);
+                  border-radius: 20px;
+                  width: 100%;
+                  max-width: 860px;
+                  max-height: 90vh;
+                  overflow: hidden;
+                  display: flex;
+                  flex-direction: column;
+                  box-shadow: 0 24px 60px rgba(4, 14, 26, 0.9);
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 18px 24px;
+                    border-bottom: 1px solid rgba(61, 133, 198, 0.12);
+                  "
+                >
+                  <div>
+                    <div
+                      style="font-weight: 800; color: #fff; font-size: 0.95rem"
+                      id="clientPreviewName"
+                    >
+                      Document
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.75rem;
+                        color: rgba(143, 168, 196, 0.5);
+                        margin-top: 2px;
+                      "
+                      id="clientPreviewMeta"
+                    ></div>
+                  </div>
+                  <div style="display: flex; gap: 10px">
+                    <a
+                      id="clientPreviewDownload"
+                      href="#"
+                      target="_blank"
+                      class="btn yellow sm"
+                      ><i class="fas fa-download"></i> Download</a
+                    >
+                    <button
+                      class="btn outline sm"
+                      onclick="closeClientDocPreview()"
+                    >
+                      <i class="fas fa-times"></i> Close
+                    </button>
+                  </div>
+                </div>
+                <div
+                  style="flex: 1; overflow: auto; padding: 20px"
+                  id="clientPreviewBody"
+                ></div>
+              </div>
+            </div>
+
+            <!-- REQUEST SERVICE -->
+            <div class="panel" id="panel-request">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Request a Service</div>
+                  <div class="section-sub">
+                    Submit a new plumbing job or enquiry
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div id="requestSuccess" style="display: none">
+                  <div class="success-box">
+                    <div class="icon">✅</div>
+                    <h3>Request Submitted!</h3>
+                    <p>Your plumber will review and get back to you shortly.</p>
+                    <!-- FIX: was btn.gold which wasn't defined — now uses btn.yellow which is defined -->
+                    <button
+                      class="btn yellow"
+                      style="margin-top: 8px"
+                      onclick="
+                        document.getElementById(
+                          'requestSuccess',
+                        ).style.display = 'none';
+                        document.getElementById('requestForm').style.display =
+                          'block';
+                      "
+                    >
+                      Submit Another
+                    </button>
+                  </div>
+                </div>
+                <div id="requestForm">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label">Service Type</label>
+                      <select class="form-select" id="reqService">
+                        <option value="">Select service...</option>
+                        <option>Plumbing Installation</option>
+                        <option>Leak Detection &amp; Repair</option>
+                        <option>Drain &amp; Sewer Cleaning</option>
+                        <option>Water Tank Services</option>
+                        <option>Bathroom Upgrade</option>
+                        <option>Hot Water System</option>
+                        <option>Emergency Repair</option>
+                        <option>Material Supply Only</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Priority</label>
+                      <select class="form-select" id="reqPriority">
+                        <option>Normal</option>
+                        <option>Urgent</option>
+                        <option>Emergency (24hr)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Property Address</label>
+                      <input
+                        class="form-input"
+                        id="reqAddress"
+                        placeholder="e.g. Westlands, Nairobi"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Preferred Date</label>
+                      <input class="form-input" id="reqDate" type="date" />
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label">Description</label>
+                      <textarea
+                        class="form-textarea"
+                        id="reqDesc"
+                        placeholder="Describe the problem or job in detail..."
+                      ></textarea>
+                    </div>
+                  </div>
+                  <button class="form-submit" onclick="submitRequest()">
+                    <i class="fas fa-paper-plane" style="margin-right: 8px"></i
+                    >Submit Request
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
-</div>
-
-<script type="module">
-  // ══════════════════════════════════════
-//  PDF GENERATOR
-// ══════════════════════════════════════
-const PRIMELINE = {
-  name:    'PRIMELINE PLUMBING SOLUTIONS',
-  tagline: 'Precision Plumbing. Lasting Solutions.',
-  address: 'Kiambu, Kenya',
-  phone:   '+254 796 016 720',
-  email:   'info@primelinesolutions.co.ke',
-  website: 'primelineplumbingsolutions.co.ke'
-};
-
-function buildPDF(type, data) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const W = 210, H = 297;
-  const blue  = [61, 133, 198];
-  const navy  = [7, 22, 38];
-  const gold  = [230, 190, 12];
-  const white = [255, 255, 255];
-  const grey  = [143, 168, 196];
-
-  // ── HEADER BACKGROUND ──
-  doc.setFillColor(...navy);
-  doc.rect(0, 0, W, 48, 'F');
-
-  // Gold accent line
-  doc.setFillColor(...gold);
-  doc.rect(0, 0, W, 2, 'F');
-
-  // Blue side accent
-  doc.setFillColor(...blue);
-  doc.rect(0, 2, 3, 46, 'F');
-
-  // Company name
-  doc.setTextColor(...gold);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(15);
-  doc.text(PRIMELINE.name, 14, 16);
-
-  // Tagline
-  doc.setTextColor(...grey);
-  doc.setFont('helvetica', 'italic');
-  doc.setFontSize(8);
-  doc.text(PRIMELINE.tagline, 14, 22);
-
-  // Contact details — right side
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.setTextColor(...grey);
-  const contactLines = [
-    PRIMELINE.address,
-    PRIMELINE.phone,
-    PRIMELINE.email,
-    PRIMELINE.website
-  ];
-  contactLines.forEach((line, i) => {
-    doc.text(line, W - 14, 12 + (i * 6), { align: 'right' });
-  });
-
-  // ── DOCUMENT TYPE BADGE ──
-  const isInvoice = type === 'invoice';
-  const badgeColor = isInvoice ? gold : blue;
-  doc.setFillColor(...badgeColor);
-  doc.roundedRect(14, 54, isInvoice ? 28 : 26, 8, 2, 2, 'F');
-  doc.setTextColor(...navy);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
-  doc.text(isInvoice ? 'INVOICE' : 'QUOTATION', 18, 59.5);
-
-  // ── DOCUMENT TITLE ──
-  doc.setTextColor(...navy);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.text(data.title || (isInvoice ? 'Invoice' : 'Quotation'), 14, 74);
-
-  // Divider
-  doc.setDrawColor(...blue);
-  doc.setLineWidth(0.3);
-  doc.line(14, 78, W - 14, 78);
-
-  // ── META INFO BOX ──
-  doc.setFillColor(240, 245, 252);
-  doc.roundedRect(14, 82, W - 28, 28, 3, 3, 'F');
-
-  const metaLeft = [
-    { label: isInvoice ? 'Invoice No.' : 'Quote Ref.', value: data.refNo || '—' },
-    { label: 'Project',   value: data.projectName || '—' },
-    { label: 'Date',      value: data.date || new Date().toLocaleDateString('en-KE', { day:'numeric', month:'short', year:'numeric' }) }
-  ];
-
-  const metaRight = [
-    { label: 'Client',    value: data.clientEmail || '—' },
-    { label: isInvoice ? 'Due Date' : 'Valid Until', value: data.dueDate || '—' },
-    { label: 'Status',    value: (data.status || '—').toUpperCase() }
-  ];
-
-  metaLeft.forEach((m, i) => {
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
-    doc.setTextColor(...grey);
-    doc.text(m.label.toUpperCase(), 20, 89 + (i * 7));
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
-    doc.setTextColor(...navy);
-    doc.text(m.value, 20, 94 + (i * 7));
-  });
-
-  metaRight.forEach((m, i) => {
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
-    doc.setTextColor(...grey);
-    doc.text(m.label.toUpperCase(), W / 2 + 10, 89 + (i * 7));
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
-    doc.setTextColor(...navy);
-    doc.text(m.value, W / 2 + 10, 94 + (i * 7));
-  });
-
-  // ── ITEMS TABLE ──
-  const items = data.items || [];
-
-  if (items.length > 0) {
-    doc.autoTable({
-      startY: 116,
-      head: [['#', 'Description', 'Qty', 'Unit Price', 'Amount']],
-      body: items.map((item, i) => {
-        const qty       = item.qty   || 1;
-        const unitPrice = item.price ? (item.price / qty) : 0;
-        return [
-          i + 1,
-          item.name  || '—',
-          qty,
-          'KSh ' + unitPrice.toLocaleString(),
-          'KSh ' + (item.price || 0).toLocaleString()
-        ];
-      }),
-      headStyles: {
-        fillColor:   navy,
-        textColor:   gold,
-        fontStyle:   'bold',
-        fontSize:    8,
-        cellPadding: 4
-      },
-      bodyStyles: {
-        fontSize:    8.5,
-        cellPadding: 4,
-        textColor:   navy
-      },
-      alternateRowStyles: {
-        fillColor: [245, 248, 252]
-      },
-      columnStyles: {
-        0: { cellWidth: 10,  halign: 'center' },
-        1: { cellWidth: 80  },
-        2: { cellWidth: 15,  halign: 'center' },
-        3: { cellWidth: 35,  halign: 'right'  },
-        4: { cellWidth: 35,  halign: 'right', fontStyle: 'bold' }
-      },
-      margin: { left: 14, right: 14 },
-      styles: { lineColor: [220, 230, 240], lineWidth: 0.2 }
-    });
-  } else if (isInvoice) {
-    // Invoice with single amount, no line items
-    doc.autoTable({
-      startY: 116,
-      head: [['Description', 'Amount']],
-      body: [[data.description || '—', 'KSh ' + (data.amount || 0).toLocaleString()]],
-      headStyles: {
-        fillColor:   navy,
-        textColor:   gold,
-        fontStyle:   'bold',
-        fontSize:    8,
-        cellPadding: 4
-      },
-      bodyStyles: {
-        fontSize:    8.5,
-        cellPadding: 4,
-        textColor:   navy
-      },
-      margin:  { left: 14, right: 14 },
-      styles:  { lineColor: [220, 230, 240], lineWidth: 0.2 }
-    });
-  }
-
-  // ── TOTAL BOX ──
-  const finalY = doc.lastAutoTable?.finalY || 160;
-  const total  = items.length > 0
-    ? items.reduce((s, i) => s + (i.price || 0), 0)
-    : (data.amount || 0);
-
-  doc.setFillColor(...navy);
-  doc.roundedRect(W - 80, finalY + 6, 66, 20, 3, 3, 'F');
-  doc.setTextColor(...grey);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.text('TOTAL AMOUNT', W - 47, finalY + 13, { align: 'center' });
-  doc.setTextColor(...gold);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
-  doc.text('KSh ' + total.toLocaleString(), W - 47, finalY + 21, { align: 'center' });
-
-  // ── NOTES ──
-  if (data.notes) {
-    doc.setTextColor(...grey);
-    doc.setFont('helvetica', 'italic');
-    doc.setFontSize(8);
-    doc.text('Notes: ' + data.notes, 14, finalY + 34);
-  }
-
-  // ── FOOTER ──
-  doc.setFillColor(...navy);
-  doc.rect(0, H - 18, W, 18, 'F');
-  doc.setFillColor(...gold);
-  doc.rect(0, H - 18, W, 1, 'F');
-  doc.setTextColor(...grey);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.text(PRIMELINE.tagline, W / 2, H - 10, { align: 'center' });
-  doc.setTextColor(80, 100, 130);
-  doc.setFontSize(7);
-  doc.text(PRIMELINE.website, W / 2, H - 5, { align: 'center' });
-
-  return doc;
-}
-
-window.downloadPDF = function(type, data) {
-  try {
-    const doc      = buildPDF(type, data);
-    const filename = `${type === 'invoice' ? 'Invoice' : 'Quote'}_${data.refNo || Date.now()}.pdf`;
-    doc.save(filename);
-  } catch(e) {
-    console.error('PDF generation failed:', e);
-    alert('Could not generate PDF. Please try again.');
-  }
-};
-  // ══════════════════════════════════════
-//  CLOUDINARY UPLOAD HELPER
-// ══════════════════════════════════════
-const CLOUDINARY_CLOUD  = 'dz9xhjakt';
-const CLOUDINARY_PRESET = 'primeline_docs';
-
-async function uploadToCloudinary(file, onProgress) {
-  return new Promise((resolve, reject) => {
-    const formData = new FormData();
-    formData.append('file',         file);
-    formData.append('upload_preset', CLOUDINARY_PRESET);
-    formData.append('folder',        'primeline');
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/auto/upload`);
-
-    xhr.upload.onprogress = e => {
-      if (e.lengthComputable && onProgress) {
-        onProgress(Math.round((e.loaded / e.total) * 100));
-      }
-    };
-
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        const res = JSON.parse(xhr.responseText);
-        resolve({
-          url:       res.secure_url,
-          publicId:  res.public_id,
-          format:    res.format,
-          bytes:     res.bytes
-        });
-      } else {
-        reject(new Error('Cloudinary upload failed: ' + xhr.statusText));
-      }
-    };
-
-    xhr.onerror = () => reject(new Error('Network error during upload'));
-    xhr.send(formData);
-  });
-}
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getAuth, onAuthStateChanged, signOut
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import {
-    getFirestore, collection, doc, addDoc, getDocs, getDoc,
-    query, where, onSnapshot, serverTimestamp, updateDoc, setDoc
-    /* FIX: added setDoc — needed for onboarding save */
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBU0OmqvuaHgFs3h5eul60dfJdnwS8Na9M",
-    authDomain: "primeline-plumbing.firebaseapp.com",
-    projectId: "primeline-plumbing",
-    storageBucket: "primeline-plumbing.firebasestorage.app",
-    messagingSenderId: "115563321966",
-    appId: "1:115563321966:web:a71fca315dc4572e26a47f"
-  };
-
-  const app  = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db   = getFirestore(app);
-
-  let currentUser         = null;
-  let msgUnsubscribe      = null;
-  let projectsUnsubscribe = null;
-
-  // ── ONBOARDING STATE ──
-  let obCurrentStep    = 0;
-  let obClientType     = 'Residential';
-  let obContactMethods = ['Call'];
-  let obGoingBack      = false;
-
-  // ══════════════════════════════════════
-  //  AUTH
-  // ══════════════════════════════════════
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      document.getElementById('authGate').style.display   = 'none';
-      document.getElementById('portalWrap').style.display = 'block';
-      document.getElementById('userInitial').textContent  = user.email.charAt(0).toUpperCase();
-      document.getElementById('userEmail').textContent    = user.email;
-      document.getElementById('welcomeSub').textContent   = 'Logged in as ' + user.email;
-
-      try {
-        const userSnap = await getDoc(doc(db, 'users', user.uid));
-        const data = userSnap.exists() ? userSnap.data() : {};
-
-        if (data.clientId) {
-          const cid = data.clientId;
-          document.getElementById('userClientId').textContent    = cid;
-          document.getElementById('welcomeSub').textContent      = 'Client ID: ' + cid;
-          document.getElementById('clientIdDisplay').textContent = cid;
-          document.getElementById('clientIdBadge').style.display = 'block';
-          document.getElementById('obClientIdDisplay').textContent = cid;
-        }
-
-        // Pre-fill onboarding fields
-        if (data.displayName) document.getElementById('obName').value    = data.displayName;
-        if (data.phone)       document.getElementById('obPhone').value   = data.phone;
-        if (data.address)     document.getElementById('obAddress').value = data.address;
-        if (data.clientType)  selectClientType(data.clientType);
-        if (data.contactMethods) { obContactMethods = data.contactMethods; obSyncPills(); }
-
-        // Show onboarding only on first login
-        if (!data.onboardingComplete) {
-          loadObPlumber();
-          document.getElementById('onboardingOverlay').style.display = 'flex';
-        }
-      } catch(e) { console.warn('User doc fetch failed:', e); }
-
-      // FIX: removed direct loadProjects() call here — dashboard's onSnapshot handles it
-      loadPanel('dashboard');
-      loadMessages(user.uid);
-      startBadgeWatchers(user.uid);
-
-    } else {
-      window.location.href = 'index.html';
-    }
-  });
-
-  // ══════════════════════════════════════
-  //  ONBOARDING
-  // ══════════════════════════════════════
-  async function loadObPlumber() {
-    try {
-      const snap = await getDoc(doc(db, 'plumberProfile', 'main'));
-      if (!snap.exists()) return;
-      const p = snap.data();
-      document.getElementById('obPlumberName').textContent    = p.name || 'Your Plumber';
-      document.getElementById('obPlumberRole').textContent    = p.specialisation || 'Senior Plumbing Technician';
-      document.getElementById('obPlumberBadgeId').textContent = p.badgeId || '—';
-      const avEl = document.getElementById('obPlumberAvatar');
-      if (p.photoUrl) {
-        const img = document.createElement('img');
-        img.src = p.photoUrl;
-        img.alt = p.name;
-        img.onerror = () => { avEl.textContent = '🔧'; };
-        avEl.innerHTML = '';
-        avEl.appendChild(img);
-      }
-    } catch(e) {}
-  }
-
-  window.obNext = function() {
-    document.getElementById('obError').style.display = 'none';
-    if (obCurrentStep === 1) {
-      if (!document.getElementById('obName').value.trim())  { obShowError('Please enter your full name.'); return; }
-      if (!document.getElementById('obPhone').value.trim()) { obShowError('Please enter your phone number.'); return; }
-    }
-    if (obCurrentStep === 2) {
-      if (!document.getElementById('obAddress').value.trim()) { obShowError('Please enter your property address.'); return; }
-    }
-    obGoingBack = false;
-    obCurrentStep++;
-    obRenderStep();
-  };
-
-  window.obBack = function() {
-    obGoingBack = true;
-    obCurrentStep--;
-    obRenderStep();
-  };
-
-  function obRenderStep() {
-    document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active', 'going-back'));
-    const current = document.getElementById('obStep' + obCurrentStep);
-    if (obGoingBack) current.classList.add('going-back');
-    current.classList.add('active');
-    document.querySelectorAll('.ob-step-dot').forEach((dot, i) => {
-      dot.classList.remove('active', 'done');
-      if (i === obCurrentStep) dot.classList.add('active');
-      if (i < obCurrentStep)  dot.classList.add('done');
-    });
-    document.getElementById('obStepLabel').textContent = `Step ${obCurrentStep + 1} of 5`;
-    document.getElementById('obError').style.display = 'none';
-  }
-
-  function obShowError(msg) {
-    const el = document.getElementById('obError');
-    el.textContent   = msg;
-    el.style.display = 'block';
-  }
-
-  window.selectClientType = function(type) {
-    obClientType = type;
-    document.getElementById('obTypeResidential').classList.toggle('selected', type === 'Residential');
-    document.getElementById('obTypeCommercial').classList.toggle('selected', type === 'Commercial');
-  };
-
-  window.toggleContactPill = function(method) {
-    const idx = obContactMethods.indexOf(method);
-    if (idx > -1) {
-      if (obContactMethods.length === 1) return;
-      obContactMethods.splice(idx, 1);
-    } else {
-      obContactMethods.push(method);
-    }
-    obSyncPills();
-  };
-
-  function obSyncPills() {
-    ['Call', 'WhatsApp', 'Email'].forEach(m => {
-      const el = document.getElementById('obPill' + m);
-      if (el) el.classList.toggle('selected', obContactMethods.includes(m));
-    });
-  }
-
- window.obFinish = async function() {
-  const btn = document.getElementById('obFinishBtn');
-  btn.disabled  = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-  const uid = auth.currentUser?.uid;
-  if (!uid) {
-    obShowError('Session expired. Please refresh and log in again.');
-    btn.disabled  = false;
-    btn.innerHTML = '<i class="fas fa-th-large"></i> Go to Dashboard';
-    return;
-  }
-
-  const name    = document.getElementById('obName').value.trim();
-  const phone   = document.getElementById('obPhone').value.trim();
-  const address = document.getElementById('obAddress').value.trim();
-
-  try {
-    await setDoc(doc(db, 'users', uid), {
-      displayName:        name,
-      phone:              phone,
-      address:            address,
-      email:              auth.currentUser.email,
-      clientType:         obClientType,
-      contactMethods:     obContactMethods,
-      onboardingComplete: true,
-      updatedAt:          serverTimestamp()
-    }, { merge: true });
-
-    // Verify the write actually landed before closing
-    const verify = await getDoc(doc(db, 'users', uid));
-    if (!verify.exists() || !verify.data().onboardingComplete) {
-      throw new Error('Write did not persist');
-    }
-
-    // Update welcome message
-    if (name) {
-      const sub = document.getElementById('welcomeSub');
-      if (sub) sub.textContent = 'Welcome, ' + name.split(' ')[0] + ' 👋';
-    }
-
-    // Smooth close
-    const overlay = document.getElementById('onboardingOverlay');
-    overlay.style.transition = 'opacity 0.45s ease';
-    overlay.style.opacity    = '0';
-    setTimeout(() => { overlay.style.display = 'none'; }, 480);
-
-  } catch(e) {
-    console.error('Onboarding save failed:', e);
-    btn.disabled  = false;
-    btn.innerHTML = '<i class="fas fa-th-large"></i> Go to Dashboard';
-    obShowError('Could not save your profile. Check your connection and try again.');
-  }
-};
-
-  // ══════════════════════════════════════
-  //  NAVIGATION
-  // ══════════════════════════════════════
-  const panelTitles = {
-    dashboard: 'Dashboard', projects: 'My Projects', quotes: 'Quotations',
-    purchases: 'Purchase History', invoices: 'Invoices', messages: 'Messages',
-    photos: 'Progress Photos', documents: 'Document Vault', plumber: 'My Plumber',
-    notifications: 'Notifications', request: 'Request a Service'
-  };
-
-  window.showPanel = function(name, el) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    if (el) el.classList.add('active');
-    document.getElementById('pageTitle').textContent = panelTitles[name] || name;
-    loadPanel(name);
-    if (window.innerWidth <= 768) closeMobileSidebar();
-    const badgeMap = {
-      quotes:'quoteBadge', messages:'msgBadge', notifications:'notifBadge',
-      invoices:'invoicesBadge', projects:'projectsBadge', photos:'photosBadge',
-      documents:'documentsBadge', purchases:'purchasesBadge'
-    };
-    if (badgeMap[name]) setBadge(badgeMap[name], 0);
-  };
-
-  function loadPanel(name) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    const loaders = {
-      dashboard:     () => loadDashboard(uid),
-      projects:      () => renderProjectsPanel(uid),
-      quotes:        () => loadQuotes(uid),
-      purchases:     () => loadPurchases(uid),
-      invoices:      () => loadInvoices(uid),
-      messages:      () => loadMessages(uid),
-      photos:        () => loadPhotos(uid),
-      documents:     () => loadDocuments(uid),
-      plumber:       () => loadPlumber(uid),
-      notifications: () => loadNotifications(uid),
-    };
-    if (loaders[name]) loaders[name]();
-  }
-
-  function setBadge(id, count) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (count > 0) { el.style.display = 'inline'; el.textContent = count; }
-    else { el.style.display = 'none'; }
-  }
-
-  function isActive(panel) {
-    return document.getElementById('panel-' + panel)?.classList.contains('active');
-  }
-
-  // ══════════════════════════════════════
-  //  BADGE WATCHERS
-  // ══════════════════════════════════════
-  function startBadgeWatchers(uid) {
-    onSnapshot(query(collection(db,'quotes'), where('uid','==',uid)), snap => {
-      const count = snap.docs.filter(d => d.data().status === 'awaiting').length;
-      setBadge('quoteBadge', count);
-    });
-    onSnapshot(query(collection(db,'notifications'), where('uid','==',uid)), snap => {
-      const count = snap.docs.filter(d => !d.data().read).length;
-      if (!isActive('notifications')) setBadge('notifBadge', count);
-      else setBadge('notifBadge', 0);
-    });
-    onSnapshot(query(collection(db,'invoices'), where('uid','==',uid)), snap => {
-      const count = snap.docs.filter(d => d.data().status === 'unpaid').length;
-      if (!isActive('invoices')) setBadge('invoicesBadge', count);
-      else setBadge('invoicesBadge', 0);
-    });
-    onSnapshot(query(collection(db,'projects'), where('uid','==',uid)), snap => {
-      const count = snap.docs.filter(d => d.data().status === 'active').length;
-      if (!isActive('projects')) setBadge('projectsBadge', count);
-      else setBadge('projectsBadge', 0);
-    });
-    onSnapshot(query(collection(db,'photos'), where('uid','==',uid)), snap => {
-      if (!isActive('photos')) setBadge('photosBadge', snap.size > 0 ? 'NEW' : 0);
-      else setBadge('photosBadge', 0);
-    });
-    onSnapshot(query(collection(db,'documents'), where('uid','==',uid)), snap => {
-      if (!isActive('documents')) setBadge('documentsBadge', snap.size > 0 ? 'NEW' : 0);
-      else setBadge('documentsBadge', 0);
-    });
-    onSnapshot(query(collection(db,'purchases'), where('uid','==',uid)), snap => {
-      if (!isActive('purchases')) setBadge('purchasesBadge', snap.size > 0 ? snap.size : 0);
-      else setBadge('purchasesBadge', 0);
-    });
-  }
-
-  // ══════════════════════════════════════
-  //  DASHBOARD
-  // ══════════════════════════════════════
-  async function loadDashboard(uid) {
-    const [purchases, quotes, notifs] = await Promise.all([
-      getDocs(query(collection(db,'purchases'), where('uid','==',uid))),
-      getDocs(query(collection(db,'quotes'), where('uid','==',uid))),
-      getDocs(query(collection(db,'notifications'), where('uid','==',uid)))
-    ]);
-
-    const pendingQuotes = quotes.docs.filter(d => d.data().status === 'awaiting').length;
-    const unreadNotifs  = notifs.docs.filter(d => d.data().read === false).length;
-
-    document.getElementById('statPurchases').textContent = purchases.size;
-    document.getElementById('statQuotes').textContent    = pendingQuotes;
-    document.getElementById('statNotifs').textContent    = unreadNotifs;
-
-    if (pendingQuotes > 0) { setBadge('quoteBadge', pendingQuotes); }
-    if (unreadNotifs  > 0) { setBadge('notifBadge', unreadNotifs); }
-
-    // FIX: single projects listener — shared across dashboard + projects panel
-    loadProjects(uid);
-
-    const sortedNotifs = notifs.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-    document.getElementById('dashNotifs').innerHTML = sortedNotifs.length === 0
-      ? '<div class="empty-state"><i class="fas fa-bell"></i><p>No notifications yet.</p></div>'
-      : sortedNotifs.slice(0,4).map(d => notifHTML(d.id, d.data())).join('');
-  }
-
-  // ══════════════════════════════════════
-  //  PROJECTS — single real-time listener
-  //  FIX: feeds both dashboard preview AND projects panel
-  // ══════════════════════════════════════
-  function loadProjects(uid) {
-    // Don't create duplicate listeners
-    if (projectsUnsubscribe) return;
-
-    projectsUnsubscribe = onSnapshot(
-      query(collection(db,'projects'), where('uid','==',uid)),
-      snap => {
-        const sorted      = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-        const activeCount = snap.docs.filter(d => d.data().status === 'active').length;
-
-        // Update stat + badge
-        const statEl = document.getElementById('statProjects');
-        if (statEl) statEl.textContent = activeCount;
-        setBadge('projectsBadge', activeCount);
-
-        // Update dashboard preview
-        const dashP = document.getElementById('dashProjects');
-        if (dashP) {
-          dashP.innerHTML = sorted.length === 0
-            ? '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet. Submit a service request to get started.</p></div>'
-            : sorted.slice(0,3).map(d => projectCardHTML(d.data())).join('');
-        }
-
-        // Update projects panel (only if visible)
-        const listEl = document.getElementById('projectsList');
-        if (listEl && isActive('projects')) {
-          listEl.innerHTML = sorted.length === 0
-            ? '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>'
-            : sorted.map(d => projectCardHTML(d.data())).join('');
-        }
-      },
-      () => {
-        const listEl = document.getElementById('projectsList');
-        if (listEl) listEl.innerHTML = '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>Could not load projects.</p></div>';
-      }
-    );
-  }
-
-async function renderProjectsPanel(uid) {
-  const listEl = document.getElementById('projectsList');
-  listEl.innerHTML = '<div class="spinner"></div>';
-
-  const [projectsSnap, photosSnap] = await Promise.all([
-    getDocs(query(collection(db,'projects'), where('uid','==',uid))),
-    getDocs(query(collection(db,'photos'),   where('uid','==',uid)))
-  ]);
-
-  const sorted = projectsSnap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-
-  // Group photos by projectId
-  const photosByProject = {};
-  photosSnap.docs.forEach(d => {
-    const p = d.data();
-    if (p.projectId) {
-      if (!photosByProject[p.projectId]) photosByProject[p.projectId] = [];
-      photosByProject[p.projectId].push(p);
-    }
-  });
-
-  if (sorted.length === 0) {
-    listEl.innerHTML = '<div class="empty-state"><i class="fas fa-hard-hat"></i><p>No projects yet.</p></div>';
-    return;
-  }
-
-  listEl.innerHTML = sorted.map(d => projectCardHTML(d.id, d.data(), photosByProject[d.id] || [])).join('');
-}
-
-  function projectCardHTML(id, p, photos = []) {
-  const prog = p.progress || 0;
-  const photosSorted = photos.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-
-  const photosSection = photos.length > 0 ? `
-    <div class="project-photos-section">
-      <div class="project-photos-label">
-        <i class="fas fa-images"></i> Progress Photos
-        <span class="project-photos-count">${photos.length} photo${photos.length !== 1 ? 's' : ''}</span>
-      </div>
-      <div class="project-photos-grid">
-        ${photosSorted.map(ph => `
-          <div class="project-photo-thumb" onclick="openPhotoLightbox('${ph.url}', '${(ph.caption||'').replace(/'/g,"\\'")}', '${ph.uploadDate||''}')">
-            <img src="${ph.url}" alt="${ph.caption||''}" loading="lazy" onerror="this.parentElement.style.display='none'">
-            ${ph.caption ? `<div class="project-photo-caption">${ph.caption}</div>` : ''}
-          </div>`).join('')}
-      </div>
-    </div>` : '';
-
-  return `<div class="project-card">
-    <div class="project-header">
-      <div>
-        <div class="project-title">${p.title || 'Untitled Project'}</div>
-        <div class="project-meta">${p.location || ''} ${p.location && p.startDate ? '&bull;' : ''} ${p.startDate ? 'Started ' + p.startDate : ''}</div>
-      </div>
-      <span class="badge ${p.status || 'pending'}">${(p.status||'pending').toUpperCase()}</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
-    <div class="progress-labels"><span>${p.phase || 'In progress'}</span><span>${prog}% complete</span></div>
-    ${photosSection}
-  </div>`;
-}
-
-  // ══════════════════════════════════════
-  //  QUOTES
-  // ══════════════════════════════════════
-  async function loadQuotes(uid) {
-    try {
-      const snap = await getDocs(query(collection(db,'quotes'), where('uid','==',uid)));
-      const el   = document.getElementById('quotesList');
-      if (snap.empty) { el.innerHTML = '<div class="empty-state"><i class="fas fa-file-invoice"></i><p>No quotations yet. Your plumber will send quotes here.</p></div>'; return; }
-      const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-      el.innerHTML = sorted.map(d => quoteCardHTML(d.id, d.data())).join('');
-    } catch(e) {
-      document.getElementById('quotesList').innerHTML = '<div class="empty-state"><i class="fas fa-file-invoice"></i><p>Could not load quotations. Please refresh.</p></div>';
-    }
-  }
-
- function quoteCardHTML(id, q) {
-  const items  = (q.items || []);
-  const total  = items.reduce((s, i) => s + (i.price || 0), 0);
-  const canAct = q.status === 'awaiting';
-
-  const itemRows = items.length
-    ? items.map(i => `<tr>
-        <td style="color:var(--pure-white);font-weight:500;">${i.name||'—'}</td>
-        <td style="text-align:center;">${i.qty||1}</td>
-        <td style="text-align:right;color:var(--accent-yellow);font-weight:600;">KSh ${(i.price||0).toLocaleString()}</td>
-      </tr>`).join('')
-    : `<tr><td colspan="3" style="text-align:center;color:rgba(203,213,224,0.3);padding:16px;">No items listed</td></tr>`;
-
-  // Build data object for PDF
-  const pdfData = JSON.stringify({
-    title:       q.title || 'Quotation',
-    refNo:       id.slice(-8).toUpperCase(),
-    projectName: q.projectName || '',
-    date:        q.date || '',
-    clientEmail: q.clientEmail || '',
-    dueDate:     '—',
-    status:      q.status || 'awaiting',
-    items:       q.items || []
-  }).replace(/'/g, '&apos;');
-
-  return `<div class="quote-card">
-    <div class="quote-header">
-      <div>
-        <div class="quote-title">${q.title||'Quotation'}</div>
-        <div class="quote-subtitle">${q.projectName||''} &bull; ${q.date||''}</div>
-      </div>
-      <span class="badge ${q.status||'awaiting'}">${(q.status||'awaiting').toUpperCase()}</span>
-    </div>
-    <table class="quote-items" style="width:100%;border-collapse:collapse;">
-      <thead><tr style="border-bottom:1px solid var(--border);">
-        <th style="text-align:left;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Item</th>
-        <th style="text-align:center;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Qty</th>
-        <th style="text-align:right;padding:6px 0;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;color:rgba(61,133,198,0.6);">Amount</th>
-      </tr></thead>
-      <tbody>${itemRows}</tbody>
-    </table>
-    <div class="quote-total"><span>Total</span><span>KSh ${total.toLocaleString()}</span></div>
-    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center;">
-      ${canAct ? `
-        <button class="btn green sm" onclick="updateQuote('${id}','approved')"><i class="fas fa-check"></i> Approve</button>
-        <button class="btn red sm"   onclick="updateQuote('${id}','declined')"><i class="fas fa-times"></i> Decline</button>` : ''}
-      <button class="btn outline sm" onclick='downloadPDF("quote", ${pdfData})' style="margin-left:auto;">
-        <i class="fas fa-file-pdf"></i> Download PDF
-      </button>
-      ${q.attachmentUrl ? `
-        <a href="${q.attachmentUrl}" target="_blank" class="btn yellow sm">
-          <i class="fas fa-paperclip"></i> Official Copy
-        </a>` : ''}
-    </div>
-  </div>`;
-}
-  window.updateQuote = async function(id, status) {
-    await updateDoc(doc(db,'quotes',id), { status });
-    loadQuotes(currentUser.uid);
-  };
-  window.openPhotoLightbox = function(url, caption, date) {
-  // Create lightbox if it doesn't exist
-  let lb = document.getElementById('photoLightbox');
-  if (!lb) {
-    lb = document.createElement('div');
-    lb.id = 'photoLightbox';
-    lb.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(4,14,26,0.95);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out;';
-    lb.innerHTML = `
-      <button onclick="closePhotoLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(61,133,198,0.15);border:1px solid rgba(61,133,198,0.25);border-radius:50%;width:40px;height:40px;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-        <i class="fas fa-times"></i>
-      </button>
-      <img id="lightboxImg" src="" style="max-width:90vw;max-height:78vh;border-radius:12px;object-fit:contain;box-shadow:0 24px 60px rgba(4,14,26,0.8);">
-      <div id="lightboxCaption" style="margin-top:14px;color:#fff;font-weight:600;font-size:0.9rem;text-align:center;"></div>
-      <div id="lightboxDate" style="margin-top:4px;color:rgba(143,168,196,0.5);font-size:0.78rem;text-align:center;"></div>`;
-    lb.onclick = e => { if (e.target === lb) closePhotoLightbox(); };
-    document.body.appendChild(lb);
-  }
-  document.getElementById('lightboxImg').src          = url;
-  document.getElementById('lightboxCaption').textContent = caption || '';
-  document.getElementById('lightboxDate').textContent    = date    || '';
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-};
-
-window.closePhotoLightbox = function() {
-  const lb = document.getElementById('photoLightbox');
-  if (lb) lb.style.display = 'none';
-  document.body.style.overflow = '';
-};
-
-  // ══════════════════════════════════════
-  //  PURCHASES
-  // ══════════════════════════════════════
-  async function loadPurchases(uid) {
-    try {
-      const snap   = await getDocs(query(collection(db,'purchases'), where('uid','==',uid)));
-      const el     = document.getElementById('purchasesList');
-      const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-      el.innerHTML = sorted.length === 0
-        ? '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>No purchases recorded yet.</p></div>'
-        : `<div class="table-wrap"><table class="data-table"><thead><tr><th>Item</th><th>Qty</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody>
-            ${sorted.map(d => { const p=d.data(); return `<tr><td>${p.item||'—'}</td><td>${p.qty||1}</td><td>KSh ${(p.amount||0).toLocaleString()}</td><td>${p.date||'—'}</td><td><span class="badge ${p.status||'completed'}">${(p.status||'completed').toUpperCase()}</span></td></tr>`; }).join('')}
-           </tbody></table></div>`;
-    } catch(e) { document.getElementById('purchasesList').innerHTML = '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>Could not load purchases.</p></div>'; }
-  }
-
-  // ══════════════════════════════════════
-  //  INVOICES
-  // ══════════════════════════════════════
- async function loadInvoices(uid) {
-  try {
-    const snap   = await getDocs(query(collection(db,'invoices'), where('uid','==',uid)));
-    const el     = document.getElementById('invoicesList');
-    const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-
-    el.innerHTML = sorted.length === 0
-      ? '<div class="empty-state"><i class="fas fa-receipt"></i><p>No invoices yet.</p></div>'
-      : `<div class="table-wrap"><table class="data-table">
-          <thead><tr>
-            <th>Invoice #</th><th>Description</th><th>Amount</th>
-            <th>Due Date</th><th>Status</th><th>Download</th>
-          </tr></thead>
-          <tbody>
-            ${sorted.map(d => {
-              const i = d.data();
-              const pdfData = JSON.stringify({
-                title:       'Invoice — ' + (i.description || ''),
-                refNo:       i.invoiceNo || d.id.slice(-8).toUpperCase(),
-                projectName: i.description || '',
-                date:        new Date().toLocaleDateString('en-KE', {day:'numeric',month:'short',year:'numeric'}),
-                clientEmail: '',
-                dueDate:     i.dueDate || '—',
-                status:      i.status  || 'unpaid',
-                amount:      i.amount  || 0,
-                description: i.description || ''
-              }).replace(/'/g, '&apos;');
-
-              return `<tr>
-                <td style="color:var(--accent-yellow);font-weight:700;">${i.invoiceNo||'—'}</td>
-                <td>${i.description||'—'}</td>
-                <td>KSh ${(i.amount||0).toLocaleString()}</td>
-                <td>${i.dueDate||'—'}</td>
-                <td><span class="badge ${i.status==='paid'?'paid':'unpaid'}">${(i.status||'unpaid').toUpperCase()}</span></td>
-                <td style="display:flex;gap:8px;align-items:center;">
-                  <button class="btn outline sm" onclick='downloadPDF("invoice", ${pdfData})'>
-                    <i class="fas fa-file-pdf"></i> PDF
-                  </button>
-                  ${i.attachmentUrl ? `
-                    <a href="${i.attachmentUrl}" target="_blank" class="btn yellow sm">
-                      <i class="fas fa-paperclip"></i>
-                    </a>` : ''}
-                </td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table></div>`;
-  } catch(e) {
-    document.getElementById('invoicesList').innerHTML = '<div class="empty-state"><i class="fas fa-receipt"></i><p>Could not load invoices.</p></div>';
-  }
-}
-
-  // ══════════════════════════════════════
-  //  MESSAGES
-  // ══════════════════════════════════════
-  function loadMessages(uid) {
-    const thread = document.getElementById('messageThread');
-    // FIX: guard prevents duplicate listener — but still set spinner on first call
-    if (msgUnsubscribe) { thread.scrollTop = thread.scrollHeight; return; }
-    thread.innerHTML = '<div class="spinner"></div>';
-
-    msgUnsubscribe = onSnapshot(query(collection(db,'messages'), where('uid','==',uid)), snap => {
-      if (snap.empty) {
-        thread.innerHTML = '<div class="empty-state"><i class="fas fa-comments"></i><p>No messages yet. Start the conversation below.</p></div>';
-        return;
-      }
-      const sorted   = snap.docs.sort((a,b) => (a.data().createdAt?.seconds||0) - (b.data().createdAt?.seconds||0));
-      const msgPanel = document.getElementById('panel-messages');
-
-      if (msgPanel.classList.contains('active')) {
-        snap.docs.forEach(d => {
-          if (d.data().sender === 'plumber' && !d.data().seen) {
-            updateDoc(doc(db,'messages',d.id), { seen: true });
-          }
-        });
-      }
-
-      thread.innerHTML = sorted.map(d => {
-        const m    = d.data();
-        const isMe = m.sender === 'client';
-        const seenTick = isMe && m.seen
-          ? `<span style="color:#22c55e;font-size:0.68rem;margin-left:4px;">✓✓ Seen</span>`
-          : isMe
-          ? `<span style="color:rgba(143,168,196,0.35);font-size:0.68rem;margin-left:4px;">✓ Sent</span>`
-          : '';
-        return `<div class="message ${isMe?'mine':''}">
-          <div class="msg-avatar">${isMe?'👤':'🔧'}</div>
-          <div class="msg-body">
-            <div class="msg-bubble">${m.text||''}</div>
-            <div class="msg-time">${isMe?'You':'Plumber'} &bull; ${m.time||''}${seenTick}</div>
-          </div>
-        </div>`;
-      }).join('');
-      thread.scrollTop = thread.scrollHeight;
-
-      const unread = snap.docs.filter(d => d.data().sender === 'plumber' && !d.data().seen).length;
-      if (!msgPanel.classList.contains('active') && unread > 0) {
-        setBadge('msgBadge', unread);
-      } else {
-        setBadge('msgBadge', 0);
-      }
-    });
-  }
-
-  window.sendMessage = async function() {
-    if (!currentUser) return;
-    const input = document.getElementById('msgInput');
-    const text  = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    const time  = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-    await addDoc(collection(db,'messages'), {
-      uid: currentUser.uid, sender: 'client',
-      text, time, seen: false, createdAt: serverTimestamp()
-    });
-  };
-
-  // ══════════════════════════════════════
-  //  PHOTOS
-  // ══════════════════════════════════════
-async function loadPhotos(uid) {
-  try {
-    const [photosSnap, projectsSnap] = await Promise.all([
-      getDocs(query(collection(db,'photos'), where('uid','==',uid))),
-      getDocs(query(collection(db,'projects'), where('uid','==',uid)))
-    ]);
-
-    const el = document.getElementById('photoGrid');
-
-    if (photosSnap.empty) {
-      el.innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>No photos yet. Your plumber will upload progress photos here.</p></div>';
-      return;
-    }
-
-    // Build a project ID → title map
-    const projectMap = {};
-    projectsSnap.docs.forEach(d => {
-      projectMap[d.id] = d.data().title || 'Unnamed Project';
-    });
-
-    // Group photos by projectId
-    const grouped = {};
-    const ungrouped = [];
-
-    photosSnap.docs.forEach(d => {
-      const p = { id: d.id, ...d.data() };
-      if (p.projectId && projectMap[p.projectId]) {
-        if (!grouped[p.projectId]) grouped[p.projectId] = [];
-        grouped[p.projectId].push(p);
-      } else {
-        ungrouped.push(p);
-      }
-    });
-
-    let html = '';
-
-    // Render grouped photos
-    Object.entries(grouped).forEach(([projectId, photos]) => {
-      const sorted = photos.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-      html += `
-        <div class="photo-project-group">
-          <div class="photo-project-label">
-            <i class="fas fa-hard-hat"></i> ${projectMap[projectId]}
-            <span class="photo-project-count">${photos.length} photo${photos.length !== 1 ? 's' : ''}</span>
-          </div>
-          <div class="photo-project-grid">
-            ${sorted.map(p => photoItemHTML(p)).join('')}
-          </div>
-        </div>`;
-    });
-
-    // Render ungrouped photos (uploaded from Photos panel, no projectId)
-    if (ungrouped.length > 0) {
-      const sorted = ungrouped.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-      html += `
-        <div class="photo-project-group">
-          <div class="photo-project-label">
-            <i class="fas fa-images"></i> General Photos
-            <span class="photo-project-count">${ungrouped.length} photo${ungrouped.length !== 1 ? 's' : ''}</span>
-          </div>
-          <div class="photo-project-grid">
-            ${sorted.map(p => photoItemHTML(p)).join('')}
-          </div>
-        </div>`;
-    }
-
-    el.innerHTML = html;
-
-  } catch(e) {
-    document.getElementById('photoGrid').innerHTML = '<div class="photo-placeholder"><i class="fas fa-camera"></i><p>Could not load photos.</p></div>';
-  }
-}
-
-function photoItemHTML(p) {
-  return `<div class="photo-item">
-    <img src="${p.url}" alt="${p.caption||''}" loading="lazy" onerror="this.parentElement.style.display='none'">
-    <div class="photo-caption">${p.caption||''}</div>
-    ${p.uploadDate ? `<div class="photo-date">${p.uploadDate}</div>` : ''}
-  </div>`;
-}
-  // ══════════════════════════════════════
-  //  DOCUMENTS
-  // ══════════════════════════════════════
- async function loadDocuments(uid) {
-  try {
-    const snap = await getDocs(query(collection(db,'documents'), where('uid','==',uid)));
-    const el   = document.getElementById('documentsList');
-    let docs   = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-    // Populate project filter
-    const projects = [...new Set(docs.map(d => d.projectName).filter(Boolean))];
-    const projSel  = document.getElementById('clientDocFilterProj');
-    if (projSel) {
-      const current = projSel.value;
-      projSel.innerHTML = '<option value="">All Projects</option>' +
-        projects.map(p => `<option ${p===current?'selected':''}>${p}</option>`).join('');
-    }
-
-    // Apply filters
-    const catFilter  = document.getElementById('clientDocFilterCat')?.value  || '';
-    const projFilter = document.getElementById('clientDocFilterProj')?.value || '';
-    if (catFilter)  docs = docs.filter(d => d.category === catFilter);
-    if (projFilter) docs = docs.filter(d => d.projectName === projFilter);
-
-    docs.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-
-    if (docs.length === 0) {
-      el.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents yet.</p></div>';
-      return;
-    }
-
-    const catColors = { Certificate:'#22c55e', Invoice:'#e6be0c', Permit:'#3d85c6', Warranty:'#8b5cf6', Quote:'#f97316', 'Proof of Payment':'#06b6d4', 'Site Photo':'#ec4899', Photo:'#06b6d4', Other:'#6a84a0' };
-
-    el.innerHTML = docs.map(f => {
-      const color = catColors[f.category] || '#6a84a0';
-      return `<div class="doc-item">
-        <div class="doc-icon" style="background:${color}18;color:${color};">
-          <i class="fas fa-file-${f.type==='pdf'?'pdf':f.type==='image'?'image':'alt'}"></i>
-        </div>
-        <div class="doc-info">
-          <div class="doc-name">${f.name||'Document'}</div>
-          <div class="doc-meta">
-            <span style="color:${color};">${f.category||'File'}</span>
-            ${f.projectName ? ' · ' + f.projectName : ''}
-            · ${f.uploadDate||'—'}
-            ${f.uploadedBy==='client' ? ' · <span style="color:rgba(143,168,196,0.4);">You</span>' : ''}
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn outline sm" onclick="previewClientDoc('${f.url}','${(f.name||'').replace(/'/g,"\\'")}','${f.category||''}','${f.uploadDate||''}','${f.type||''}')">
-            <i class="fas fa-eye"></i>
-          </button>
-          <a href="${f.url||'#'}" target="_blank" class="btn outline sm"><i class="fas fa-download"></i></a>
-        </div>
-      </div>`;
-    }).join('');
-  } catch(e) {
-    document.getElementById('documentsList').innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>Could not load documents.</p></div>';
-  }
-}
-window.uploadClientDoc = async function() {
-  if (!currentUser) return;
-
-  const name     = document.getElementById('clientDocName').value.trim();
-  const category = document.getElementById('clientDocCategory').value;
-  const fileEl   = document.getElementById('clientDocFile');
-  const file     = fileEl.files[0];
-
-  if (!name) { alert('Please enter a document name.'); return; }
-  if (!file) { alert('Please choose a file.'); return; }
-  if (file.size > 20 * 1024 * 1024) { alert('File too large — max 20MB.'); return; }
-
-  const btn = document.getElementById('clientDocBtn');
-  btn.disabled  = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i>Uploading...';
-  document.getElementById('clientDocProgress').style.display = 'block';
-
-  try {
-    const result = await uploadToCloudinary(file, pct => {
-      document.getElementById('clientDocPct').textContent  = pct + '%';
-      document.getElementById('clientDocBar').style.width  = pct + '%';
-    });
-
-    const uploadDate = new Date().toLocaleDateString('en-KE', {
-      day:'numeric', month:'short', year:'numeric'
-    });
-
-    const type = /\.(png|jpe?g|gif|webp)$/i.test(file.name)
-      ? 'image' : file.name.endsWith('.pdf')
-      ? 'pdf'   : 'other';
-
-    await addDoc(collection(db, 'documents'), {
-      uid:         currentUser.uid,
-      name,
-      category,
-      type,
-      url:         result.url,
-      publicId:    result.publicId,
-      uploadDate,
-      uploadedBy:  'client',
-      createdAt:   serverTimestamp()
-    });
-
-    // Reset form
-    document.getElementById('clientDocName').value          = '';
-    fileEl.value                                            = '';
-    document.getElementById('clientDocProgress').style.display = 'none';
-    document.getElementById('clientDocBar').style.width     = '0%';
-    btn.disabled  = false;
-    btn.innerHTML = '<i class="fas fa-upload" style="margin-right:8px;"></i>Upload';
-
-    loadDocuments(currentUser.uid);
-
-  } catch(e) {
-    console.error('Client upload failed:', e);
-    alert('Upload failed. Please check your connection and try again.');
-    document.getElementById('clientDocProgress').style.display = 'none';
-    btn.disabled  = false;
-    btn.innerHTML = '<i class="fas fa-upload" style="margin-right:8px;"></i>Upload';
-  }
-};
-
-  // ══════════════════════════════════════
-  //  PLUMBER
-  //  FIX: removed broken onerror with escaped quotes — now uses safe DOM approach
-  // ══════════════════════════════════════
-  async function loadPlumber(uid) {
-    const el = document.getElementById('plumberCard');
-    try {
-      const snap = await getDoc(doc(db,'plumberProfile','main'));
-      if (!snap.exists()) { el.innerHTML = '<div class="empty-state"><i class="fas fa-user-tie"></i><p>Your plumber profile will appear here once set up by the team.</p></div>'; return; }
-      const p = snap.data();
-
-      // FIX: build avatar HTML safely without nested quote escaping
-      let avatarHTML;
-      if (p.photoUrl) {
-        avatarHTML = `<img src="${p.photoUrl}" alt="${p.name||'Plumber'}" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(230,190,12,0.4);" id="plumberAvatarImg">`;
-      } else {
-        avatarHTML = `<i class="fas fa-user-hard-hat"></i>`;
-      }
-
-      el.innerHTML = `<div class="plumber-card">
-        <div class="plumber-avatar" style="position:relative;overflow:visible;">
-          ${avatarHTML}
-          <div style="position:absolute;bottom:2px;right:2px;background:#22c55e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#fff;border:2px solid var(--deep-navy);"><i class="fas fa-check"></i></div>
-        </div>
-        <div class="plumber-info">
-          <div class="plumber-name">${p.name||'Your Plumber'}</div>
-          <div class="plumber-role">${p.specialisation||'Senior Plumbing Technician'}${p.experience ? ' &bull; ' + p.experience : ''}</div>
-          ${p.badgeId ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(230,190,12,0.08);border:1px solid rgba(230,190,12,0.2);border-radius:50px;padding:4px 12px;font-size:0.75rem;font-weight:700;color:var(--accent-yellow);letter-spacing:0.5px;margin-bottom:14px;"><i class="fas fa-shield-alt"></i> ${p.badgeId}</div>` : ''}
-          <div class="plumber-actions">
-            <a href="tel:${p.phone||''}" class="btn green sm"><i class="fas fa-phone"></i> Call</a>
-            <a href="https://wa.me/${(p.phone||'').replace(/\D/g,'')}" class="btn yellow sm" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <button class="btn blue sm" onclick="showPanel('messages', null)"><i class="fas fa-comments"></i> Message</button>
-          </div>
-        </div>
-      </div>
-      <div class="card"><div class="card-title"><i class="fas fa-star"></i> Rating</div><p style="color:var(--text-dim);font-size:0.85rem;">Rating system coming soon.</p></div>`;
-
-      // FIX: attach onerror via JS after render, avoids broken inline attribute
-      const imgEl = document.getElementById('plumberAvatarImg');
-      if (imgEl) imgEl.onerror = () => { imgEl.outerHTML = '<i class="fas fa-user-hard-hat"></i>'; };
-
-    } catch(e) {
-      el.innerHTML = '<div class="empty-state"><i class="fas fa-user-tie"></i><p>Could not load plumber info.</p></div>';
-    }
-  }
-
-  // ══════════════════════════════════════
-  //  NOTIFICATIONS
-  // ══════════════════════════════════════
-  async function loadNotifications(uid) {
-    try {
-      const snap   = await getDocs(query(collection(db,'notifications'), where('uid','==',uid)));
-      const el     = document.getElementById('notificationsList');
-      const sorted = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
-      el.innerHTML = sorted.length === 0
-        ? '<div class="empty-state"><i class="fas fa-bell"></i><p>No notifications yet.</p></div>'
-        : sorted.map(d => notifHTML(d.id, d.data())).join('');
-      snap.docs.forEach(d => { if (!d.data().read) updateDoc(doc(db,'notifications',d.id), {read:true}); });
-      setBadge('notifBadge', 0);
-    } catch(e) { document.getElementById('notificationsList').innerHTML = '<div class="empty-state"><i class="fas fa-bell"></i><p>Could not load notifications.</p></div>'; }
-  }
-
-  function notifHTML(id, n) {
-    const colors = { info:'#3d85c6', success:'#27ae60', warning:'#e67e22', quote:'#f1c40f' };
-    const icons  = { info:'fa-info-circle', success:'fa-check-circle', warning:'fa-exclamation-triangle', quote:'fa-file-invoice' };
-    const type   = n.type || 'info';
-    return `<div class="notif-item ${n.read?'':'unread'}">
-      <div class="notif-icon" style="background:${colors[type]}18;color:${colors[type]};"><i class="fas ${icons[type]}"></i></div>
-      <div class="notif-body">
-        <div class="notif-title">${n.title||'Update'}</div>
-        <div class="notif-text">${n.body||''}</div>
-        <div class="notif-time">${n.time||''}</div>
-      </div>
-    </div>`;
-  }
-
-  // ══════════════════════════════════════
-  //  REQUEST SERVICE
-  // ══════════════════════════════════════
-  window.submitRequest = async function() {
-    if (!currentUser) return;
-    const service = document.getElementById('reqService').value;
-    const desc    = document.getElementById('reqDesc').value;
-    if (!service || !desc) { alert('Please fill in the service type and description.'); return; }
-    await addDoc(collection(db,'requests'), {
-      uid: currentUser.uid,
-      email: currentUser.email,
-      service,
-      priority:      document.getElementById('reqPriority').value,
-      address:       document.getElementById('reqAddress').value,
-      preferredDate: document.getElementById('reqDate').value,
-      description:   desc,
-      status:        'pending',
-      createdAt:     serverTimestamp()
-    });
-    document.getElementById('requestForm').style.display    = 'none';
-    document.getElementById('requestSuccess').style.display = 'block';
-  };
-
-  // ══════════════════════════════════════
-  //  LOGOUT + SIDEBAR
-  // ══════════════════════════════════════
-  window.doLogout = async function() {
-    if (msgUnsubscribe)      msgUnsubscribe();      // FIX: was missing projectsUnsubscribe cleanup
-    if (projectsUnsubscribe) projectsUnsubscribe();
-    await signOut(auth);
-    window.location.href = 'index.html';
-  };
-
-  window.toggleSidebar = function() {
-    const sb = document.getElementById('sidebar');
-    if (window.innerWidth <= 768) {
-      sb.classList.toggle('mobile-open');
-      document.getElementById('sidebarOverlay').classList.toggle('visible');
-    } else {
-      sb.classList.toggle('collapsed');
-    }
-  };
-
-  window.closeMobileSidebar = function() {
-    document.getElementById('sidebar').classList.remove('mobile-open');
-    document.getElementById('sidebarOverlay').classList.remove('visible');
-  };
-</script>
-
-</body>
+  </body>
 </html>
